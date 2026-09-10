@@ -1,0 +1,9 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Accidental Windows redirect artefacts (> nul)
+nul
+nul.map

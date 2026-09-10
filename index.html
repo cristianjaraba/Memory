@@ -5,10 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memory</title>
+    <!-- Preloaded so the hover arrow does not flicker on first hover -->
+    <link rel="preload" as="image" href="/assets/icons/arrow-right-hover.svg">
 </head>
 
 <body>
-    <section id="field">
+    <!-- Home screen: entry point of the game -->
+    <section class="home" id="home">
+        <header class="home__intro">
+            <p class="home__kicker">It's play time.</p>
+            <h1 class="home__title">Ready to play?</h1>
+        </header>
+
+        <button class="home__play" type="button">
+            <img class="home__play-icon" src="/assets/icons/stadia_controller.svg" alt="" aria-hidden="true">
+            <span class="home__play-label">Play</span>
+            <span class="home__play-arrow" aria-hidden="true"></span>
+        </button>
+
+        <!-- Decorative watermark in the lower left corner -->
+        <span class="home__watermark" aria-hidden="true"></span>
+    </section>
+
+    <!-- Game board, revealed once a round starts -->
+    <section id="field" hidden>
         <button class="card">
             <div class="card__inner">
                 <div class="card__face"></div>
