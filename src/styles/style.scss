@@ -82,6 +82,9 @@ $color-summary-surface: #f6f6f6;
 $settings-panel-gap: 2rem;
 // Fixed, so the preview above it knows how much room is left
 $settings-summary-height: 4rem;
+// Fixed as well: room for the longest set of picks, so the row keeps one
+// width no matter which options are picked
+$settings-summary-width: 27rem;
 // Type of the panel, a size smaller than the option lists it sums up
 $settings-summary-value-size: 16px;
 $settings-start-size: 18px;
@@ -94,7 +97,7 @@ $settings-start-icon-width: 16px;
 $settings-start-icon-height: 13px;
 $settings-start-icon-gap: 0.5rem;
 $settings-summary-padding: 0.75rem;
-$settings-summary-gap: 2rem;
+$settings-summary-gap: 1.5rem;
 $settings-summary-slash-width: 32px;
 $settings-summary-slash-thickness: 5px;
 $settings-summary-slash-angle: 109.33deg;
@@ -469,32 +472,31 @@ body {
     }
 
 
-    // Panel in the right column, it only places the summary. The preview above
-    // it is out of the flow, so the margin keeps that space free
+    // Panel in the right column, it carries the preview and the summary
     &__panel {
-        // Right column: it holds the summary at its bottom edge and keeps the
-        // room the preview above it needs, that sets the height of the row
+        // Right column: as wide as the preview it carries, its height keeps
+        // the room for preview, gap and summary. Both of them are taken out
+        // of the flow, so no pick can change the size of this column
+        position: relative;
         flex: none;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
+        width: calc(var(--preview-width) - #{$settings-preview-inset});
         // Room for the scaled down preview, its gap and the summary itself
         min-height: calc(
             (var(--preview-width) - #{$settings-preview-inset}) / #{$settings-preview-ratio}
             + #{$settings-panel-gap} + #{$settings-summary-height}
         );
-        // The preview sets the width, the summary row fits into it. That keeps
-        // the panel at one size, so a new pick cannot move the block around it
-        width: max-content;
-        min-width: var(--preview-width);
-        max-width: 100%;
     }
 
-    // Picked values on the left, the start button closes the row on the right
+    // Picked values first, the start button right behind them
     &__summary {
+        // Sits in the bottom corner of the column, its fixed width holds the
+        // longest set of picks, so the row never changes size
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: $settings-summary-width;
         display: flex;
         align-items: center;
-        justify-content: space-between;
         gap: $settings-summary-column-gap;
         // Fixed height, the preview above it is capped with the same value
         height: $settings-summary-height;
@@ -515,6 +517,9 @@ body {
     // Only holds the picked value, the anchor is needed for the slash
     &__summary-item {
         position: relative;
+        // Keeps its text on one line, the row has a fixed height
+        flex: none;
+        white-space: nowrap;
         font-family: $font-body;
         font-weight: 400;
         font-size: $settings-summary-value-size;
@@ -536,8 +541,10 @@ body {
 
     // Disabled until all three options are picked
     &__start {
-        // Only as wide as icon and label, the summary keeps the rest of the row
+        // Only as wide as icon and label, the auto margin keeps it at the
+        // right end of the row, whatever the picked values need
         flex: none;
+        margin-left: auto;
         display: flex;
         align-items: center;
         gap: $settings-start-icon-gap;
