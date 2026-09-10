@@ -27,6 +27,112 @@
         <span class="home__watermark" aria-hidden="true"></span>
     </section>
 
+    <!-- Settings: everything the player picks before a round starts -->
+    <section class="settings" id="settings" hidden>
+        <h2 class="settings__title">Settings</h2>
+        <!-- Decorative rule below the title: diamond plus line -->
+        <span class="settings__rule" aria-hidden="true"></span>
+
+        <!-- Everything the player picks, grouped so it can be placed as one block -->
+        <form class="settings__content">
+            <!-- Left column: every option list -->
+            <div class="settings__lists">
+                <fieldset class="settings__group">
+                    <legend class="settings__legend">
+                        <img class="settings__legend-icon" src="/assets/icons/palette.svg" alt="" aria-hidden="true">
+                        <span class="settings__legend-text">Game themes</span>
+                    </legend>
+                    <ul class="settings__options">
+                        <li class="settings__option">
+                            <input class="settings__input" type="radio" name="theme" id="theme-code-vibes" value="code-vibes" checked>
+                            <label class="settings__label" for="theme-code-vibes">Code vibes theme</label>
+                            <img class="settings__preview" width="460" height="412" src="/assets/code_vibes_theme_cards/code_vibes_theme_preview.png"
+                                alt="Cards of the Code vibes theme">
+                        </li>
+                        <li class="settings__option">
+                            <input class="settings__input" type="radio" name="theme" id="theme-gaming" value="gaming">
+                            <label class="settings__label" for="theme-gaming">Gaming theme</label>
+                            <img class="settings__preview" width="460" height="412" src="/assets/games_theme_cards/games_theme_preview.png"
+                                alt="Cards of the Gaming theme">
+                        </li>
+                        <li class="settings__option">
+                            <input class="settings__input" type="radio" name="theme" id="theme-da-projects" value="da-projects">
+                            <label class="settings__label" for="theme-da-projects">DA Projects theme</label>
+                            <img class="settings__preview" width="460" height="412" src="/assets/DA_projects_theme_cards/DA_projects_theme_preview.png"
+                                alt="Cards of the DA Projects theme">
+                        </li>
+                        <li class="settings__option">
+                            <input class="settings__input" type="radio" name="theme" id="theme-foods" value="foods">
+                            <label class="settings__label" for="theme-foods">Foods theme</label>
+                            <img class="settings__preview" width="460" height="412" src="/assets/food_theme_cards/foods_theme_preview.png"
+                                alt="Cards of the Foods theme">
+                        </li>
+                    </ul>
+                </fieldset>
+
+                <fieldset class="settings__group">
+                    <legend class="settings__legend">
+                        <img class="settings__legend-icon" src="/assets/icons/chess_pawn.svg" alt="" aria-hidden="true">
+                        <span class="settings__legend-text">Chose player</span>
+                    </legend>
+                    <ul class="settings__options">
+                        <li class="settings__option">
+                            <input class="settings__input" type="radio" name="player-color" id="player-blue" value="blue" checked>
+                            <label class="settings__label" for="player-blue">Blue</label>
+                        </li>
+                        <li class="settings__option">
+                            <input class="settings__input" type="radio" name="player-color" id="player-orange" value="orange">
+                            <label class="settings__label" for="player-orange">Orange</label>
+                        </li>
+                    </ul>
+                </fieldset>
+
+                <fieldset class="settings__group">
+                    <legend class="settings__legend">
+                        <img class="settings__legend-icon" src="/assets/icons/style.svg" alt="" aria-hidden="true">
+                        <span class="settings__legend-text">Boardsize</span>
+                    </legend>
+                    <ul class="settings__options">
+                        <li class="settings__option">
+                            <input class="settings__input" type="radio" name="board-size" id="board-16" value="16" checked>
+                            <label class="settings__label" for="board-16">16 cards</label>
+                        </li>
+                        <li class="settings__option">
+                            <input class="settings__input" type="radio" name="board-size" id="board-24" value="24">
+                            <label class="settings__label" for="board-24">24 cards</label>
+                        </li>
+                        <li class="settings__option">
+                            <input class="settings__input" type="radio" name="board-size" id="board-36" value="36">
+                            <label class="settings__label" for="board-36">36 cards</label>
+                        </li>
+                    </ul>
+                </fieldset>
+            </div>
+
+            <!-- Overview of the picked options, it fills up while choosing -->
+            <div class="settings__panel">
+                <aside class="settings__summary" aria-label="Your current selection">
+                    <ul class="settings__summary-list">
+                        <li class="settings__summary-item">
+                            <output class="settings__summary-value" id="summary-theme" aria-label="Game theme">Code vibes theme</output>
+                        </li>
+                        <li class="settings__summary-item">
+                            <output class="settings__summary-value" id="summary-player" aria-label="Player">Blue</output>
+                        </li>
+                        <li class="settings__summary-item">
+                            <output class="settings__summary-value" id="summary-board" aria-label="Boardsize">16 cards</output>
+                        </li>
+                    </ul>
+
+                    <button class="settings__start" type="button" disabled>
+                        <img class="settings__start-icon" width="16" height="13" src="/assets/icons/smart_display.svg" alt="" aria-hidden="true">
+                        Start
+                    </button>
+                </aside>
+            </div>
+        </form>
+    </section>
+
     <!-- Game board, revealed once a round starts -->
     <section id="field" hidden>
         <button class="card">
