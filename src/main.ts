@@ -27,7 +27,35 @@ const CARDS_PER_PAIR = 2;
 /** How long a wrong guess stays visible before it is turned back. */
 const MISMATCH_DELAY_MS = 900;
 
+/** The two players of a round, in the order they sit in the status bar. */
+const PLAYERS = ['blue', 'orange'] as const;
+
+/** Name of every player, it names the marker for screen readers. */
+const PLAYER_LABELS: Record<string, string> = {
+  blue: 'Blue',
+  orange: 'Orange',
+};
+
+/** Output of the status bar that carries the points of a player. */
+const SCORE_OUTPUTS: Record<string, string> = {
+  blue: 'score-blue',
+  orange: 'score-orange',
+};
+
+/** Every pair a player finds is worth this many points. */
+const POINTS_PER_PAIR = 1;
+
+/** Points every player starts a round with. */
+const SCORE_START = 0;
+
 type SectionId = (typeof SECTION_IDS)[number];
+type Player = (typeof PLAYERS)[number];
+
+/** Points of the running round, one entry per player. */
+let scores: Record<Player, number> = { orange: SCORE_START, blue: SCORE_START };
+
+/** Who is on turn, a wrong guess hands the turn to the other player. */
+let currentPlayer: Player = PLAYERS[0];
 
 /** The cards that are face up and still waiting for their partner. */
 let openCards: HTMLButtonElement[] = [];
@@ -62,11 +90,15 @@ function setupNavigation(): void {
 
   const startButton = document.querySelector<HTMLButtonElement>('.settings__start');
   startButton?.addEventListener('click', startRound);
+
+  const exitButton = document.querySelector<HTMLButtonElement>('.field__exit');
+  exitButton?.addEventListener('click', () => showSection('settings'));
 }
 
 /** Opens the game board, dressed in the picked theme. */
 function startRound(): void {
   applyFieldTheme();
+  resetScores();
   buildBoard();
   showSection('field');
 }
@@ -129,6 +161,49 @@ function applyFieldTheme(): void {
   const theme = getPickedInput('theme')?.value;
   if (field && theme) {
     field.className = `field field--${theme}`;
+  }
+}
+
+/** Puts both scores back to zero, the picked colour opens the round. */
+function resetScores(): void {
+  scores = { blue: SCORE_START, orange: SCORE_START };
+  currentPlayer = getStartingPlayer();
+  PLAYERS.forEach(showScore);
+  showTurn();
+}
+
+/** The player colour picked in the settings takes the first turn. */
+function getStartingPlayer(): Player {
+  const picked = getPickedInput('player-color')?.value;
+  return PLAYERS.find(player => player === picked) ?? PLAYERS[0];
+}
+
+/** Books the points of a found pair for the player on turn. */
+function addPairPoints(): void {
+  scores[currentPlayer] += POINTS_PER_PAIR;
+  showScore(currentPlayer);
+}
+
+/** Hands the turn over, a found pair leaves it where it is. */
+function switchPlayer(): void {
+  currentPlayer = PLAYERS.find(player => player !== currentPlayer) ?? currentPlayer;
+  showTurn();
+}
+
+/** Points the marker of the status bar at the player on turn. */
+function showTurn(): void {
+  const marker = document.getElementById('turn-marker');
+  if (marker) {
+    marker.dataset.player = currentPlayer;
+    marker.setAttribute('aria-label', PLAYER_LABELS[currentPlayer]);
+  }
+}
+
+/** Writes the points of one player into the status bar. */
+function showScore(player: Player): void {
+  const output = document.getElementById(SCORE_OUTPUTS[player]);
+  if (output) {
+    output.textContent = String(scores[player]);
   }
 }
 
@@ -211,12 +286,14 @@ function comparePair(): void {
     card.disabled = true;
   });
   openCards = [];
+  addPairPoints();
 }
 
 /** Turns the two cards of a wrong guess face down again. */
 function hideOpenCards(): void {
   openCards.forEach(card => card.classList.remove('is-flipped'));
   openCards = [];
+  switchPlayer();
   isBoardLocked = false;
 }
 

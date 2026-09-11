@@ -135,6 +135,34 @@
 
     <!-- Game board, revealed once a round starts -->
     <section class="field" id="field" hidden>
+        <!-- Status bar above the cards: both players, whose turn it is, way out -->
+        <header class="field__hud">
+            <!-- Panel with both players, each one in its own colour -->
+            <ul class="field__players">
+                <li class="field__player" data-player="blue">
+                    <span class="field__player-marker" aria-hidden="true"></span>
+                    <span class="field__player-name">Blue</span>
+                    <output class="field__score" id="score-blue" aria-label="Points of Blue">0</output>
+                </li>
+                <li class="field__player" data-player="orange">
+                    <span class="field__player-marker" aria-hidden="true"></span>
+                    <span class="field__player-name">Orange</span>
+                    <output class="field__score" id="score-orange" aria-label="Points of Orange">0</output>
+                </li>
+            </ul>
+
+            <!-- Whose turn it is, the marker takes the colour of that player -->
+            <p class="field__turn">
+                <span class="field__turn-label">Current player:</span>
+                <output class="field__turn-marker" id="turn-marker" data-player="blue" aria-label="Blue"></output>
+            </p>
+
+            <button class="field__exit" type="button">
+                <span class="field__exit-icon" aria-hidden="true"></span>
+                <span class="field__exit-label">Exit game</span>
+            </button>
+        </header>
+
         <ul class="field__board" id="board"></ul>
     </section>
 
@@ -152,6 +180,22 @@
             </button>
         </li>
     </template>
+
+    <!--
+        Filter of the Foods theme: it pushes the frame of the exit button off
+        its straight run, just enough to take the machine out of the line. The
+        svg carries nothing visible, it only holds the filter for the stylesheet.
+    -->
+    <svg class="filters" aria-hidden="true" focusable="false" width="0" height="0">
+        <defs>
+            <filter id="sketchy-frame" x="-10%" y="-30%" width="120%" height="160%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.015 0.04" numOctaves="1" seed="3"
+                    result="noise" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.5" xChannelSelector="R"
+                    yChannelSelector="G" />
+            </filter>
+        </defs>
+    </svg>
 
     <script type="module" src="/src/main.ts"></script>
 </body>
