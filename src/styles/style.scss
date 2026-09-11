@@ -11,6 +11,8 @@ $color-accent-text: #303131;
 // Light surface, used by the settings screen
 $color-surface: #ffffff;
 $color-surface-text: #303131;
+// Board surface of the Gaming theme, the other themes reuse the tokens above
+$color-field-gaming: #294f60;
 
 $font-display: 'Red Rose', sans-serif;
 $font-body: 'Almarai', sans-serif;
@@ -108,6 +110,73 @@ $settings-radio-ring-thin: 1px;
 $settings-radio-dot-size: 6px;
 // White gap between ring and dot, it leaves the dot at its size
 $settings-radio-dot-gap: ($settings-radio-size - 2 * $settings-radio-ring-thin - $settings-radio-dot-size) * 0.5;
+
+// Game board (the column count comes from the picked board size)
+$board-gap: 1rem;
+$board-columns-default: 4;
+
+// Size of one card, every theme brings its own (values from the design file)
+$card-width-code-vibes: 120px;
+$card-height-code-vibes: 120px;
+$card-width-gaming: 105px;
+$card-height-gaming: 120px;
+$card-width-da-projects: 120px;
+$card-height-da-projects: 100px;
+$card-width-foods: 122px;
+$card-height-foods: 122px;
+// Rounded corners of the cards, Code vibes and Food are drawn with
+// square corners (values taken from the design file)
+$card-radius-code-vibes: 0;
+$card-radius-gaming: 12px;
+$card-radius-da-projects: 12px;
+$card-radius-foods: 0;
+$card-radius-property: --card-radius;
+
+// Abstand um das Motiv. Ziel ist, dass das Motiv auf jeder Karte gleich
+// gross und gleich mittig steht, egal aus welcher Theme sie kommt.
+// Gemessen wurde, wie gross das Motiv in jedem der 73 Bilder ohne Abstand
+// auf seiner Karte landet: Code vibes und DA Projects, deren Bilder als
+// fertige Kartenflaechen gezeichnet sind, ergeben beide genau 70 px. Das
+// ist der Zielwert, die anderen beiden Themes werden darauf gebracht.
+// Ihre Motive fuellen ihr Bild fast ganz aus, brauchen also mehr Rand:
+// Gaming 105 px Karte - 2 x 18 px = 69 px, Food 122 px bei 92 % Motivanteil
+// - 2 x 23 px = 70 px.
+$card-motif-inset: 0;
+$card-motif-inset-code-vibes: 0;
+$card-motif-inset-gaming: 18px;
+$card-motif-inset-da-projects: 0;
+$card-motif-inset-foods: 23px;
+$card-motif-inset-property: --card-motif-inset;
+// Properties the cards read their size from, the theme of the board sets them
+$card-width-property: --card-width;
+$card-height-property: --card-height;
+
+// Cover of the cards, one per theme (values taken from the design file)
+$card-front-code-vibes: linear-gradient(212.26deg, #4dd5bc 29.42%, #286f62 123.94%);
+$card-front-gaming: linear-gradient(147.13deg, #ed1b76 1.28%, #0a2835 142.53%);
+$card-front-da-projects: #1e7594;
+$card-front-foods: #f3832d;
+// Surface behind the motif, it shows once the card is flipped
+$card-back-code-vibes: #c2dcd5;
+$card-back-gaming: #f6f1f3;
+$card-back-da-projects: #eaf2f4;
+$card-back-foods: #f4ece4;
+// Rahmen um ein gefundenes Paar (values taken from the design file)
+$card-match-code-vibes: #4dd5bc;
+$card-match-width-code-vibes: 5px;
+$card-match-gaming: #ed1b76;
+$card-match-width-gaming: 3px;
+$card-match-da-projects: #1e7594;
+$card-match-width-da-projects: 2px;
+$card-match-foods: #f3832d;
+$card-match-width-foods: 3px;
+$card-match-property: --card-match;
+$card-match-width-property: --card-match-width;
+
+// Properties the cards read their two sides from, the theme of the board
+// sets them
+$card-front-property: --card-front;
+$card-back-property: --card-back;
 
 // Play button controller icon
 $play-icon-hover-angle: -12deg;
@@ -589,13 +658,16 @@ body {
 }
 
 .card {
-    height: 100px;
-    aspect-ratio: 1 / 1;
+    // Fills its grid cell, its height comes from the theme of the board
+    width: 100%;
+    height: var(#{$card-height-property}, $card-height-code-vibes);
+    padding: 0;
     background-color: transparent;
     border: none;
 
     &__inner {
         position: relative;
+        display: block;
         width: 100%;
         height: 100%;
         transform-style: preserve-3d;
@@ -605,16 +677,110 @@ body {
     &__face {
         position: absolute;
         inset: 0;
-        background-color: black;
+        // Cover of the card, the theme of the board hands it down
+        background: var(#{$card-front-property}, $color-background);
+        border-radius: var(#{$card-radius-property}, $card-radius-code-vibes);
         backface-visibility: hidden;
 
+        // The side with the motif, it is only seen once the card is flipped
         &--back {
             transform: rotateY(180deg);
-            background-color: red;
+            background: var(#{$card-back-property}, $card-back-code-vibes);
         }
+    }
+
+    // The motif of the card, it only shows on the flipped side
+    &__motif {
+        width: 100%;
+        height: 100%;
+        // Room to all four sides, the picture stays centred inside it
+        padding: var(#{$card-motif-inset-property}, $card-motif-inset);
+        border-radius: inherit;
+        // Keeps the whole picture visible, no matter its aspect ratio
+        object-fit: contain;
     }
 
     &.is-flipped .card__inner {
         transform: rotateY(180deg);
+    }
+
+    // A found pair keeps a frame in the colour of its theme. It is drawn as
+    // an outline and pulled inwards, so it stays inside the card and leaves
+    // the room for the motif untouched
+    &.is-matched .card__face {
+        outline: var(#{$card-match-width-property}, $card-match-width-code-vibes)
+            solid var(#{$card-match-property}, $card-match-code-vibes);
+        outline-offset: calc(-1 * var(#{$card-match-width-property}, #{$card-match-width-code-vibes}));
+    }
+}
+
+// Game board, its surface follows the theme picked in the settings
+.field {
+    // The board is the only child, so it ends up centred on the screen
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+    background-color: $color-surface;
+    color: $color-surface-text;
+
+    // One grid cell per card, the column count is set while the board is built
+    &__board {
+        display: grid;
+        grid-template-columns:
+            repeat(var(--board-columns, #{$board-columns-default}), var(#{$card-width-property}, $card-width-code-vibes));
+        gap: $board-gap;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    // One block per theme: surface of the board plus size and cover of its cards
+    &--code-vibes {
+        #{$card-width-property}: $card-width-code-vibes;
+        #{$card-height-property}: $card-height-code-vibes;
+        #{$card-radius-property}: $card-radius-code-vibes;
+        #{$card-motif-inset-property}: $card-motif-inset-code-vibes;
+        #{$card-front-property}: #{$card-front-code-vibes};
+        #{$card-back-property}: $card-back-code-vibes;
+        #{$card-match-property}: $card-match-code-vibes;
+        #{$card-match-width-property}: $card-match-width-code-vibes;
+        background-color: $color-background;
+        color: $color-text;
+    }
+
+    &--gaming {
+        #{$card-width-property}: $card-width-gaming;
+        #{$card-height-property}: $card-height-gaming;
+        #{$card-radius-property}: $card-radius-gaming;
+        #{$card-motif-inset-property}: $card-motif-inset-gaming;
+        #{$card-front-property}: #{$card-front-gaming};
+        #{$card-back-property}: $card-back-gaming;
+        #{$card-match-property}: $card-match-gaming;
+        #{$card-match-width-property}: $card-match-width-gaming;
+        background-color: $color-field-gaming;
+        color: $color-text;
+    }
+
+    &--da-projects {
+        #{$card-width-property}: $card-width-da-projects;
+        #{$card-height-property}: $card-height-da-projects;
+        #{$card-radius-property}: $card-radius-da-projects;
+        #{$card-motif-inset-property}: $card-motif-inset-da-projects;
+        #{$card-front-property}: #{$card-front-da-projects};
+        #{$card-back-property}: $card-back-da-projects;
+        #{$card-match-property}: $card-match-da-projects;
+        #{$card-match-width-property}: $card-match-width-da-projects;
+    }
+
+    &--foods {
+        #{$card-width-property}: $card-width-foods;
+        #{$card-height-property}: $card-height-foods;
+        #{$card-radius-property}: $card-radius-foods;
+        #{$card-motif-inset-property}: $card-motif-inset-foods;
+        #{$card-front-property}: #{$card-front-foods};
+        #{$card-back-property}: $card-back-foods;
+        #{$card-match-property}: $card-match-foods;
+        #{$card-match-width-property}: $card-match-width-foods;
     }
 }

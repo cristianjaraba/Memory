@@ -134,14 +134,24 @@
     </section>
 
     <!-- Game board, revealed once a round starts -->
-    <section id="field" hidden>
-        <button class="card">
-            <div class="card__inner">
-                <div class="card__face"></div>
-                <div class="card__face card__face--back"></div>
-            </div>
-        </button>
+    <section class="field" id="field" hidden>
+        <ul class="field__board" id="board"></ul>
     </section>
+
+    <!-- Markup of one card, cloned once per card of the picked board size -->
+    <template id="card-template">
+        <li class="field__cell">
+            <button class="card" type="button">
+                <span class="card__inner">
+                    <span class="card__face"></span>
+                    <span class="card__face card__face--back">
+                        <!-- Motif of the card, it is filled in while the board is built -->
+                        <img class="card__motif" src="" alt="">
+                    </span>
+                </span>
+            </button>
+        </li>
+    </template>
 
     <script type="module" src="/src/main.ts"></script>
 </body>
