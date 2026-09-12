@@ -7,6 +7,10 @@ Two players share one screen and take turns. Whoever turns over a matching
 pair scores a point and stays on turn; a wrong guess hands the turn to the
 other player. The round ends when the last pair is off the board.
 
+![The board screen: a four by four grid of face down cards, with the score
+markers of both players, the player on turn and the exit button above
+it.](public/assets/screenshots/game_view.png)
+
 ## Getting started
 
 Requires Node.js 18 or newer (developed on Node 24).
