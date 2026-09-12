@@ -1,0 +1,21 @@
+// Tokens of the home screen: the watermark in the corner, the arrow of
+// the play button and the tilt its controller icon takes on hover
+
+// Decorative watermark (values taken from the design file)
+$watermark-width: 331px;
+$watermark-height: 241px;
+// Anchored to the bottom left corner, offset so a small part stays off the page
+$watermark-bottom: 110px;
+$watermark-left: -20px;
+$watermark-angle: 37.42deg;
+// Scales around the center, so growing it does not shift its position
+$watermark-scale: 1.2;
+$color-watermark: #393a34;
+
+// Play button arrow (natural size of the hover export)
+$arrow-box-width: 40px;
+$arrow-box-height: 30px;
+
+// Play button controller icon
+$play-icon-hover-angle: -12deg;
+$play-icon-hover-scale: 1.2;

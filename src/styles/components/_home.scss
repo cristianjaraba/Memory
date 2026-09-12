@@ -1,0 +1,104 @@
+// Home screen: the entry point of the game
+
+@use '../tokens' as *;
+
+.home {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    overflow: hidden;
+    background-color: $color-background;
+    color: $color-text;
+    text-align: center;
+
+    // Keeps the kicker aligned with the left edge of the headline
+    &__intro {
+        text-align: left;
+    }
+
+    &__kicker {
+        margin: 0 0 0.5rem;
+        font-family: $font-body;
+        font-weight: 400;
+        font-size: clamp(1.5rem, 4vw, 48px);
+        line-height: 100%;
+    }
+
+    &__title {
+        margin: 0;
+        font-family: $font-display;
+        font-weight: 700;
+        font-size: clamp(3rem, 12vw, 140px);
+        line-height: 100%;
+    }
+
+    &__play {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        margin-top: 3rem;
+        padding: $button-padding-block $button-padding-inline;
+        border: none;
+        background-color: $color-accent;
+        color: $color-accent-text;
+        cursor: pointer;
+        transition: transform 200ms ease-in-out;
+
+        &:hover,
+        &:focus-visible {
+            transform: scale(1.05);
+        }
+    }
+
+    &__play-label {
+        font-family: $font-display;
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 100%;
+    }
+
+    &__play-icon {
+        width: 44px;
+        height: 32px;
+        transition: transform 200ms ease-in-out;
+    }
+
+    // Slight tilt to the left plus its own growth, on top of the button scale
+    &__play:hover &__play-icon,
+    &__play:focus-visible &__play-icon {
+        transform: rotate($play-icon-hover-angle) scale($play-icon-hover-scale);
+    }
+
+    // Box uses the size of the larger hover icon, both arrows are drawn at
+    // their natural size so the button does not jump on hover
+    &__play-arrow {
+        width: $arrow-box-width;
+        height: $arrow-box-height;
+        background: url("/assets/icons/arrow-right.svg") no-repeat center;
+    }
+
+    &__play:hover &__play-arrow,
+    &__play:focus-visible &__play-arrow {
+        background-image: url("/assets/icons/arrow-right-hover.svg");
+    }
+
+    &__watermark {
+        position: absolute;
+        bottom: $watermark-bottom;
+        left: $watermark-left;
+        width: $watermark-width;
+        height: $watermark-height;
+        transform: rotate($watermark-angle) scale($watermark-scale);
+        pointer-events: none;
+        // The icon is used as a mask, so it takes the colour below it
+        background-color: $color-watermark;
+        mask-image: url("/assets/icons/stadia_controller.svg");
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-size: contain;
+    }
+}

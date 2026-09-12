@@ -38,6 +38,12 @@ Ein Memory-Spiel (Karten-Matching-Spiel) als Web-App. Umschulungsprojekt.
 
 ## Code Conventions
 
+### Dateigröße (gilt für alle Dateitypen)
+- Keine Code-Datei länger als 300–400 Zeilen (`.ts`, `.html`, `.scss`, …)
+- Wird eine Datei zu lang: Code ohne Rückfrage in sinnvolle Module auslagern
+- SCSS: Partials nach Screen/Komponente, `style.scss` bindet sie nur noch ein
+- TypeScript: ein Modul pro Aufgabengebiet, `main.ts` verdrahtet sie nur
+
 ### TypeScript – Allgemein
 - Dateinamen in kebab-case (z. B. `user-utils.ts`)
 - Max. 14 Zeilen pro Funktion

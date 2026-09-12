@@ -1,0 +1,79 @@
+// Tokens of the board and its cards. Every theme brings its own sizes and
+// colours, the custom properties below carry them to the cards
+
+// Game board (the column count comes from the picked board size). Every theme
+// sets how far its cards stand apart (values from the design file)
+$board-gap-code-vibes: 6px;
+$board-gap-gaming: 6px;
+$board-gap-da-projects: 8px;
+$board-gap-foods: 8px;
+$board-gap-property: --board-gap;
+$board-columns-default: 4;
+
+// Size of one card, every theme brings its own (values from the design file)
+// Emblem that stands on the cover of every card (natural size of the export)
+$card-emblem-width: 60px;
+$card-emblem-height: 48px;
+
+$card-width-code-vibes: 120px;
+$card-height-code-vibes: 120px;
+$card-width-gaming: 105px;
+$card-height-gaming: 120px;
+$card-width-da-projects: 120px;
+$card-height-da-projects: 100px;
+$card-width-foods: 122px;
+$card-height-foods: 122px;
+// Rounded corners of the cards, Code vibes and Food are drawn with
+// square corners (values taken from the design file)
+$card-radius-code-vibes: 0;
+$card-radius-gaming: 12px;
+$card-radius-da-projects: 12px;
+$card-radius-foods: 0;
+$card-radius-property: --card-radius;
+
+// Abstand um das Motiv. Ziel ist, dass das Motiv auf jeder Karte gleich
+// gross und gleich mittig steht, egal aus welcher Theme sie kommt.
+// Gemessen wurde, wie gross das Motiv in jedem der 73 Bilder ohne Abstand
+// auf seiner Karte landet: Code vibes und DA Projects, deren Bilder als
+// fertige Kartenflaechen gezeichnet sind, ergeben beide genau 70 px. Das
+// ist der Zielwert, die anderen beiden Themes werden darauf gebracht.
+// Ihre Motive fuellen ihr Bild fast ganz aus, brauchen also mehr Rand:
+// Gaming 105 px Karte - 2 x 18 px = 69 px, Food 122 px bei 92 % Motivanteil
+// - 2 x 23 px = 70 px.
+$card-motif-inset: 0;
+$card-motif-inset-code-vibes: 0;
+$card-motif-inset-gaming: 18px;
+$card-motif-inset-da-projects: 0;
+$card-motif-inset-foods: 23px;
+$card-motif-inset-property: --card-motif-inset;
+// Properties the cards read their size from, the theme of the board sets them
+$card-width-property: --card-width;
+$card-height-property: --card-height;
+
+// Cover of the cards, one per theme (values taken from the design file)
+$card-front-code-vibes: linear-gradient(212.26deg, #4dd5bc 29.42%, #286f62 123.94%);
+$card-front-gaming: linear-gradient(147.13deg, #ed1b76 1.28%, #0a2835 142.53%);
+$card-front-da-projects: #1e7594;
+$card-front-foods: #f3832d;
+// Surface behind the motif, it shows once the card is flipped
+$card-back-code-vibes: #c2dcd5;
+$card-back-gaming: #f6f1f3;
+$card-back-da-projects: #eaf2f4;
+$card-back-foods: #f4ece4;
+// Rahmen um ein gefundenes Paar (values taken from the design file)
+$card-match-code-vibes: #4dd5bc;
+$card-match-width-code-vibes: 5px;
+$card-match-gaming: #ed1b76;
+$card-match-width-gaming: 3px;
+$card-match-da-projects: #1e7594;
+$card-match-width-da-projects: 2px;
+$card-match-foods: #f3832d;
+$card-match-width-foods: 3px;
+$card-match-property: --card-match;
+$card-match-width-property: --card-match-width;
+
+// Properties the cards read their two sides from, the theme of the board
+// sets them
+$card-front-property: --card-front;
+$card-back-property: --card-back;
+

@@ -1,0 +1,153 @@
+// Dialog that asks before a running round is given up, plus the three
+// ways it can come in. Every theme picks one of them
+
+@use '../tokens' as *;
+
+// The three ways a dialog can come in. Every one of them brings the sheet
+// from a place of its own and fades it in on the way
+@keyframes quit-drop {
+    from {
+        opacity: 0;
+        transform: translateY($quit-entrance-travel-up);
+    }
+}
+
+@keyframes quit-rise {
+    from {
+        opacity: 0;
+        transform: translateY($quit-entrance-travel-down);
+    }
+}
+
+// Neither from above nor from below: the sheet surfaces where it stands,
+// a touch smaller than it ends up
+@keyframes quit-surface {
+    from {
+        opacity: 0;
+        transform: scale($quit-entrance-scale);
+    }
+}
+
+// The board darkens along with it
+@keyframes quit-backdrop {
+    from {
+        opacity: 0;
+    }
+}
+
+.field {
+    // Asked before a running round is given up. The dialog keeps the size of
+    // the design, the browser sets it in the middle of the page, and it is
+    // dressed in the theme of the board behind it. A theme that wants its own
+    // dialog says so with the properties below, the others follow their bar
+    &__quit {
+        width: $quit-width;
+        height: $quit-height;
+        padding: $quit-padding-block $quit-padding-inline;
+        background-color: var(#{$quit-background-property},
+            var(#{$hud-background-property}, $hud-background-code-vibes));
+        // The sheet stands on the dimmed board without a frame around it
+        border: none;
+        border-radius: var(#{$quit-radius-property}, $hud-radius);
+        color: var(#{$quit-text-property}, var(#{$hud-text-property}, $color-text));
+        text-align: center;
+
+        // Only the open dialog lays itself out: the question above, the two
+        // answers below. Closed it keeps the display the browser gives it,
+        // which takes it off the page
+        &[open] {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            animation: var(#{$quit-entrance-property}, #{$quit-entrance-code-vibes})
+                var(#{$quit-entrance-duration-property}, $quit-entrance-duration-code-vibes) ease-out;
+        }
+
+        // The board keeps lying behind the dialog, dimmed down
+        &::backdrop {
+            background-color: $quit-backdrop-color;
+            animation: quit-backdrop
+                var(#{$quit-entrance-duration-property}, $quit-entrance-duration-code-vibes) ease-out;
+        }
+
+        // Whoever asked for less movement is shown the dialog where it lands
+        @media (prefers-reduced-motion: reduce) {
+            &[open],
+            &::backdrop {
+                animation: none;
+            }
+        }
+    }
+
+    // The question stands in the face the picked theme writes its bar in,
+    // unless the theme brings a face of its own for the dialog
+    &__quit-question {
+        margin: 0;
+        // Keeps the question from breaking into one long and one short line
+        text-wrap: balance;
+        font-family: var(#{$quit-question-font-property},
+            var(#{$hud-turn-font-property}, #{$hud-turn-font-code-vibes}));
+        font-weight: var(#{$quit-question-weight-property}, 700);
+        font-size: var(#{$quit-question-size-property}, $quit-question-size);
+        line-height: var(#{$quit-question-line-height-property}, $quit-question-line-height);
+        letter-spacing: var(#{$quit-question-spacing-property}, normal);
+    }
+
+    &__quit-actions {
+        display: flex;
+        gap: $quit-actions-gap;
+    }
+
+    // Both answers are dressed like the way out that opened the dialog
+    &__quit-button {
+        padding: $button-padding-block $button-padding-inline;
+        background-color: var(#{$quit-exit-background-property},
+            var(#{$hud-exit-background-property}, $hud-exit-background-code-vibes));
+        // The accent frames the button, unless the theme names a tone of its own
+        border: var(#{$hud-exit-border-property}, $hud-exit-border-code-vibes)
+            solid var(#{$quit-exit-border-property}, var(#{$card-match-property}, $card-match-code-vibes));
+        border-radius: var(#{$hud-exit-radius-property}, $hud-exit-radius-code-vibes);
+        color: var(#{$quit-exit-text-property},
+            var(#{$hud-exit-text-property}, $hud-exit-text-code-vibes));
+        font-family: var(#{$hud-exit-font-property}, #{$hud-exit-font-code-vibes});
+        font-weight: 700;
+        font-size: var(#{$quit-button-size-property},
+            var(#{$hud-exit-size-property}, $hud-exit-size-code-vibes));
+        line-height: 100%;
+        letter-spacing: var(#{$quit-button-spacing-property},
+            var(#{$hud-exit-spacing-property}, $hud-exit-spacing-code-vibes));
+        white-space: nowrap;
+        cursor: pointer;
+        transition: transform 200ms ease-in-out;
+
+        // The same answer every theme plays for its way out
+        &:hover,
+        &:focus-visible {
+            background-color: var(#{$quit-exit-hover-background-property},
+                var(#{$hud-exit-hover-background-property}, $hud-exit-hover-background-code-vibes));
+            box-shadow: inset 0 0 0 var(#{$hud-exit-hover-ring-property}, $hud-exit-hover-ring-code-vibes)
+                var(#{$card-match-property}, $card-match-code-vibes);
+            color: var(#{$quit-exit-hover-text-property},
+                var(#{$hud-exit-hover-text-property}, $hud-exit-hover-text-code-vibes));
+        }
+    }
+
+    // The way back into the round is the answer the dialog leans on, so it
+    // stands filled: in the accent of the app, or in the tone the theme names
+    &__quit-button--stay {
+        background-color: var(#{$quit-stay-background-property}, $color-accent);
+        border-color: var(#{$quit-stay-background-property}, $color-accent);
+        color: var(#{$quit-stay-text-property}, $color-accent-text);
+
+        // It keeps its colours under the pointer and only steps forward,
+        // the way the start button of the settings does
+        &:hover,
+        &:focus-visible {
+            background-color: var(#{$quit-stay-background-property}, $color-accent);
+            box-shadow: none;
+            color: var(#{$quit-stay-text-property}, $color-accent-text);
+            transform: scale(1.05);
+        }
+    }
+}

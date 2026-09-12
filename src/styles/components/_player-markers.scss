@@ -1,0 +1,122 @@
+// Figures that name the two players in the status bar. Every theme lays
+// in its own file, so the row is drawn the way that theme draws it
+
+@use '../tokens' as *;
+
+.field {
+
+    // Foods does not frame its way out with the border of the button but with
+    // a line laid over it, drawn twice and roughened a little by the filter of
+    // the document. The border of the button stays, unpainted, so the room it
+    // takes up in the bar does not change. The way out of the dialog is drawn
+    // the same way, so the two answer each other
+    &--foods {
+        .field__exit,
+        .field__quit-button--exit {
+            position: relative;
+            border-color: transparent;
+        }
+
+        .field__exit::before,
+        .field__exit::after,
+        .field__quit-button--exit::before,
+        .field__quit-button--exit::after {
+            content: "";
+            position: absolute;
+            // Reaches out to the border box, the line runs where the border
+            // of the button would have run
+            inset: -$hud-exit-border-foods;
+            border-radius: $hud-exit-sketch-radius;
+            filter: url("#sketchy-frame");
+            pointer-events: none;
+        }
+
+        // The stroke the pen laid down first. It runs thinner and a touch
+        // askew, the way a pen that goes round a box a second time never quite
+        // finds its own line again
+        .field__exit::before,
+        .field__quit-button--exit::before {
+            border: $hud-exit-sketch-second-width solid $hud-exit-sketch-color;
+            // Turned about the lower right corner, so the two lines meet there
+            // and drift apart towards the upper left
+            transform-origin: 100% 100%;
+            transform: rotate($hud-exit-sketch-second-angle);
+        }
+
+        .field__exit::after,
+        .field__quit-button--exit::after {
+            border: $hud-exit-sketch-width solid $hud-exit-sketch-color;
+        }
+    }
+
+    // Code vibes names its players with a label
+    &--code-vibes {
+        .field__player[data-player="blue"] .field__player-marker,
+        .field__turn-marker[data-player="blue"] {
+            background-image: url("/assets/icons/label_blue.svg");
+        }
+
+        .field__player[data-player="orange"] .field__player-marker,
+        .field__turn-marker[data-player="orange"] {
+            background-image: url("/assets/icons/label_orange.svg");
+        }
+    }
+
+    // Every theme but Code vibes sends two chess pawns into the panel, in
+    // place of the two names and the markers beside them. Orange opens the
+    // row, Blue follows
+    &:not(&--code-vibes) {
+        .field__player[data-player="orange"] {
+            order: $hud-pawn-order-first;
+        }
+
+        // The name stays for screen readers, the pawn carries it visually
+        .field__player-name {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip-path: inset(50%);
+            white-space: nowrap;
+        }
+
+        // The pawns stand taller than the labels of Code vibes
+        .field__player-marker {
+            width: $hud-pawn-width;
+            height: $hud-pawn-height;
+        }
+
+        .field__player[data-player="blue"] .field__player-marker {
+            background-image: url("/assets/icons/chess_pawn_blue.svg");
+        }
+
+        .field__player[data-player="orange"] .field__player-marker {
+            background-image: url("/assets/icons/chess_pawn_orange.svg");
+        }
+
+        // The middle of the bar names the player on turn with the same
+        // figure, laid in white on a small block in the colour of that player
+        .field__turn-marker {
+            width: auto;
+            height: auto;
+            padding: $hud-turn-figure-padding;
+            background-color: var(#{$hud-turn-figure-background-property},
+                $hud-turn-figure-background-gaming);
+            border-radius: $hud-turn-figure-radius;
+
+            // Orange takes over the block while it is that player's turn
+            &[data-player="orange"] {
+                background-color: $hud-turn-figure-background-orange;
+            }
+
+            &::before {
+                content: "";
+                display: block;
+                width: $hud-turn-figure-width;
+                height: $hud-turn-figure-height;
+                background-color: $color-text;
+                mask: url("/assets/icons/chess_pawn.svg") no-repeat center / contain;
+            }
+        }
+    }
+}

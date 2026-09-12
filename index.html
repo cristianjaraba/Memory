@@ -164,6 +164,18 @@
         </header>
 
         <ul class="field__board" id="board"></ul>
+
+        <!--
+            Asked before a round is given up. The form closes the dialog by
+            itself, the value of the pressed button says which way was taken
+        -->
+        <dialog class="field__quit" id="quit-dialog" aria-labelledby="quit-question">
+            <h2 class="field__quit-question" id="quit-question">Are you sure you want to quit the game?</h2>
+            <form class="field__quit-actions" method="dialog">
+                <button class="field__quit-button field__quit-button--stay" type="submit" value="stay" autofocus>Back to game</button>
+                <button class="field__quit-button field__quit-button--exit" type="submit" value="quit">Exit game</button>
+            </form>
+        </dialog>
     </section>
 
     <!-- Markup of one card, cloned once per card of the picked board size -->

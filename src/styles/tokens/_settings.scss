@@ -1,0 +1,77 @@
+// Tokens of the settings screen: title, option lists, theme preview and
+// the summary panel that collects the picks
+
+@use "sass:math";
+
+// How far the title and its rule are pushed down, without taking room
+// from the content block below them
+$settings-title-offset: 4rem;
+
+// Settings screen typography (values taken from the design file)
+$settings-title-size: 54px;
+$settings-legend-size: 24px;
+$settings-option-size: 20px;
+
+// Accent rule below the title (values taken from the design file)
+$settings-rule-width: 251px;
+$settings-rule-thickness: 4px;
+$settings-rule-diamond-size: 16px;
+$settings-rule-gap: 0;
+// Height of the icon exports, the width follows the aspect ratio
+$settings-legend-icon-size: 27px;
+// Icon width plus its gap, so the options line up under the legend text
+$settings-options-indent: 40px;
+// Radio buttons: the ring is thick by default and thins out when active
+// Line that appears right of a hovered option (values from the design file)
+$settings-hover-line-width: 41px;
+$settings-hover-line-thickness: 3px;
+$settings-hover-line-gap: 0.75rem;
+$settings-hover-diamond-size: 12px;
+
+// Gap between the option lists and the preview column next to them
+$settings-content-column-gap: 10rem;
+// Smallest distance between two option groups, they spread from there
+$settings-group-gap: 2rem;
+
+// Theme preview, shown right of the lists (natural size of the exports).
+// It never grows past that size and only shrinks on a narrow screen
+$settings-preview-width: 460px;
+$settings-preview-height: 412px;
+// How much narrower than the summary below it the preview is drawn, both
+// share their right edge, so the difference stays on the left
+$settings-preview-inset: 6rem;
+$settings-preview-ratio: math.div($settings-preview-width, $settings-preview-height);
+// Space the option lists, their column gap and the section padding take up
+$settings-preview-reserved-width: 42rem;
+// Floor, so the motives stay readable on a small screen
+$settings-preview-min-width: 240px;
+
+// Summary panel below the preview (values taken from the design file)
+$color-summary-surface: #f6f6f6;
+$settings-panel-gap: 2rem;
+// Fixed, so the preview above it knows how much room is left
+$settings-summary-height: 4rem;
+// Fixed as well: room for the longest set of picks, so the row keeps one
+// width no matter which options are picked
+$settings-summary-width: 27rem;
+// Type of the panel, a size smaller than the option lists it sums up
+$settings-summary-value-size: 16px;
+$settings-start-size: 18px;
+// Gap between the picked values and the start button next to them
+$settings-summary-column-gap: 1rem;
+// Play icon inside the start button (natural size of the export)
+$settings-start-icon-width: 16px;
+$settings-start-icon-height: 13px;
+$settings-start-icon-gap: 0.5rem;
+$settings-summary-padding: 0.75rem;
+$settings-summary-gap: 1.5rem;
+$settings-summary-slash-width: 32px;
+$settings-summary-slash-thickness: 5px;
+$settings-summary-slash-angle: 109.33deg;
+
+$settings-radio-size: 20px;
+$settings-radio-ring: 3px;
+$settings-radio-ring-thin: 1px;
+$settings-radio-dot-size: 6px;
+// White gap between ring and dot, it leaves the dot at its size
+$settings-radio-dot-gap: ($settings-radio-size - 2 * $settings-radio-ring-thin - $settings-radio-dot-size) * 0.5;

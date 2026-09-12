@@ -1,0 +1,16 @@
+// Rules every screen of the app builds on
+
+* {
+    box-sizing: border-box;
+}
+
+// Class based layouts (e.g. `display: flex`) beat the browser default for
+// [hidden], so hidden sections would otherwise stay visible
+[hidden] {
+    display: none !important;
+}
+
+body {
+    height: 100vh;
+    margin: 0;
+}

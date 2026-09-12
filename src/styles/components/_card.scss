@@ -1,0 +1,72 @@
+// Card of the board: cover, motif and the frame a found pair keeps
+
+@use '../tokens' as *;
+
+.card {
+    // Fills its grid cell, its height comes from the theme of the board
+    width: 100%;
+    height: var(#{$card-height-property}, $card-height-code-vibes);
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    // Every card on the board waits to be turned
+    cursor: pointer;
+
+    &__inner {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        transition: all 300ms ease-in-out;
+    }
+
+    &__face {
+        position: absolute;
+        inset: 0;
+        // Cover of the card: the emblem stands in the middle of it, on the
+        // ground the theme of the board hands down
+        background:
+            url("/assets/icons/pc.svg") no-repeat center /
+                #{$card-emblem-width} #{$card-emblem-height},
+            var(#{$card-front-property}, $color-background);
+        border-radius: var(#{$card-radius-property}, $card-radius-code-vibes);
+        backface-visibility: hidden;
+
+        // The side with the motif, it is only seen once the card is flipped
+        &--back {
+            transform: rotateY(180deg);
+            background: var(#{$card-back-property}, $card-back-code-vibes);
+        }
+    }
+
+    // The motif of the card, it only shows on the flipped side
+    &__motif {
+        width: 100%;
+        height: 100%;
+        // Room to all four sides, the picture stays centred inside it
+        padding: var(#{$card-motif-inset-property}, $card-motif-inset);
+        border-radius: inherit;
+        // Keeps the whole picture visible, no matter its aspect ratio
+        object-fit: contain;
+    }
+
+    // A card that is turned or found takes no further click
+    &.is-flipped,
+    &.is-matched {
+        cursor: default;
+    }
+
+    &.is-flipped .card__inner {
+        transform: rotateY(180deg);
+    }
+
+    // A found pair keeps a frame in the colour of its theme. It is drawn as
+    // an outline and pulled inwards, so it stays inside the card and leaves
+    // the room for the motif untouched
+    &.is-matched .card__face {
+        outline: var(#{$card-match-width-property}, $card-match-width-code-vibes)
+            solid var(#{$card-match-property}, $card-match-code-vibes);
+        outline-offset: calc(-1 * var(#{$card-match-width-property}, #{$card-match-width-code-vibes}));
+    }
+}

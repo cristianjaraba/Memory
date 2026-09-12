@@ -1,0 +1,257 @@
+// Settings screen: title, the three option lists and the theme preview
+// that opens beside them. The panel on the right lives in its own file
+
+@use '../tokens' as *;
+
+.settings {
+    // One centred column, as wide as the content block. The title starts at
+    // its left edge, so it sits right above the column with the option lists.
+    // The last row takes the free space, the content is centred inside it
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    background-color: $color-surface;
+    color: $color-surface-text;
+
+    // Title and rule are only shifted visually, their boxes stay where they
+    // are. That way the content below them keeps its place on the screen
+    &__title,
+    &__rule {
+        position: relative;
+        top: $settings-title-offset;
+    }
+
+    &__title {
+        // Indented by the diamond of the rule, so the title starts where the
+        // accent line below it starts
+        margin: 0 0 0 $settings-rule-diamond-size;
+        font-family: $font-display;
+        font-weight: 700;
+        font-size: $settings-title-size;
+        line-height: 100%;
+    }
+
+    // Accent coloured rule below the title: a diamond followed by the line
+    &__rule {
+        display: flex;
+        align-items: center;
+        gap: $settings-rule-gap;
+        margin: 0.125rem 0 2.5rem;
+
+        // Diamond, a square turned by 45 degrees
+        &::before {
+            content: '';
+            width: $settings-rule-diamond-size;
+            height: $settings-rule-diamond-size;
+            background-color: $color-accent;
+            transform: rotate(45deg);
+        }
+
+        // Line, a zero height box with a border on top
+        &::after {
+            content: '';
+            width: $settings-rule-width;
+            height: 0;
+            border-top: $settings-rule-thickness solid $color-accent;
+        }
+    }
+
+    // Everything the player picks: lists left, preview and summary right. It
+    // is only as big as its content, the auto margin centres it in the section
+    &__content {
+        // Widest the preview column may get, it gives way to the lists first
+        --preview-width: max(
+            #{$settings-preview-min-width},
+            min(#{$settings-preview-width}, calc(100vw - #{$settings-preview-reserved-width}))
+        );
+
+        // Anchor for the theme previews
+        position: relative;
+        // Two columns, the lists on the left set the height of the row
+        display: flex;
+        align-items: stretch;
+        gap: $settings-content-column-gap;
+        width: fit-content;
+        max-width: 100%;
+        margin: auto;
+    }
+
+    // Left column: the groups spread over the height of the preview column,
+    // the gap is their minimum distance
+    &__lists {
+        flex: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: $settings-group-gap;
+    }
+
+    // The fieldset only groups the radios, all of its default chrome is reset
+    &__group {
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+
+    // Icon first, heading text next to it
+    &__legend {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0;
+        font-family: $font-body;
+        font-weight: 700;
+        font-size: $settings-legend-size;
+        line-height: 100%;
+    }
+
+    &__legend-icon {
+        // Fixed height, so every icon keeps its own aspect ratio
+        width: auto;
+        height: $settings-legend-icon-size;
+    }
+
+    &__options {
+        margin: 1rem 0 0;
+        // Indented so the radios start just past the first letter of the legend
+        padding: 0 0 0 $settings-options-indent;
+        list-style: none;
+    }
+
+    // Radio button first, the option text next to it
+    &__option {
+        display: flex;
+        align-items: center;
+        // Only as wide as radio and text, so the hover ends with the label
+        width: fit-content;
+
+        & + & {
+            margin-top: 0.75rem;
+        }
+    }
+
+    // Line that grows out of the label while the row is hovered. It starts at
+    // the right edge of the row and is taken out of the flow, so neither the
+    // row nor the column next to it moves while it grows
+    &__label::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: calc(100% + #{$settings-hover-line-gap});
+        width: 0;
+        height: 0;
+        border-top: $settings-hover-line-thickness solid $color-accent;
+        transform: translateY(-50%);
+        transition: width 150ms ease-in-out;
+    }
+
+    &__option:hover &__label::after {
+        width: $settings-hover-line-width;
+    }
+
+    // Diamond that closes the hover line, a square turned by 45 degrees. It
+    // is scaled instead of resized, so it grows out of its own centre
+    &__label::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: calc(100% + #{$settings-hover-line-gap} + #{$settings-hover-line-width});
+        width: $settings-hover-diamond-size;
+        height: $settings-hover-diamond-size;
+        background-color: $color-accent;
+        transform: translateY(-50%) rotate(45deg) scale(0);
+        transition: transform 150ms ease-in-out;
+    }
+
+    &__option:hover &__label::before {
+        transform: translateY(-50%) rotate(45deg) scale(1);
+    }
+
+    // Custom radio: the ring of the browser default cannot be thickened.
+    // The dot is drawn with an inset shadow, because pseudo elements are
+    // not rendered on input elements
+    &__input {
+        width: $settings-radio-size;
+        height: $settings-radio-size;
+        // Own margin instead of a flex gap, so the hover line can sit
+        // directly next to the label
+        margin: 0 0.75rem 0 0;
+        appearance: none;
+        border: $settings-radio-ring solid currentColor;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: border-width 150ms ease-in-out, background-color 150ms ease-in-out,
+            box-shadow 150ms ease-in-out;
+
+        // Thinner ring while hovered and once the option is picked
+        &:hover,
+        &:checked {
+            border-width: $settings-radio-ring-thin;
+        }
+
+        &:checked {
+            background-color: currentColor;
+            box-shadow: inset 0 0 0 $settings-radio-dot-gap $color-surface;
+        }
+
+        &:focus-visible {
+            outline: $settings-radio-ring-thin solid currentColor;
+            outline-offset: 3px;
+        }
+    }
+
+    // Hovering a row previews the pick with the same dot, the option that is
+    // really picked simply keeps it once the pointer moves on
+    &__option:hover &__input:not(:checked) {
+        border-width: $settings-radio-ring-thin;
+        background-color: currentColor;
+        box-shadow: inset 0 0 0 $settings-radio-dot-gap $color-surface;
+    }
+
+    // Theme preview, it fades in while its option is hovered or focused.
+    // Taken out of the flow, so it never widens the option row
+    &__preview {
+        position: absolute;
+        top: 0;
+        // Flush with the right edge of the summary below it
+        right: 0;
+        // Both caps keep the aspect ratio: the preview shrinks until it fits
+        // into the space the summary leaves inside the height of the lists
+        width: auto;
+        height: auto;
+        max-width: calc(var(--preview-width) - #{$settings-preview-inset});
+        max-height: calc(100% - #{$settings-summary-height} - #{$settings-panel-gap});
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 200ms ease-in-out;
+    }
+
+    // The picked theme shows its preview while nothing is hovered
+    &__input:checked ~ &__preview,
+    &__option:focus-within &__preview {
+        opacity: 1;
+    }
+
+    // As soon as a row is hovered, only that row shows its preview. Without
+    // the reset the picked one would stay and cover the hovered one
+    &__options:hover &__preview {
+        opacity: 0;
+    }
+
+    &__option:hover &__preview {
+        opacity: 1;
+    }
+
+    &__label {
+        // Anchor of the hover decoration, it closes the row on the right.
+        // The list item stays unpositioned, it holds the absolute preview
+        position: relative;
+        font-family: $font-body;
+        font-weight: 400;
+        font-size: $settings-option-size;
+        line-height: 100%;
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,110 @@
+// Panel on the right of the settings screen: it carries the theme
+// preview, sums up every pick below it and opens the round
+
+@use '../tokens' as *;
+
+.settings {
+    // Panel in the right column, it carries the preview and the summary
+    &__panel {
+        // Right column: as wide as the preview it carries, its height keeps
+        // the room for preview, gap and summary. Both of them are taken out
+        // of the flow, so no pick can change the size of this column
+        position: relative;
+        flex: none;
+        width: calc(var(--preview-width) - #{$settings-preview-inset});
+        // Room for the scaled down preview, its gap and the summary itself
+        min-height: calc(
+            (var(--preview-width) - #{$settings-preview-inset}) / #{$settings-preview-ratio}
+            + #{$settings-panel-gap} + #{$settings-summary-height}
+        );
+    }
+
+    // Picked values first, the start button right behind them
+    &__summary {
+        // Sits in the bottom corner of the column, its fixed width holds the
+        // longest set of picks, so the row never changes size
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: $settings-summary-width;
+        display: flex;
+        align-items: center;
+        gap: $settings-summary-column-gap;
+        // Fixed height, the preview above it is capped with the same value
+        height: $settings-summary-height;
+        padding: $settings-summary-padding;
+        background-color: $color-summary-surface;
+    }
+
+    // Entries side by side, each gap holds one accent slash
+    &__summary-list {
+        display: flex;
+        align-items: center;
+        gap: $settings-summary-gap;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    // Only holds the picked value, the anchor is needed for the slash
+    &__summary-item {
+        position: relative;
+        // Keeps its text on one line, the row has a fixed height
+        flex: none;
+        white-space: nowrap;
+        font-family: $font-body;
+        font-weight: 400;
+        font-size: $settings-summary-value-size;
+        line-height: 100%;
+    }
+
+    // Accent slash left of every entry but the first. It is taken out of the
+    // flow, so the rotation cannot push the entries around
+    &__summary-item + &__summary-item::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: -$settings-summary-gap * 0.5;
+        width: $settings-summary-slash-width;
+        height: 0;
+        border-top: $settings-summary-slash-thickness solid $color-accent;
+        transform: translate(-50%, -50%) rotate($settings-summary-slash-angle);
+    }
+
+    // Disabled until all three options are picked
+    &__start {
+        // Only as wide as icon and label, the auto margin keeps it at the
+        // right end of the row, whatever the picked values need
+        flex: none;
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: $settings-start-icon-gap;
+        padding: $button-padding-block $button-padding-inline;
+        white-space: nowrap;
+        border: none;
+        background-color: $color-accent;
+        color: $color-accent-text;
+        font-family: $font-display;
+        font-weight: 700;
+        font-size: $settings-start-size;
+        line-height: 100%;
+        cursor: pointer;
+        transition: transform 200ms ease-in-out, opacity 200ms ease-in-out;
+
+        &:hover:enabled,
+        &:focus-visible:enabled {
+            transform: scale(1.05);
+        }
+
+        &:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+    }
+
+    &__start-icon {
+        width: $settings-start-icon-width;
+        height: $settings-start-icon-height;
+    }
+}

@@ -1,0 +1,26 @@
+// Design tokens shared by every screen: colours, type and the padding
+// every button of the app is built with
+
+$color-background: #303131;
+$color-text: #ffffff;
+$color-accent: #f0ea6e;
+$color-accent-text: #303131;
+// Light surface, used by the settings screen
+$color-surface: #ffffff;
+$color-surface-text: #303131;
+// Board surface of the Gaming theme, the other themes reuse the tokens above
+$color-field-gaming: #294f60;
+// Colours of the two players (values taken from the design file)
+$color-player-blue: #2bb1ff;
+$color-player-orange: #f58e39;
+
+$font-score: 'Orbitron', sans-serif;
+$font-figtree: 'Figtree', sans-serif;
+$font-klee-one: 'Klee One', serif;
+$font-delius-unicase: 'Delius Unicase', cursive;
+$font-display: 'Red Rose', sans-serif;
+$font-body: 'Almarai', sans-serif;
+
+// Every button of the app is padded the same way (values from the design file)
+$button-padding-block: 15px;
+$button-padding-inline: 20px;

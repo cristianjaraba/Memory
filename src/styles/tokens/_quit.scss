@@ -1,0 +1,135 @@
+// Tokens of the dialog that asks before a running round is given up.
+// Every theme dresses the sheet, its question and its two answers
+
+@use "sass:color";
+
+@use "base" as *;
+@use "card" as *;
+
+// Dialog that asks before a running round is given up. It keeps one size,
+// whatever the question and the two answers below it need
+$quit-width: 540px;
+$quit-height: 270px;
+$quit-padding-block: 2rem;
+$quit-padding-inline: 2.5rem;
+// Gap between the two answers
+$quit-actions-gap: 1rem;
+// The question is written a size above the label of the button that opened it
+$quit-question-size: 24px;
+$quit-question-line-height: 130%;
+// The board keeps playing behind the dialog, dimmed down this far
+$quit-backdrop-color: rgba(0, 0, 0, 0.6);
+
+// Wherever a theme says nothing of its own, the dialog follows the bar it was
+// opened from. Code vibes does say something: it lays its question on a white
+// sheet with square corners and writes it larger than anywhere else, and it
+// dresses the two answers in the mint of the theme instead of the yellow of
+// the app (values taken from the design file)
+$quit-background-code-vibes: $color-surface;
+$quit-text-code-vibes: $color-surface-text;
+$quit-radius-code-vibes: 0;
+$quit-question-font-code-vibes: $font-display;
+$quit-question-size-code-vibes: 32px;
+$quit-question-line-height-code-vibes: 40px;
+$quit-button-size-code-vibes: 20px;
+$quit-stay-background-code-vibes: #66cfbc;
+$quit-stay-text-code-vibes: $color-text;
+// The way out is written in the accent of the theme, laid on a pale tint of it
+$quit-exit-background-code-vibes: color.mix($color-surface, $card-match-code-vibes, 70%);
+$quit-exit-text-code-vibes: $card-match-code-vibes;
+// Under the pointer the two trade places, the accent fills the button
+$quit-exit-hover-background-code-vibes: $card-match-code-vibes;
+$quit-exit-hover-text-code-vibes: $color-text;
+// Gaming lays its dialog on a white sheet, rounds it a little tighter than
+// its bar and writes the question in the face of its scores, in the tone its
+// board is painted in. Its answers stand apart: the way back is filled with
+// the pink of the theme, the way out written in the signal red the theme
+// lights its arrow with, on a pale tint of that red
+$quit-background-gaming: $color-surface;
+$quit-text-gaming: $color-field-gaming;
+$quit-radius-gaming: 10px;
+$quit-question-font-gaming: $font-score;
+$quit-question-size-gaming: 28px;
+$quit-question-line-height-gaming: 40px;
+$quit-question-spacing-gaming: 0.02em;
+$quit-button-size-gaming: 16px;
+$quit-button-spacing-gaming: 0.04em;
+$quit-stay-background-gaming: $card-match-gaming;
+$quit-stay-text-gaming: $color-text;
+$quit-exit-text-gaming: #e71c4f;
+$quit-exit-border-gaming: $quit-exit-text-gaming;
+$quit-exit-background-gaming: color.mix($color-surface, $quit-exit-text-gaming, 70%);
+$quit-exit-hover-background-gaming: $quit-exit-text-gaming;
+$quit-exit-hover-text-gaming: $color-text;
+
+// DA Projects lays its dialog on the palest of its blues and writes the
+// question larger than its bar does. The way back is filled with the accent of
+// the theme, the way out with a warm red that answers it, both written white
+// (values taken from the design file)
+$quit-background-da-projects: #f0f6f9;
+$quit-radius-da-projects: 10px;
+$quit-question-font-da-projects: $font-figtree;
+$quit-question-size-da-projects: 28px;
+$quit-question-line-height-da-projects: 40px;
+$quit-button-size-da-projects: 16px;
+$quit-stay-background-da-projects: $card-match-da-projects;
+$quit-stay-text-da-projects: $color-text;
+$quit-exit-background-da-projects: #fd8a81;
+$quit-exit-text-da-projects: $color-text;
+// Under the pointer the warm red only deepens, the label stays where it is
+$quit-exit-hover-background-da-projects: color.mix($color-surface-text, $quit-exit-background-da-projects, 15%);
+$quit-exit-hover-text-da-projects: $color-text;
+
+// Foods lays its dialog on a light grey sheet and writes the question in the
+// brown of its own hand. The way back is filled with the warm yellow of the
+// theme, the way out keeps the dressing of the bar, drawn frame and all
+// (values taken from the design file)
+$quit-background-foods: #f6f6f6;
+$quit-radius-foods: 10px;
+$quit-question-font-foods: $font-klee-one;
+$quit-question-weight-foods: 600;
+$quit-question-size-foods: 28px;
+$quit-question-line-height-foods: 40px;
+$quit-text-foods: #a45212;
+$quit-stay-background-foods: #ffab3e;
+$quit-stay-text-foods: $color-text;
+
+// The way the dialog comes in. Code vibes lets it drop from above, Gaming and
+// Foods send it up from below, DA Projects lets it surface where it stands.
+// The two that travel start off the page: half the window plus half the sheet
+// puts them just past the edge, whatever the window measures
+$quit-entrance-travel-down: calc(50vh + 50%);
+$quit-entrance-travel-up: calc(-50vh - 50%);
+$quit-entrance-scale: 0.94;
+$quit-entrance-code-vibes: quit-drop;
+$quit-entrance-gaming: quit-rise;
+$quit-entrance-da-projects: quit-surface;
+$quit-entrance-foods: quit-rise;
+// The long way in is walked at ease, the one that surfaces on the spot is over
+// as quickly as it was
+$quit-entrance-duration-code-vibes: 520ms;
+$quit-entrance-duration-gaming: 520ms;
+$quit-entrance-duration-da-projects: 260ms;
+$quit-entrance-duration-foods: 520ms;
+
+// Properties the dialog reads its own dressing from, a theme that sets none
+// of them keeps the one of its bar
+$quit-background-property: --quit-background;
+$quit-entrance-property: --quit-entrance;
+$quit-entrance-duration-property: --quit-entrance-duration;
+$quit-text-property: --quit-text;
+$quit-radius-property: --quit-radius;
+$quit-question-font-property: --quit-question-font;
+$quit-question-size-property: --quit-question-size;
+$quit-question-weight-property: --quit-question-weight;
+$quit-question-line-height-property: --quit-question-line-height;
+$quit-question-spacing-property: --quit-question-spacing;
+$quit-button-spacing-property: --quit-button-spacing;
+$quit-exit-border-property: --quit-exit-border;
+$quit-button-size-property: --quit-button-size;
+$quit-stay-background-property: --quit-stay-background;
+$quit-stay-text-property: --quit-stay-text;
+$quit-exit-background-property: --quit-exit-background;
+$quit-exit-text-property: --quit-exit-text;
+$quit-exit-hover-background-property: --quit-exit-hover-background;
+$quit-exit-hover-text-property: --quit-exit-hover-text;

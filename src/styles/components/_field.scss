@@ -1,0 +1,185 @@
+// Game board: the status bar above the cards and the grid below it.
+// The colours of both come from the theme picked in the settings
+
+@use '../tokens' as *;
+
+// Game board, its surface follows the theme picked in the settings
+.field {
+    // Status bar on top, the board takes the rest and stays centred in it
+    display: grid;
+    grid-template-rows: auto 1fr;
+    justify-items: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+    background-color: $color-surface;
+    color: $color-surface-text;
+
+    // Status bar above the cards, almost as wide as the page. It carries
+    // the player on the left, the score and the way out on the right
+    &__hud {
+        // Three columns, so the middle one stays centred in the bar
+        // whatever the two sides need
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: $hud-gap;
+        align-self: start;
+        width: 100%;
+        max-width: $hud-max-width;
+        margin-bottom: $hud-margin-bottom;
+        padding: $hud-padding-block $hud-padding-inline;
+        background-color: var(#{$hud-background-property}, $hud-background-code-vibes);
+        border-radius: $hud-radius;
+        color: var(#{$hud-text-property}, $color-text);
+    }
+
+    // Panel of the two players, it lies as a lighter block on the bar and
+    // writes every player in the colour that player is playing with
+    &__players {
+        display: flex;
+        align-items: center;
+        gap: $hud-players-gap;
+        justify-self: start;
+        margin: 0;
+        padding: $hud-panel-padding-block $hud-panel-padding-inline;
+        background-color: var(#{$hud-panel-property}, $hud-panel-code-vibes);
+        border-radius: var(#{$hud-panel-radius-property}, $hud-panel-radius-code-vibes);
+        list-style: none;
+        // The whole bar is written in the face the picked theme brings along
+        font-family: var(#{$hud-turn-font-property}, #{$hud-turn-font-code-vibes});
+        font-size: var(#{$hud-turn-size-property}, #{$hud-turn-size-code-vibes});
+        line-height: 100%;
+    }
+
+    &__player {
+        display: flex;
+        align-items: center;
+        gap: $hud-item-gap;
+        font-weight: 700;
+
+        &[data-player='blue'] {
+            color: $color-player-blue;
+        }
+
+        &[data-player='orange'] {
+            color: $color-player-orange;
+        }
+    }
+
+    // Points of one player, the theme of the board says in which face they
+    // are written. Where it names none, they follow the panel a size smaller
+    &__score {
+        font-family: var(#{$hud-score-font-property}, inherit);
+        font-weight: var(#{$hud-score-weight-property}, inherit);
+        font-size: var(#{$hud-score-size-property}, #{$hud-score-scale});
+        line-height: 100%;
+        // Keeps the number from shifting the row while it counts up
+        min-width: $hud-score-min-width;
+        text-align: right;
+    }
+
+    // Whose turn it is, it sits in the middle of the bar and is written
+    // in the face the picked theme brings along
+    &__turn {
+        display: flex;
+        align-items: center;
+        gap: $hud-item-gap;
+        margin: 0;
+        font-family: var(#{$hud-turn-font-property}, #{$hud-turn-font-code-vibes});
+        font-weight: var(#{$hud-turn-weight-property}, #{$hud-turn-weight-code-vibes});
+        font-size: var(#{$hud-turn-size-property}, #{$hud-turn-size-code-vibes});
+        line-height: 100%;
+        letter-spacing: var(#{$hud-turn-spacing-property}, #{$hud-turn-spacing-code-vibes});
+        color: var(#{$hud-turn-color-property}, #{$hud-turn-color-code-vibes});
+        white-space: nowrap;
+    }
+
+    // Marker of a player: a small figure in the colour that player is
+    // playing with. Every theme lays its own file in, and every file brings
+    // its colour along
+    &__player-marker,
+    &__turn-marker {
+        display: block;
+        flex: none;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
+
+    &__player-marker {
+        width: $hud-marker-width;
+        height: $hud-marker-height;
+    }
+
+    // The marker of the middle stands a little bigger and follows the turn
+    &__turn-marker {
+        width: $hud-turn-marker-width;
+        height: $hud-turn-marker-height;
+    }
+
+    &__exit {
+        display: flex;
+        // Icon and label sit centred in the button, on both axes
+        align-items: center;
+        justify-content: center;
+        gap: $hud-item-gap;
+        flex: none;
+        // Closes the row on the right end of the bar
+        justify-self: end;
+        padding: $button-padding-block $button-padding-inline;
+        background-color: var(#{$hud-exit-background-property}, $hud-exit-background-code-vibes);
+        // The accent of the theme frames the button, DA projects goes without
+        border: var(#{$hud-exit-border-property}, $hud-exit-border-code-vibes)
+            solid var(#{$card-match-property}, $card-match-code-vibes);
+        border-radius: var(#{$hud-exit-radius-property}, $hud-exit-radius-code-vibes);
+        color: var(#{$hud-exit-text-property}, $hud-exit-text-code-vibes);
+        font-family: var(#{$hud-exit-font-property}, #{$hud-exit-font-code-vibes});
+        font-weight: 700;
+        font-size: var(#{$hud-exit-size-property}, $hud-exit-size-code-vibes);
+        line-height: 100%;
+        letter-spacing: var(#{$hud-exit-spacing-property}, $hud-exit-spacing-code-vibes);
+        white-space: nowrap;
+        cursor: pointer;
+
+        // Under the pointer every theme plays its own answer, the values
+        // above say which parts of the button take part
+        &:hover,
+        &:focus-visible {
+            #{$hud-exit-icon-property}: var(#{$hud-exit-hover-icon-property}, currentColor);
+            background-color: var(#{$hud-exit-hover-background-property},
+                $hud-exit-hover-background-code-vibes);
+            box-shadow: inset 0 0 0 var(#{$hud-exit-hover-ring-property}, $hud-exit-hover-ring-code-vibes)
+                var(#{$card-match-property}, $card-match-code-vibes);
+            color: var(#{$hud-exit-hover-text-property}, $hud-exit-hover-text-code-vibes);
+        }
+    }
+
+    &__exit-label {
+        text-box: var(#{$hud-exit-trim-property}, #{$hud-exit-trim-code-vibes});
+    }
+
+    // Drawn as a mask, so the arrow always takes the colour of the bar
+    &__exit-icon {
+        width: $hud-exit-icon-width;
+        height: $hud-exit-icon-height;
+        background-color: var(#{$hud-exit-icon-property}, currentColor);
+        mask: url("/assets/icons/move_item.svg") no-repeat center / contain;
+    }
+
+    // One grid cell per card, the column count is set while the board is built.
+    // The board opens right under the status bar instead of standing in the
+    // middle of the room below it
+    &__board {
+        // The row of the grid centres what it holds, the board says no and
+        // stays right under the status bar
+        align-self: start;
+        display: grid;
+        grid-template-columns:
+            repeat(var(--board-columns, #{$board-columns-default}), var(#{$card-width-property}, $card-width-code-vibes));
+        gap: var(#{$board-gap-property}, $board-gap-code-vibes);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+}
