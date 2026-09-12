@@ -47,8 +47,13 @@ screen.
 ```
 index.html              single page, one <section> per screen
 public/
-  assets/               fonts, card motifs, icons
-  favicon.svg           and the raster fallbacks beside it
+  assets/
+    fonts/              the woff2 faces, self hosted
+    icons/              the icons the screens draw
+    games_theme_cards/  card motifs of the Gaming theme
+    food_theme_cards/   card motifs of the Foods theme
+    favicons/           the svg icon and its raster fallbacks
+    screenshots/        the picture this readme shows
 src/
   main.ts               entry point, wires the modules together
   navigation.ts         shows one screen, hides the rest
