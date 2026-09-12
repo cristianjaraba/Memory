@@ -97,8 +97,10 @@ $settings-start-padding-inline: 16px;
 $settings-start-icon-width: 16px;
 $settings-start-icon-height: 13px;
 $settings-start-icon-gap: 0.5rem;
-// Fill of the start button while a pick is still missing
+// Fill of the start button while a pick is still missing, and the grey
+// its label and its icon are written in for as long as it does not answer
 $color-start-disabled: #dbdbd6;
+$color-start-disabled-text: #a3a1a1;
 // Name of a setting that is still open, a shade back from the picked value
 $color-summary-placeholder: #8a8a85;
 // Tint the cover of the panel takes once a click would uncover the picks

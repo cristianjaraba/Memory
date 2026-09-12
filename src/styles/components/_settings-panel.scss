@@ -158,17 +158,23 @@
             transform: scale(1.05);
         }
 
-        // Until all three picks are in: the accent is dropped, icon and
-        // label keep their ink, so the button stays readable
+        // Until all three picks are in: the accent is dropped, and label
+        // and icon step back into a grey of their own, so the button says
+        // it is not to be pressed yet
         &:disabled {
             background-color: $color-start-disabled;
+            color: $color-start-disabled-text;
             cursor: not-allowed;
         }
     }
 
+    // Drawn as a mask, so the play sign is always written in the ink of
+    // the label beside it, whether the button answers or not
     &__start-icon {
         flex: none;
         width: $settings-start-icon-width;
         height: $settings-start-icon-height;
+        background-color: currentColor;
+        mask: url("/assets/icons/smart_display.svg") no-repeat center / contain;
     }
 }
