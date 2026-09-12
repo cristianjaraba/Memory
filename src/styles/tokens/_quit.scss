@@ -3,20 +3,25 @@
 
 @use "sass:color";
 
+@use "layout" as *;
 @use "base" as *;
 @use "card" as *;
 @use "hud" as *;
 
 // Dialog that asks before a running round is given up. It keeps one size,
-// whatever the question and the two answers below it need
+// whatever the question and the two answers below it need. On a narrow
+// window it gives way and keeps one gutter to either edge, and its height
+// is the room it holds open, not a lid: a question that breaks into three
+// lines pushes the sheet open instead of running out of it
 $quit-width: 540px;
-$quit-height: 270px;
-$quit-padding-block: 2rem;
-$quit-padding-inline: 2.5rem;
+$quit-width-gutter: 1rem;
+$quit-height: fluid(210px, 270px);
+$quit-padding-block: fluid(1.25rem, 2rem);
+$quit-padding-inline: fluid(1.25rem, 2.5rem);
 // Gap between the two answers
-$quit-actions-gap: 1rem;
+$quit-actions-gap: fluid(0.5rem, 1rem);
 // The question is written a size above the label of the button that opened it
-$quit-question-size: 24px;
+$quit-question-size: fluid(17px, 24px);
 $quit-question-line-height: 130%;
 // The board keeps playing behind the dialog, dimmed down this far
 $quit-backdrop-color: rgba(0, 0, 0, 0.6);
@@ -35,10 +40,10 @@ $quit-background-gaming: $color-surface;
 $quit-text-gaming: $color-field-gaming;
 $quit-radius-gaming: 10px;
 $quit-question-font-gaming: $font-score;
-$quit-question-size-gaming: 28px;
-$quit-question-line-height-gaming: 40px;
+$quit-question-size-gaming: fluid(19px, 28px);
+$quit-question-line-height-gaming: 1.4;
 $quit-question-spacing-gaming: 0.02em;
-$quit-button-size-gaming: 16px;
+$quit-button-size-gaming: fluid(13px, 16px);
 $quit-button-spacing-gaming: 0.04em;
 $quit-stay-background-gaming: $card-match-gaming;
 $quit-stay-text-gaming: $color-text;
@@ -62,8 +67,8 @@ $quit-background-foods: #f6f6f6;
 $quit-radius-foods: 10px;
 $quit-question-font-foods: $font-klee-one;
 $quit-question-weight-foods: 600;
-$quit-question-size-foods: 28px;
-$quit-question-line-height-foods: 40px;
+$quit-question-size-foods: fluid(19px, 28px);
+$quit-question-line-height-foods: 1.4;
 $quit-text-foods: #a45212;
 $quit-stay-background-foods: #ffab3e;
 $quit-stay-text-foods: $color-text;

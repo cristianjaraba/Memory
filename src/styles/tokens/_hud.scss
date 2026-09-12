@@ -1,8 +1,13 @@
 // Tokens of the status bar above the board. Most of them come in one
-// value per theme, the custom properties carry the picked set to the bar
+// value per theme, the custom properties carry the picked set to the bar.
+// Everything that would not fit on a phone is written as the pair it runs
+// between: the value on the narrowest screen, and the one of the design
+// file, which it reaches once the content column has stopped growing
 
 @use "sass:color";
+@use "sass:math";
 
+@use "layout" as *;
 @use "base" as *;
 @use "card" as *;
 
@@ -45,9 +50,9 @@ $hud-text-property: --hud-text;
 
 // Status bar layout, it stays a little narrower than the page
 $hud-max-width: 1240px;
-$hud-padding-block: 1.25rem;
-$hud-padding-inline: 1.5rem;
-$hud-gap: 1.5rem;
+$hud-padding-block: fluid(0.75rem, 1.25rem);
+$hud-padding-inline: fluid(0.75rem, 1.5rem);
+$hud-gap: fluid(0.75rem, 1.5rem);
 $hud-radius: 12px;
 // Panel of the players, both themes round it
 $hud-panel-radius-gaming: 10px;
@@ -59,18 +64,18 @@ $hud-item-gap: 0.5rem;
 // the row does, so the two read as one unit
 $hud-score-gap: 0.2rem;
 // Gap between the two players of a round
-$hud-players-gap: 1.5rem;
+$hud-players-gap: fluid(0.75rem, 1.5rem);
 // Room the status bar leaves between itself and the first row of cards
-$hud-margin-bottom: 55px;
-$hud-panel-padding-block: 1.25rem;
-$hud-panel-padding-inline: 1.25rem;
+$hud-margin-bottom: fluid(20px, 55px);
+$hud-panel-padding-block: fluid(0.5rem, 1.25rem);
+$hud-panel-padding-inline: fluid(0.5rem, 1.25rem);
 // Scores are written a little smaller than the names next to them
 $hud-score-scale: 0.8em;
 // Foods writes its points in a face of its own, Gaming keeps the one the
-// panel hands down (values from the design file)
+// panel hands down (design value: 30px)
 $hud-score-font-foods: $font-delius-unicase;
 $hud-score-weight-foods: 700;
-$hud-score-size-foods: 30px;
+$hud-score-size-foods: fluid(17px, 30px);
 $hud-score-font-property: --hud-score-font;
 $hud-score-weight-property: --hud-score-weight;
 $hud-score-size-property: --hud-score-size;
@@ -79,20 +84,20 @@ $hud-score-min-width: 2ch;
 // Marker of a player (natural size of the exports)
 $hud-marker-width: 24px;
 $hud-marker-height: 20px;
-// Chess pawn that stands in for a player (natural size of the export)
-$hud-pawn-width: 26px;
-$hud-pawn-height: 32px;
+// Chess pawn that stands in for a player (natural size of the export: 26 x 32)
+$hud-pawn-width: fluid(18px, 26px);
+$hud-pawn-ratio: math.div(26, 32);
 // Orange stands first in the row, Blue keeps the place it has in the markup
 $hud-pawn-order-first: -1;
-// Exit button (values taken from the design file)
-$hud-exit-icon-width: 26px;
-$hud-exit-icon-height: 23px;
+// Exit button (natural size of its arrow: 26 x 23)
+$hud-exit-icon-width: fluid(18px, 26px);
+$hud-exit-icon-ratio: math.div(26, 23);
 // Label of the exit button, every theme writes it in its own face
-// (values taken from the design file)
+// (design values: 20px for Gaming, 16px for Foods)
 $hud-exit-font-gaming: $font-score;
 $hud-exit-font-foods: $font-delius-unicase;
-$hud-exit-size-gaming: 20px;
-$hud-exit-size-foods: 16px;
+$hud-exit-size-gaming: fluid(13px, 20px);
+$hud-exit-size-foods: fluid(12px, 16px);
 // Only Gaming pulls its letters apart, Foods sets them normally
 $hud-exit-spacing-gaming: 0.04em;
 $hud-exit-spacing-foods: normal;
@@ -130,15 +135,15 @@ $hud-exit-radius-foods: $hud-exit-sketch-radius;
 $hud-exit-radius-property: --hud-exit-radius;
 
 // "Current player" above the board, every theme writes it in its own way
-// (values taken from the design file)
+// (design value of both: 32px)
 $hud-turn-font-gaming: $font-score;
 $hud-turn-weight-gaming: 700;
-$hud-turn-size-gaming: 32px;
+$hud-turn-size-gaming: fluid(18px, 32px);
 $hud-turn-spacing-gaming: 0.07em;
 $hud-turn-color-gaming: $color-text;
 $hud-turn-font-foods: $font-klee-one;
 $hud-turn-weight-foods: 600;
-$hud-turn-size-foods: 32px;
+$hud-turn-size-foods: fluid(18px, 32px);
 $hud-turn-spacing-foods: 0;
 $hud-turn-color-foods: #a45212;
 // Properties the line reads its look from, the theme of the board sets them
@@ -151,10 +156,10 @@ $hud-turn-color-property: --hud-turn-color;
 $hud-turn-marker-width: 28px;
 $hud-turn-marker-height: 24px;
 // The player on turn is named by a white chess pawn on a small block of
-// colour (natural size of the export, plus its surround)
-$hud-turn-figure-width: 22px;
-$hud-turn-figure-height: 27px;
-$hud-turn-figure-padding: 6px;
+// colour (natural size of the export: 22 x 27, plus its surround)
+$hud-turn-figure-width: fluid(16px, 22px);
+$hud-turn-figure-ratio: math.div(22, 27);
+$hud-turn-figure-padding: fluid(4px, 6px);
 // The block carries just a hint of a rounding (value from the design file)
 $hud-turn-figure-radius: 3px;
 // The block takes the colour of the player on turn. Blue is the tone of the

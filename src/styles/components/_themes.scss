@@ -8,7 +8,7 @@
     &--gaming {
         #{$board-gap-property}: $board-gap-gaming;
         #{$card-width-property}: $card-width-gaming;
-        #{$card-height-property}: $card-height-gaming;
+        #{$card-ratio-property}: #{$card-ratio-gaming};
         #{$card-radius-property}: $card-radius-gaming;
         #{$card-motif-inset-property}: $card-motif-inset-gaming;
         #{$card-front-property}: #{$card-front-gaming};
@@ -67,7 +67,7 @@
     &--foods {
         #{$board-gap-property}: $board-gap-foods;
         #{$card-width-property}: $card-width-foods;
-        #{$card-height-property}: $card-height-foods;
+        #{$card-ratio-property}: #{$card-ratio-foods};
         #{$card-radius-property}: $card-radius-foods;
         #{$card-motif-inset-property}: $card-motif-inset-foods;
         #{$card-front-property}: #{$card-front-foods};

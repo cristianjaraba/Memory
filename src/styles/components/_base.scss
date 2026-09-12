@@ -1,5 +1,7 @@
 // Rules every screen of the app builds on
 
+@use '../tokens' as *;
+
 * {
     box-sizing: border-box;
 }
@@ -11,8 +13,16 @@
 }
 
 body {
-    height: 100vh;
     margin: 0;
+    // Every screen brings its own height, the page only has to keep the
+    // window from being scrolled sideways by a decoration that sticks out
+    overflow-x: hidden;
+}
+
+// No picture of the app may grow past the box it was laid into, however
+// narrow the window gets
+img {
+    max-width: 100%;
 }
 
 // Holder of the filter a theme paints with. It draws nothing itself, but as

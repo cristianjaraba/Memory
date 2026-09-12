@@ -3,17 +3,31 @@
 @use '../tokens' as *;
 
 .home {
+    @include screen-height;
+    @include screen-frame;
+
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    padding: 2rem;
+    padding-block: $screen-padding-mobile;
     overflow: hidden;
     background-color: $color-background;
     color: $color-text;
     text-align: center;
+
+    @include tablet-up {
+        @include screen-frame($screen-padding-tablet);
+
+        padding-block: $screen-padding-tablet;
+    }
+
+    @include desktop-up {
+        @include screen-frame($screen-padding-desktop);
+
+        padding-block: $screen-padding-desktop;
+    }
 
     // Keeps the kicker aligned with the left edge of the headline
     &__intro {
@@ -24,7 +38,7 @@
         margin: 0 0 0.5rem;
         font-family: $font-body;
         font-weight: 400;
-        font-size: clamp(1.5rem, 4vw, 48px);
+        font-size: $home-kicker-size;
         line-height: 100%;
     }
 
@@ -32,15 +46,15 @@
         margin: 0;
         font-family: $font-display;
         font-weight: 700;
-        font-size: clamp(3rem, 12vw, 140px);
+        font-size: $home-title-size;
         line-height: 100%;
     }
 
     &__play {
         display: flex;
         align-items: center;
-        gap: 1.5rem;
-        margin-top: 3rem;
+        gap: $play-gap;
+        margin-top: $home-play-margin-top;
         padding: $play-padding-block $play-padding-inline;
         border: none;
         background-color: $color-accent;
@@ -57,13 +71,15 @@
     &__play-label {
         font-family: $font-display;
         font-weight: 700;
-        font-size: 40px;
+        font-size: $play-label-size;
         line-height: 100%;
     }
 
     &__play-icon {
-        width: 44px;
-        height: 32px;
+        width: $play-icon-width;
+        // Height follows the width, so the icon keeps its aspect ratio
+        height: auto;
+        aspect-ratio: $play-icon-ratio;
         transition: transform 200ms ease-in-out;
     }
 
@@ -73,12 +89,13 @@
         transform: rotate($play-icon-hover-angle) scale($play-icon-hover-scale);
     }
 
-    // Box uses the size of the larger hover icon, both arrows are drawn at
-    // their natural size so the button does not jump on hover
+    // Box uses the size of the larger hover icon, both arrows are drawn to
+    // fit it, so the button does not jump on hover
     &__play-arrow {
+        flex: none;
         width: $arrow-box-width;
-        height: $arrow-box-height;
-        background: url("/assets/icons/arrow-right.svg") no-repeat center;
+        aspect-ratio: $arrow-box-ratio;
+        background: url("/assets/icons/arrow-right.svg") no-repeat center / contain;
     }
 
     &__play:hover &__play-arrow,
@@ -91,7 +108,7 @@
         bottom: $watermark-bottom;
         left: $watermark-left;
         width: $watermark-width;
-        height: $watermark-height;
+        aspect-ratio: $watermark-ratio;
         transform: rotate($watermark-angle) scale($watermark-scale);
         pointer-events: none;
         // The icon is used as a mask, so it takes the colour below it

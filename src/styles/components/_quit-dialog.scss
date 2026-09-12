@@ -33,8 +33,11 @@
     // dressed in the theme of the board behind it. A theme that wants its own
     // dialog says so with the properties below, the others follow their bar
     &__quit {
-        width: $quit-width;
-        height: $quit-height;
+        // Never wider than the window it stands in, one gutter stays free
+        // on either side. The height is the room the sheet holds open, a
+        // question that needs another line pushes it open instead
+        width: min(#{$quit-width}, calc(100vw - 2 * #{$quit-width-gutter}));
+        min-height: $quit-height;
         padding: $quit-padding-block $quit-padding-inline;
         background-color: var(#{$quit-background-property},
             var(#{$hud-background-property}, $hud-background-gaming));
@@ -103,8 +106,12 @@
         letter-spacing: var(#{$quit-question-spacing-property}, normal);
     }
 
+    // The two answers stand side by side, and step under one another on a
+    // window too narrow to carry both of them in one row
     &__quit-actions {
         display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
         gap: $quit-actions-gap;
     }
 

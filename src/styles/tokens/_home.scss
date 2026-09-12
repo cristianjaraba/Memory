@@ -1,25 +1,43 @@
-// Tokens of the home screen: the watermark in the corner, the arrow of
-// the play button and the tilt its controller icon takes on hover
+// Tokens of the home screen: the headline, the watermark in the corner,
+// the arrow of the play button and the tilt its controller icon takes on
+// hover. Every size is written as the pair it runs between: the value on
+// the narrowest screen and the one of the design file, which it reaches
+// once the content column has stopped growing
 
-// Decorative watermark (values taken from the design file)
-$watermark-width: 331px;
-$watermark-height: 241px;
+@use "sass:math";
+
+@use 'layout' as *;
+
+// Headline block (design values: 48px above 140px)
+$home-kicker-size: fluid(16px, 48px);
+$home-title-size: fluid(32px, 140px);
+// Room the play button keeps to the headline above it
+$home-play-margin-top: fluid(2rem, 3rem);
+
+// Decorative watermark (natural size of the export: 331 x 241)
+$watermark-width: fluid(160px, 331px);
+$watermark-ratio: math.div(331, 241);
 // Anchored to the bottom left corner, offset so a small part stays off the page
-$watermark-bottom: 110px;
+$watermark-bottom: fluid(40px, 110px);
 $watermark-left: -20px;
 $watermark-angle: 37.42deg;
 // Scales around the center, so growing it does not shift its position
 $watermark-scale: 1.2;
 $color-watermark: #393a34;
 
-// Play button arrow (natural size of the hover export)
-$arrow-box-width: 40px;
-$arrow-box-height: 30px;
+// Play button arrow (natural size of the hover export: 40 x 30)
+$arrow-box-width: fluid(26px, 40px);
+$arrow-box-ratio: math.div(40, 30);
 
-// Play button controller icon
+// Play button controller icon (natural size of the export: 44 x 32)
+$play-icon-width: fluid(28px, 44px);
+$play-icon-ratio: math.div(44, 32);
 $play-icon-hover-angle: -12deg;
 $play-icon-hover-scale: 1.2;
 
 // Play button, it sits roomier in its box than the buttons of the game do
-$play-padding-block: 20px;
-$play-padding-inline: 32px;
+$play-padding-block: fluid(12px, 20px);
+$play-padding-inline: fluid(18px, 32px);
+$play-label-size: fluid(22px, 40px);
+// Gap between icon, label and arrow inside the button
+$play-gap: fluid(0.75rem, 1.5rem);

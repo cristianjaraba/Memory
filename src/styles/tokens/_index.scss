@@ -1,6 +1,7 @@
 // Every design token of the app in one place. A stylesheet pulls them all
 // in with `@use '../tokens' as *`
 
+@forward 'layout';
 @forward 'base';
 @forward 'home';
 @forward 'settings';

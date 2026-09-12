@@ -1,0 +1,71 @@
+// Settings screen from the tablet on: the stacked column opens up into the
+// two of the design file, the option lists on the left and the panel with
+// the theme preview on the right
+
+@use '../tokens' as *;
+
+.settings {
+    @include tablet-up {
+        // The block of the two columns is only as wide as it needs to be,
+        // and it is centred in the screen. The title starts at its left
+        // edge, so it sits right above the option lists
+        grid-template-columns: auto;
+        justify-content: center;
+
+        &__content {
+            --content-gap: #{$settings-content-column-gap};
+            // Widest the preview column may get. It gives way to the option
+            // lists first, so they stay readable on a narrow tablet
+            --preview-box-width: min(
+                #{$settings-preview-column-width},
+                calc(
+                    100vw - #{$settings-lists-width} - var(--content-gap) -
+                    2 * #{$screen-padding-tablet}
+                )
+            );
+            --preview-box-height: calc(var(--preview-box-width) / #{$settings-preview-ratio});
+            --summary-height: #{$settings-summary-height};
+
+            // Two columns, the lists on the left set the height of the row
+            flex-direction: row;
+            align-items: stretch;
+            gap: var(--content-gap);
+            width: fit-content;
+            max-width: 100%;
+            // Centred inside the column, in case the title ever outgrows it
+            margin-inline: auto;
+        }
+
+        // Held at one width, the bold of a hovered row stays inside it, and
+        // the groups spread over the height of the preview column
+        &__lists {
+            flex: none;
+            width: $settings-lists-width;
+            justify-content: space-between;
+        }
+
+        // The preview moves back into the upper corner of its column and is
+        // drawn flush with the right edge of the summary below it
+        &__preview {
+            top: 0;
+            right: 0;
+            bottom: auto;
+            left: auto;
+            transform: none;
+        }
+    }
+
+    // From the small desktop on the screen keeps more room to the edges,
+    // which leaves the preview column a little less of the window
+    @include desktop-up {
+        &__content {
+            --preview-box-width: min(
+                #{$settings-preview-column-width},
+                calc(
+                    100vw - #{$settings-lists-width} - var(--content-gap) -
+                    2 * #{$screen-padding-desktop}
+                )
+            );
+        }
+    }
+}

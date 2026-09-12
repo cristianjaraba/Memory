@@ -1,7 +1,7 @@
 // Closing screens of a round: it was lost, won, or both players stand equal.
 // The block of the outcome the round ended on is the one that is shown, and
-// the screen carries the theme it was played in. What every theme dresses its
-// own way lives in the block named after it, below the screen itself
+// the screen carries the theme it was played in. What the Foods theme
+// dresses its own way lives in `result-foods`, next to this file
 
 @use '../tokens' as *;
 
@@ -21,14 +21,29 @@
     #{$hud-panel-radius-property}: $hud-panel-radius-gaming;
     #{$hud-turn-font-property}: #{$hud-turn-font-gaming};
     #{$hud-turn-size-property}: #{$hud-turn-size-gaming};
+
+    @include screen-height;
+    @include screen-frame;
+
     display: grid;
     place-items: center;
-    min-height: 100vh;
-    padding: 2rem;
+    padding-block: $screen-padding-mobile;
     background-color: $result-background-gaming;
     color: $color-text;
     font-family: $result-font-gaming;
     text-align: center;
+
+    @include tablet-up {
+        @include screen-frame($screen-padding-tablet);
+
+        padding-block: $screen-padding-tablet;
+    }
+
+    @include desktop-up {
+        @include screen-frame($screen-padding-desktop);
+
+        padding-block: $screen-padding-desktop;
+    }
 
     // One outcome of a round, its parts stand under one another
     &__outcome {
@@ -36,6 +51,8 @@
         flex-direction: column;
         align-items: center;
         gap: $result-gap;
+        // Holds the loud lines inside the screen, whatever they measure
+        max-width: 100%;
 
         // The screen is not there when the round ends, it falls in from above
         // the page. The way in is laid on a class of its own, so the closing
@@ -95,9 +112,14 @@
         }
     }
 
-    // The cup Gaming hands its winner, it is drawn as a picture of its own
+    // The cup Gaming hands its winner, it is drawn as a picture of its own.
+    // The height follows the width, so it keeps its shape while it gives
+    // way to a narrow screen
     &__cup {
         display: block;
+        width: $result-cup-width;
+        height: auto;
+        aspect-ratio: $result-cup-ratio;
     }
 
     // The figure a round closes on. It is laid as a mask, so every theme
@@ -120,7 +142,7 @@
         // The scales of a draw stand on the ground of the screen itself
         &--draw::before {
             width: $result-scale-width-gaming;
-            height: $result-scale-height-gaming;
+            aspect-ratio: $result-scale-ratio-gaming;
             background-color: $result-shout-color-gaming;
             mask: url("/assets/icons/scale.svg") no-repeat center / contain;
         }
@@ -143,141 +165,6 @@
         &:hover,
         &:focus-visible {
             background-color: $card-match-gaming;
-        }
-    }
-}
-
-// Foods closes a round in its own hand: game over on the orange of the theme,
-// the two other outcomes on the white ground its board is played on
-.result--foods {
-    // Its panel is the one of its own board, only its corners are run square
-    #{$hud-panel-radius-property}: 0;
-    #{$hud-turn-font-property}: #{$hud-turn-font-foods};
-    #{$hud-turn-size-property}: #{$hud-turn-size-foods};
-    #{$hud-score-font-property}: #{$hud-score-font-foods};
-    #{$hud-score-weight-property}: #{$hud-score-weight-foods};
-    #{$hud-score-size-property}: #{$hud-score-size-foods};
-    background-color: $result-background-foods;
-    font-family: $result-font-foods;
-
-    // The round that was lost is the one painted on the orange of the theme
-    &[data-outcome='lost'] {
-        background-color: $result-background-lost-foods;
-    }
-
-    .result__shout {
-        font-weight: $result-shout-weight-foods;
-        font-size: $result-shout-size-foods;
-        letter-spacing: normal;
-        color: $result-shout-color-lost-foods;
-    }
-
-    .result__shout--draw {
-        font-size: $result-shout-size-draw-foods;
-        color: $result-shout-color-draw-foods;
-    }
-
-    .result__lead {
-        font-weight: $result-lead-weight-foods;
-        font-size: $result-lead-size-lost-foods;
-        letter-spacing: normal;
-    }
-
-    // Above the winner and above the draw the line stands a size smaller
-    #result-won .result__lead,
-    #result-draw .result__lead {
-        font-size: $result-lead-size-foods;
-    }
-
-    // The line that announces the winner is written a weight lighter than the
-    // name below it, both in the brown of the theme
-    #result-won .result__lead {
-        font-weight: $result-lead-weight-won-foods;
-        color: $result-winner-color-foods;
-    }
-
-    #result-draw .result__lead {
-        color: $result-shout-color-draw-foods;
-    }
-
-    // Both players are named in the same brown, the figure below carries
-    // the colour that player played with
-    .result__winner,
-    .result__winner[data-player='blue'],
-    .result__winner[data-player='orange'] {
-        font-weight: $result-winner-weight-foods;
-        font-size: $result-winner-size-foods;
-        letter-spacing: normal;
-        color: $result-winner-color-foods;
-    }
-
-    // The cup gives way to the figure of the winning player
-    .result__cup {
-        display: none;
-    }
-
-    // Both figures stand on a light block that carries a soft shadow
-    .result__badge {
-        background-color: $result-badge-background-foods;
-        box-shadow: $result-badge-shadow-foods;
-    }
-
-    .result__badge--winner {
-        display: grid;
-        width: $result-badge-winner-width-foods;
-        height: $result-badge-winner-height-foods;
-
-        &::before {
-            width: $result-pawn-width;
-            height: $result-pawn-height;
-            mask: url("/assets/icons/chess_pawn.svg") no-repeat center / contain;
-        }
-
-        &[data-player='blue']::before {
-            background-color: $result-pawn-blue-foods;
-        }
-
-        &[data-player='orange']::before {
-            background-color: $result-pawn-orange-foods;
-        }
-    }
-
-    .result__badge--draw {
-        width: $result-badge-draw-width-foods;
-        height: $result-badge-draw-height-foods;
-
-        &::before {
-            width: $result-scale-width-foods;
-            height: $result-scale-height-foods;
-            background-color: $result-shout-color-draw-foods;
-        }
-    }
-
-    // Its way home is filled with the orange of the theme and written white
-    .result__home {
-        background-color: $result-home-background-foods;
-        border: none;
-        border-radius: $result-home-radius-foods;
-        color: $color-text;
-        font-family: $result-home-font-foods;
-        font-size: $result-home-size-foods;
-        letter-spacing: normal;
-
-        &:hover,
-        &:focus-visible {
-            background-color: $hud-exit-sketch-color;
-        }
-    }
-
-    // On the orange ground of a lost round the button trades its colours,
-    // an orange one would stand on the screen without showing itself
-    &[data-outcome='lost'] .result__home {
-        background-color: $result-home-text-lost-foods;
-        color: $result-home-background-foods;
-
-        &:hover,
-        &:focus-visible {
-            background-color: $result-badge-background-foods;
         }
     }
 }

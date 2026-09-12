@@ -1,0 +1,81 @@
+// Ground every screen is laid out on: the widths the layout answers to, the
+// column the content is held in on a wide window, and the helpers every
+// screen builds its fluid sizes with
+
+@use "sass:math";
+
+// Narrowest screen the layout is built for. Every fluid size starts here
+$viewport-min: 320px;
+// The two steps between the phone and the desktop
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+// From here on the content stops growing and stands centred on its ground
+$layout-max-width: 1440px;
+
+// Room a screen keeps to the edges of the window, it opens up step by step
+$screen-padding-mobile: 1rem;
+$screen-padding-tablet: 1.5rem;
+$screen-padding-desktop: 2rem;
+
+// From the tablet on
+@mixin tablet-up {
+    @media (min-width: $breakpoint-tablet) {
+        @content;
+    }
+}
+
+// From the small desktop on
+@mixin desktop-up {
+    @media (min-width: $breakpoint-desktop) {
+        @content;
+    }
+}
+
+// Below the tablet, for the few places a mobile rule cannot be written as
+// the base one
+@mixin mobile-only {
+    @media (max-width: #{$breakpoint-tablet - 0.02px}) {
+        @content;
+    }
+}
+
+// Height of the window. `svh` keeps a mobile browser from cutting the
+// screen off behind the bars it slides over the page, `vh` stays as the
+// fallback for a browser that does not know the newer unit
+@mixin screen-height {
+    min-height: 100vh;
+    min-height: 100svh;
+}
+
+// Ground of a screen: it keeps running to both edges of the window, only
+// what stands on it is held inside the centred column. The cap is laid into
+// the padding and not into a width, so every screen keeps the way it
+// centres its own content
+@mixin screen-frame($padding-inline: $screen-padding-mobile) {
+    padding-inline: max(#{$padding-inline}, calc((100% - #{$layout-max-width}) / 2));
+}
+
+// Reads a size in pixels, whatever unit it was written in. The breakpoints
+// are measured in pixels, so a size has to be brought onto the same ruler
+// before the two can be reckoned with one another
+@function to-px($value) {
+    @if math.is-unitless($value) {
+        @return $value * 1px;
+    }
+
+    @if math.unit($value) == 'rem' {
+        @return math.div($value, 1rem) * 16px;
+    }
+
+    @return $value;
+}
+
+// A size that grows with the window: `$min` on the narrowest screen it is
+// built for, `$max` once the content column has reached its cap. In between
+// it runs straight, so nothing jumps at a breakpoint. Only the middle term
+// is reckoned in pixels, the two ends keep the unit they were written in
+@function fluid($min, $max, $from: $viewport-min, $to: $layout-max-width) {
+    $slope: math.div(to-px($max) - to-px($min), $to - $from);
+    $intercept: to-px($min) - $slope * $from;
+    @return clamp(#{$min}, #{$intercept} + #{$slope * 100}vw, #{$max});
+}

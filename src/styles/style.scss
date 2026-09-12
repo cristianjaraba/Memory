@@ -1,7 +1,9 @@
 // Entry point of the stylesheet. It only pulls the parts together, every rule
 // lives in the partial its screen is named after. The order is the cascade:
 // base first, the screens after it, the theme blocks last, so a theme can
-// overrule what the board brings along.
+// overrule what the board brings along. A screen that opens up on a wider
+// window carries that step in a partial of its own, right behind the mobile
+// rules it builds on
 
 // Self-hosted webfonts (@font-face rules)
 @use 'fonts';
@@ -10,10 +12,13 @@
 @use 'components/home';
 @use 'components/settings';
 @use 'components/settings-panel';
+@use 'components/settings-wide';
+@use 'components/settings-panel-wide';
 @use 'components/card';
 @use 'components/field';
 @use 'components/player-markers';
 @use 'components/sketch-frame';
 @use 'components/quit-dialog';
 @use 'components/result';
+@use 'components/result-foods';
 @use 'components/themes';

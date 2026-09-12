@@ -1,26 +1,37 @@
 // Settings screen: title, the three option lists and the theme preview
-// that opens beside them. The panel on the right lives in its own file
+// that opens beside them. On a phone everything stands under one another,
+// the two column layout is picked up in `settings-wide`. The panel that
+// collects the picks lives in its own file
 
 @use '../tokens' as *;
 
 .settings {
-    // One centred column, as wide as the content block. The title starts at
-    // its left edge, so it sits right above the column with the option lists.
-    // The last row takes the free space, the content is centred inside it
+    @include screen-height;
+    @include screen-frame;
+
+    // One column, as wide as the screen allows and never wider than a
+    // stacked block should read. Title, rule and option block are stacked
+    // into one group, and that group is centred across both axes. `safe`
+    // hands the group back to the top edge on a screen too short for it,
+    // instead of cutting the title off above the fold
     display: grid;
-    grid-template-rows: auto auto 1fr;
+    grid-template-columns: minmax(0, $settings-stacked-max-width);
     justify-content: center;
-    min-height: 100vh;
-    padding: 2rem;
+    align-content: safe center;
+    padding-block: $screen-padding-mobile;
     background-color: $color-surface;
     color: $color-surface-text;
 
-    // Title and rule are only shifted visually, their boxes stay where they
-    // are. That way the content below them keeps its place on the screen
-    &__title,
-    &__rule {
-        position: relative;
-        top: $settings-title-offset;
+    @include tablet-up {
+        @include screen-frame($screen-padding-tablet);
+
+        padding-block: $screen-padding-tablet;
+    }
+
+    @include desktop-up {
+        @include screen-frame($screen-padding-desktop);
+
+        padding-block: $screen-padding-desktop;
     }
 
     &__title {
@@ -38,11 +49,12 @@
         display: flex;
         align-items: center;
         gap: $settings-rule-gap;
-        margin: 0.125rem 0 2.5rem;
+        margin: 0.125rem 0 $settings-rule-margin-bottom;
 
         // Diamond, a square turned by 45 degrees
         &::before {
             content: '';
+            flex: none;
             width: $settings-rule-diamond-size;
             height: $settings-rule-diamond-size;
             background-color: $color-accent;
@@ -58,35 +70,28 @@
         }
     }
 
-    // Everything the player picks: lists left, preview and summary right. It
-    // is only as big as its content, the auto margin centres it in the section
+    // Everything the player picks. On a phone the option lists stand above
+    // the panel, both of them as wide as the screen allows
     &__content {
-        // Widest the preview column may get, it gives way to the lists first
-        --preview-width: max(
-            #{$settings-preview-min-width},
-            min(#{$settings-preview-width}, calc(100vw - #{$settings-preview-reserved-width}))
-        );
+        // Room the preview may take, and the height the summary below it
+        // keeps. The panel reads both, so it can hold the space open before
+        // a preview was ever shown
+        --preview-box-width: 100%;
+        --preview-box-height: #{$settings-preview-height-mobile};
+        --summary-height: #{$settings-summary-height-mobile};
 
         // Anchor for the theme previews
         position: relative;
-        // Two columns, the lists on the left set the height of the row
-        display: flex;
-        align-items: stretch;
-        gap: $settings-content-column-gap;
-        width: fit-content;
-        max-width: 100%;
-        margin: auto;
-    }
-
-    // Left column: the groups spread over the height of the preview column,
-    // the gap is their minimum distance
-    &__lists {
-        flex: none;
-        // Held at one width, the bold of a hovered row stays inside it
-        width: $settings-lists-width;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        gap: $settings-content-row-gap;
+        width: 100%;
+    }
+
+    // The option groups, on a phone they simply follow one another
+    &__lists {
+        display: flex;
+        flex-direction: column;
         gap: $settings-group-gap;
     }
 
@@ -179,6 +184,7 @@
     // The dot is drawn with an inset shadow, because pseudo elements are
     // not rendered on input elements
     &__input {
+        flex: none;
         width: $settings-radio-size;
         height: $settings-radio-size;
         // Own margin instead of a flex gap, so the hover line can sit
@@ -212,19 +218,19 @@
         box-shadow: inset 0 0 0 $settings-radio-dot-gap $color-surface;
     }
 
-    // Theme preview, it fades in while its option is hovered or focused.
-    // Taken out of the flow, so it never widens the option row
+    // Theme preview. It is taken out of the flow, so it never widens the
+    // option row, and it is laid into the room the panel keeps open above
+    // its summary. Both caps keep the aspect ratio: the picture shrinks
+    // until it fits into that room
     &__preview {
         position: absolute;
-        top: 0;
-        // Flush with the right edge of the summary below it
-        right: 0;
-        // Both caps keep the aspect ratio: the preview shrinks until it fits
-        // into the space the summary leaves inside the height of the lists
+        left: 50%;
+        bottom: calc(var(--summary-height) + #{$settings-panel-gap});
         width: auto;
         height: auto;
-        max-width: calc(var(--preview-width) - #{$settings-preview-inset});
-        max-height: calc(100% - #{$settings-summary-height} - #{$settings-panel-gap});
+        max-width: var(--preview-box-width);
+        max-height: var(--preview-box-height);
+        transform: translateX(-50%);
         opacity: 0;
         pointer-events: none;
         transition: opacity 200ms ease-in-out;

@@ -1,22 +1,32 @@
 // Tokens of the board and its cards. Every theme brings its own sizes and
 // colours, the custom properties below carry them to the cards
 
+@use "sass:math";
+
 // Game board (the column count comes from the picked board size). Every theme
 // sets how far its cards stand apart (values from the design file)
 $board-gap-gaming: 6px;
 $board-gap-foods: 8px;
 $board-gap-property: --board-gap;
 $board-columns-default: 4;
+$board-columns-property: --board-columns;
 
-// Size of one card, every theme brings its own (values from the design file)
-// Emblem that stands on the cover of every card (natural size of the export)
+// Emblem that stands on the cover of every card (natural size of the
+// export). On a small card it gives way and is drawn as a share of the
+// cover instead, so it never reaches over its own edges
 $card-emblem-width: 60px;
-$card-emblem-height: 48px;
+$card-emblem-share: 55%;
 
+// Size of one card, every theme brings its own (values from the design
+// file). The width is the one a card is drawn at on a wide screen, it is
+// the cap the board grid is held at. The ratio is what a card keeps while
+// the grid hands it less room than that
 $card-width-gaming: 105px;
 $card-height-gaming: 120px;
+$card-ratio-gaming: math.div($card-width-gaming, $card-height-gaming);
 $card-width-foods: 122px;
 $card-height-foods: 122px;
+$card-ratio-foods: math.div($card-width-foods, $card-height-foods);
 // Rounded corners of the cards, Foods is drawn with square ones
 // (values taken from the design file)
 $card-radius-gaming: 12px;
@@ -28,14 +38,16 @@ $card-radius-property: --card-radius;
 // Gemessen wurde, wie gross das Motiv in jedem Bild ohne Abstand auf seiner
 // Karte landet. Beide Themes fuellen ihr Bild fast ganz aus und brauchen
 // deshalb Rand, der Zielwert sind 70 px: Gaming 105 px Karte - 2 x 18 px
-// = 69 px, Food 122 px bei 92 % Motivanteil - 2 x 23 px = 70 px.
+// = 69 px, Food 122 px bei 92 % Motivanteil - 2 x 23 px = 70 px. Der Rand
+// ist als Anteil der Kartenbreite notiert, damit er auf einer kleineren
+// Karte mitschrumpft: 18 / 105 und 23 / 122.
 $card-motif-inset: 0;
-$card-motif-inset-gaming: 18px;
-$card-motif-inset-foods: 23px;
+$card-motif-inset-gaming: 17%;
+$card-motif-inset-foods: 19%;
 $card-motif-inset-property: --card-motif-inset;
 // Properties the cards read their size from, the theme of the board sets them
 $card-width-property: --card-width;
-$card-height-property: --card-height;
+$card-ratio-property: --card-ratio;
 
 // Cover of the cards, one per theme (values taken from the design file)
 $card-front-gaming: linear-gradient(147.13deg, #ed1b76 1.28%, #0a2835 142.53%);
@@ -55,4 +67,3 @@ $card-match-width-property: --card-match-width;
 // sets them
 $card-front-property: --card-front;
 $card-back-property: --card-back;
-

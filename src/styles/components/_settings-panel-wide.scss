@@ -1,0 +1,124 @@
+// Panel of the settings screen from the tablet on: picks and start button
+// share one row again, the panel stands out to the left of its column, and
+// once it is uncovered it grows out to the right by the same amount
+
+@use '../tokens' as *;
+
+// Growth of the uncovered panel: it rolls out a little past the width it is
+// headed for, is caught and drifts back, and every swing after that one is
+// smaller than the one before. The steps are written as a share of the
+// growth, so every screen width rebounds the same way
+@keyframes settings-summary-grow {
+    0% {
+        width: var(--summary-width);
+        animation-timing-function: $settings-summary-grow-easing;
+    }
+
+    // A little way out past the mark
+    46% {
+        width: calc(
+            var(--summary-width) +
+            var(--summary-overhang) * #{1 + $settings-summary-grow-overshoot}
+        );
+        animation-timing-function: $settings-summary-swing-easing;
+    }
+
+    // Back short of it
+    70% {
+        width: calc(
+            var(--summary-width) +
+            var(--summary-overhang) * #{1 - $settings-summary-grow-rebound}
+        );
+        animation-timing-function: $settings-summary-swing-easing;
+    }
+
+    // One last swing out, barely a nudge
+    87% {
+        width: calc(
+            var(--summary-width) +
+            var(--summary-overhang) * #{1 + $settings-summary-grow-settle}
+        );
+        animation-timing-function: $settings-summary-swing-easing;
+    }
+}
+
+.settings {
+    @include tablet-up {
+        // The column is only as wide as the preview it carries. It may give
+        // way, so a window that is a few pixels short of its own reckoning
+        // cannot push the block sideways
+        &__panel {
+            flex: 0 1 auto;
+            width: var(--preview-box-width);
+        }
+
+        &__summary {
+            // Room the content block leaves beside itself. It stands
+            // centred in the screen, so the same amount is free on either
+            // side of it
+            --summary-slack: calc(
+                (
+                    100vw - 2 * #{$screen-padding-tablet} - #{$settings-lists-width} -
+                    var(--content-gap) - var(--preview-box-width)
+                ) / 2
+            );
+            // How far the panel stands out on the left of its column: the
+            // preview above it is drawn as wide as the column and is flush
+            // with its right edge, so the whole difference lies on the
+            // left. It steps out as far as the design asks, and never
+            // further than the gap beside it leaves the option lists, nor
+            // further than the block has room to grow back to the right
+            --summary-overhang: max(0px, min(
+                calc(#{$settings-summary-width} - var(--preview-box-width)),
+                calc(var(--content-gap) - #{$settings-summary-clearance}),
+                var(--summary-slack)
+            ));
+            --summary-width: calc(var(--preview-box-width) + var(--summary-overhang));
+
+            // Sits in the bottom corner of the column. It is held by its
+            // left edge, so the growth below can only run to the right and
+            // the picked values stay where they were read
+            left: calc(100% - var(--summary-width));
+            right: auto;
+            width: var(--summary-width);
+            // Picks first, the start button right behind them
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            gap: $settings-summary-column-gap;
+        }
+
+        // Uncovered panel: it grows to the right by as much as it stands out
+        // on the left. Both sides stand out the same far afterwards, which
+        // leaves the preview above it right over its middle. The width is
+        // the one the panel keeps, the animation only plays the way into it
+        &__summary--uncovered {
+            width: calc(var(--summary-width) + var(--summary-overhang));
+            animation: settings-summary-grow $settings-summary-grow-duration;
+
+            // Whoever asked for less movement is handed the grown panel at once
+            @media (prefers-reduced-motion: reduce) {
+                animation: none;
+            }
+        }
+
+        // In the row the start button is held at the right end, one gap
+        // away from the picks
+        &__start {
+            align-self: auto;
+        }
+    }
+
+    // From the small desktop on the screen keeps more room to the edges,
+    // which leaves the block a little less of the window to grow into
+    @include desktop-up {
+        &__summary {
+            --summary-slack: calc(
+                (
+                    100vw - 2 * #{$screen-padding-desktop} - #{$settings-lists-width} -
+                    var(--content-gap) - var(--preview-box-width)
+                ) / 2
+            );
+        }
+    }
+}

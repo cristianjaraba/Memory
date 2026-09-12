@@ -1,37 +1,45 @@
 // Tokens of the settings screen: title, option lists, theme preview and
-// the summary panel that collects the picks
+// the summary panel that collects the picks. Sizes that would crowd a
+// phone are written as the pair they run between: the value on the
+// narrowest screen, and the one of the design file, which they reach once
+// the content column has stopped growing
 
 @use "sass:math";
 
-// How far the title and its rule are pushed down, without taking room
-// from the content block below them
-$settings-title-offset: 4rem;
+@use "layout" as *;
 
-// Settings screen typography (values taken from the design file)
-$settings-title-size: 54px;
-$settings-legend-size: 24px;
-$settings-option-size: 20px;
+// Settings screen typography (design values: 54px, 24px, 20px)
+$settings-title-size: fluid(28px, 54px);
+$settings-legend-size: fluid(18px, 24px);
+$settings-option-size: fluid(16px, 20px);
 
-// Accent rule below the title (values taken from the design file)
-$settings-rule-width: 251px;
+// Accent rule below the title (design value of the line: 251px)
+$settings-rule-width: fluid(140px, 251px);
 $settings-rule-thickness: 4px;
 $settings-rule-diamond-size: 16px;
 $settings-rule-gap: 0;
+// Room the rule keeps between itself and the options below it
+$settings-rule-margin-bottom: fluid(1.5rem, 2.5rem);
 // Height of the icon exports, the width follows the aspect ratio
-$settings-legend-icon-size: 27px;
+$settings-legend-icon-size: fluid(20px, 27px);
 // Icon width plus its gap, so the options line up under the legend text
-$settings-options-indent: 40px;
-// Radio buttons: the ring is thick by default and thins out when active
-// Line that appears right of a hovered option (values from the design file)
-$settings-hover-line-width: 41px;
+$settings-options-indent: fluid(26px, 40px);
+// Line that appears right of a hovered option (design value: 41px)
+$settings-hover-line-width: fluid(24px, 41px);
 $settings-hover-line-thickness: 3px;
 $settings-hover-line-gap: 0.75rem;
 $settings-hover-diamond-size: 12px;
 
-// Gap between the option lists and the preview column next to them
-$settings-content-column-gap: 10rem;
+// Gap between the option lists and the preview column next to them. The two
+// columns are only laid side by side from the tablet on, so the gap starts
+// there as well and opens up to the value of the design file
+$settings-content-column-gap: fluid(3rem, 12rem, $breakpoint-tablet, $layout-max-width);
+// Widest the stacked column gets, before the two of the design take over
+$settings-stacked-max-width: 30rem;
+// Distance between the lists and the panel while they stand stacked
+$settings-content-row-gap: fluid(1.5rem, 2rem);
 // Smallest distance between two option groups, they spread from there
-$settings-group-gap: 2rem;
+$settings-group-gap: fluid(1.25rem, 2rem);
 // Fixed width of the left column: room for every legend and for the longest
 // option in bold, so a hovered or picked row cannot widen the column and
 // push the centred content block sideways
@@ -43,21 +51,27 @@ $settings-preview-width: 460px;
 $settings-preview-height: 412px;
 // How much narrower than the summary below it the preview is drawn, both
 // share their right edge, so the difference stays on the left
-$settings-preview-inset: 6rem;
+$settings-preview-inset: 96px;
 $settings-preview-ratio: math.div($settings-preview-width, $settings-preview-height);
-// Space the option lists, their column gap and the section padding take up
-$settings-preview-reserved-width: 42rem;
-// Floor, so the motives stay readable on a small screen
-$settings-preview-min-width: 240px;
+// Widest the preview column may get, the picture gives way to the lists first
+$settings-preview-column-width: $settings-preview-width - $settings-preview-inset;
+// Stacked under the lists the preview is capped by its height instead, so a
+// phone is not handed one screen of picture above another of options
+$settings-preview-height-mobile: fluid(150px, 260px, $viewport-min, $breakpoint-tablet);
 
 // Summary panel below the preview (values taken from the design file)
 $color-summary-surface: #f6f6f6;
-$settings-panel-gap: 2rem;
-// Fixed, so the preview above it knows how much room is left
+$settings-panel-gap: fluid(1.25rem, 2rem);
+// Fixed, so the preview above it knows how much room is left. Stacked it
+// carries its picks above the start button and keeps two rows free
 $settings-summary-height: 4rem;
+$settings-summary-height-mobile: 6.5rem;
 // Fixed as well: room for the longest set of picks, so the row keeps one
 // width no matter which options are picked
 $settings-summary-width: 27rem;
+// Room the panel leaves between its left edge and the option lists, so the
+// part that stands out on a narrow desktop cannot reach into them
+$settings-summary-clearance: 1rem;
 // Way the panel grows to the right when it is uncovered: it rolls out past
 // its new width and is caught softly, every swing after it smaller than the
 // one before. The factors are read as a share of the growth itself
@@ -69,9 +83,10 @@ $settings-summary-grow-settle: 0.02;
 $settings-summary-grow-easing: cubic-bezier(0.32, 0.14, 0.24, 1);
 // Every swing after that one leaves and lands as softly as it can
 $settings-summary-swing-easing: cubic-bezier(0.45, 0.05, 0.3, 1);
-// Type of the panel, a size smaller than the option lists it sums up
-$settings-summary-value-size: 16px;
-$settings-start-size: 18px;
+// Type of the panel, a size smaller than the option lists it sums up. Both
+// have grown to their design value by the time the two columns appear
+$settings-summary-value-size: fluid(13px, 16px, $viewport-min, $breakpoint-tablet);
+$settings-start-size: fluid(16px, 18px, $viewport-min, $breakpoint-tablet);
 // Gap between the picked values and the start button next to them
 $settings-summary-column-gap: 1rem;
 // The start button is padded tighter than the buttons that stand on their
@@ -89,8 +104,10 @@ $color-summary-placeholder: #8a8a85;
 // Tint the cover of the panel takes once a click would uncover the picks
 $color-summary-cover-hover: rgba(48, 49, 49, 0.06);
 $settings-summary-padding: 0.75rem;
-$settings-summary-gap: 1.5rem;
-$settings-summary-slash-width: 32px;
+// The three picks stand closer together on a phone than they do in the row
+// of the design file
+$settings-summary-gap: fluid(0.75rem, 1.5rem, $breakpoint-tablet, $layout-max-width);
+$settings-summary-slash-width: fluid(22px, 32px, $breakpoint-tablet, $layout-max-width);
 $settings-summary-slash-thickness: 5px;
 $settings-summary-slash-angle: 109.33deg;
 // Once the picks are uncovered the slash is drawn thinner and a diamond

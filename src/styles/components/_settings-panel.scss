@@ -1,99 +1,36 @@
-// Panel on the right of the settings screen: it carries the theme
-// preview, sums up every pick below it and opens the round
+// Panel of the settings screen: it holds the room for the theme preview,
+// sums up every pick below it and opens the round. On a phone it fills the
+// width of the screen and carries its picks above the start button, the
+// row of the design file is picked up in `settings-panel-wide`
 
 @use '../tokens' as *;
 
-// Growth of the uncovered panel: it rolls out a little past the width it is
-// headed for, is caught and drifts back, and every swing after that one is
-// smaller than the one before. The steps are written as a share of the
-// growth, so every screen width rebounds the same way
-@keyframes settings-summary-grow {
-    0% {
-        width: $settings-summary-width;
-        animation-timing-function: $settings-summary-grow-easing;
-    }
-
-    // A little way out past the mark
-    46% {
-        width: calc(
-            #{$settings-summary-width} +
-            var(--summary-overhang) * #{1 + $settings-summary-grow-overshoot}
-        );
-        animation-timing-function: $settings-summary-swing-easing;
-    }
-
-    // Back short of it
-    70% {
-        width: calc(
-            #{$settings-summary-width} +
-            var(--summary-overhang) * #{1 - $settings-summary-grow-rebound}
-        );
-        animation-timing-function: $settings-summary-swing-easing;
-    }
-
-    // One last swing out, barely a nudge
-    87% {
-        width: calc(
-            #{$settings-summary-width} +
-            var(--summary-overhang) * #{1 + $settings-summary-grow-settle}
-        );
-        animation-timing-function: $settings-summary-swing-easing;
-    }
-}
-
 .settings {
-    // Panel in the right column, it carries the preview and the summary
+    // Column that carries the preview and the summary. Its height keeps the
+    // room for preview, gap and summary open, and both of them are taken
+    // out of the flow, so no pick can change the size of this column
     &__panel {
-        // Right column: as wide as the preview it carries, its height keeps
-        // the room for preview, gap and summary. Both of them are taken out
-        // of the flow, so no pick can change the size of this column
         position: relative;
-        flex: none;
-        width: calc(var(--preview-width) - #{$settings-preview-inset});
-        // Room for the scaled down preview, its gap and the summary itself
+        width: 100%;
         min-height: calc(
-            (var(--preview-width) - #{$settings-preview-inset}) / #{$settings-preview-ratio}
-            + #{$settings-panel-gap} + #{$settings-summary-height}
+            var(--preview-box-height) + #{$settings-panel-gap} + var(--summary-height)
         );
     }
 
-    // Picked values first, the start button right behind them
+    // Picked values and the start button. Stacked it closes the panel at
+    // the bottom and spreads over its whole width
     &__summary {
-        // How far the panel stands out on the left of its column: the
-        // preview above it is drawn as wide as the column and is flush with
-        // its right edge, so the whole difference lies on the left
-        --summary-overhang: calc(
-            #{$settings-summary-width} - (var(--preview-width) - #{$settings-preview-inset})
-        );
-
-        // Sits in the bottom corner of the column. It is held by its left
-        // edge, so the growth below can only run to the right and the picked
-        // values stay where they were read
         position: absolute;
-        left: calc(100% - #{$settings-summary-width});
+        left: 0;
+        right: 0;
         bottom: 0;
-        width: $settings-summary-width;
+        height: var(--summary-height);
         display: flex;
-        align-items: center;
-        gap: $settings-summary-column-gap;
-        // Fixed height, the preview above it is capped with the same value
-        height: $settings-summary-height;
+        flex-direction: column;
+        justify-content: center;
+        gap: $settings-summary-padding;
         padding: $settings-summary-padding;
         background-color: $color-summary-surface;
-    }
-
-    // Uncovered panel: it grows to the right by as much as it stands out on
-    // the left. Both sides stand out the same far afterwards, which leaves
-    // the preview above it right over its middle. The width is the one the
-    // panel keeps, the animation only plays the way into it
-    &__summary--uncovered {
-        width: calc(#{$settings-summary-width} + var(--summary-overhang));
-        animation: settings-summary-grow $settings-summary-grow-duration;
-
-        // Whoever asked for less movement is handed the grown panel at once
-        @media (prefers-reduced-motion: reduce) {
-            animation: none;
-        }
     }
 
     // Cover over the whole panel, it takes the click that uncovers the
@@ -156,7 +93,7 @@
         content: '';
         position: absolute;
         top: 50%;
-        left: -$settings-summary-gap * 0.5;
+        left: calc(-1 * #{$settings-summary-gap} * 0.5);
         width: $settings-summary-slash-width;
         height: 0;
         border-top: $settings-summary-slash-thickness solid $color-accent;
@@ -177,12 +114,12 @@
             content: '';
             position: absolute;
             top: 50%;
-            left: -$settings-summary-gap * 0.5;
+            left: calc(-1 * #{$settings-summary-gap} * 0.5);
             width: $settings-summary-diamond-size;
             height: $settings-summary-diamond-size;
             background-color: $color-accent;
             transform: translate(-50%, -50%) rotate($settings-summary-slash-angle)
-                translateX($settings-summary-slash-width * 0.5)
+                translateX(calc(#{$settings-summary-slash-width} * 0.5))
                 rotate(-45deg);
         }
     }
@@ -197,9 +134,10 @@
 
     // Disabled until all three options are picked
     &__start {
-        // Only as wide as icon and label. The spread out list beside it
-        // holds it at the right end of the row, one gap away from the picks
+        // Only as wide as icon and label. Stacked it stands centred under
+        // the picks, in the row it is held at the right end of the panel
         flex: none;
+        align-self: center;
         display: flex;
         align-items: center;
         gap: $settings-start-icon-gap;
@@ -229,6 +167,7 @@
     }
 
     &__start-icon {
+        flex: none;
         width: $settings-start-icon-width;
         height: $settings-start-icon-height;
     }

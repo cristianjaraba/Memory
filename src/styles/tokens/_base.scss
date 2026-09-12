@@ -1,6 +1,8 @@
 // Design tokens shared by every screen: colours, type and the padding
 // every button of the app is built with
 
+@use "layout" as *;
+
 $color-background: #303131;
 $color-text: #ffffff;
 $color-accent: #f0ea6e;
@@ -20,6 +22,7 @@ $font-delius-unicase: 'Delius Unicase', cursive;
 $font-display: 'Red Rose', sans-serif;
 $font-body: 'Almarai', sans-serif;
 
-// Every button of the app is padded the same way (values from the design file)
-$button-padding-block: 15px;
-$button-padding-inline: 20px;
+// Every button of the app is padded the same way. On a phone it sits
+// tighter in its box and opens up to the values of the design file
+$button-padding-block: fluid(10px, 15px);
+$button-padding-inline: fluid(12px, 20px);

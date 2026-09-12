@@ -21,7 +21,9 @@
 
 .field__player-marker {
     width: $hud-pawn-width;
-    height: $hud-pawn-height;
+    // Height follows the width, so the pawn keeps its aspect ratio
+    height: auto;
+    aspect-ratio: $hud-pawn-ratio;
 }
 
 .field__player[data-player="blue"] .field__player-marker {
@@ -51,7 +53,7 @@
         content: "";
         display: block;
         width: $hud-turn-figure-width;
-        height: $hud-turn-figure-height;
+        aspect-ratio: $hud-turn-figure-ratio;
         background-color: $color-text;
         mask: url("/assets/icons/chess_pawn.svg") no-repeat center / contain;
     }

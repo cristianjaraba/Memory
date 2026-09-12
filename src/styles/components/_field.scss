@@ -5,24 +5,42 @@
 
 // Game board, its surface follows the theme picked in the settings
 .field {
+    @include screen-height;
+    @include screen-frame;
+
     // Status bar on top, the board takes the rest and stays centred in it
     display: grid;
     grid-template-rows: auto 1fr;
     justify-items: center;
     align-items: center;
-    min-height: 100vh;
-    padding: 2rem;
+    padding-block: $screen-padding-mobile;
     background-color: $color-surface;
     color: $color-surface-text;
 
-    // Status bar above the cards, almost as wide as the page. It carries
-    // the player on the left, the score and the way out on the right
+    @include tablet-up {
+        @include screen-frame($screen-padding-tablet);
+
+        padding-block: $screen-padding-tablet;
+    }
+
+    @include desktop-up {
+        @include screen-frame($screen-padding-desktop);
+
+        padding-block: $screen-padding-desktop;
+    }
+
+    // Status bar above the cards, almost as wide as the page. On a phone
+    // the two players and the way out share the first row and the player
+    // on turn stands centred below them, from the tablet on all three of
+    // them stand side by side
     &__hud {
-        // Three columns, so the middle one stays centred in the bar
-        // whatever the two sides need
         display: grid;
-        grid-template-columns: 1fr auto 1fr;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            'players exit'
+            'turn turn';
         align-items: center;
+        justify-items: center;
         gap: $hud-gap;
         align-self: start;
         width: 100%;
@@ -32,11 +50,19 @@
         background-color: var(#{$hud-background-property}, $hud-background-gaming);
         border-radius: $hud-radius;
         color: var(#{$hud-text-property}, $color-text);
+
+        @include tablet-up {
+            // Three columns, so the middle one stays centred in the bar
+            // whatever the two sides need
+            grid-template-columns: 1fr auto 1fr;
+            grid-template-areas: 'players turn exit';
+        }
     }
 
     // Panel of the two players, it lies as a lighter block on the bar and
     // writes every player in the colour that player is playing with
     &__players {
+        grid-area: players;
         display: flex;
         align-items: center;
         gap: $hud-players-gap;
@@ -85,6 +111,7 @@
     // Whose turn it is, it sits in the middle of the bar and is written
     // in the face the picked theme brings along
     &__turn {
+        grid-area: turn;
         display: flex;
         align-items: center;
         gap: $hud-item-gap;
@@ -122,6 +149,7 @@
     }
 
     &__exit {
+        grid-area: exit;
         display: flex;
         // Icon and label sit centred in the button, on both axes
         align-items: center;
@@ -164,23 +192,33 @@
 
     // Drawn as a mask, so the arrow always takes the colour of the bar
     &__exit-icon {
+        flex: none;
         width: $hud-exit-icon-width;
-        height: $hud-exit-icon-height;
+        aspect-ratio: $hud-exit-icon-ratio;
         background-color: var(#{$hud-exit-icon-property}, currentColor);
         mask: url("/assets/icons/move_item.svg") no-repeat center / contain;
     }
 
-    // One grid cell per card, the column count is set while the board is built.
-    // The board opens right under the status bar instead of standing in the
+    // One grid cell per card, the column count is set while the board is
+    // built. Every column takes the same share of the room the board has,
+    // so the cards shrink with the screen instead of running off it. The
+    // board opens right under the status bar instead of standing in the
     // middle of the room below it
     &__board {
-        // The row of the grid centres what it holds, the board says no and
-        // stays right under the status bar
+        #{$board-columns-property}: #{$board-columns-default};
+
         align-self: start;
         display: grid;
-        grid-template-columns:
-            repeat(var(--board-columns, #{$board-columns-default}), var(#{$card-width-property}, $card-width-gaming));
+        grid-template-columns: repeat(var(#{$board-columns-property}), minmax(0, 1fr));
         gap: var(#{$board-gap-property}, $board-gap-gaming);
+        width: 100%;
+        // Never wider than the theme draws its own cards: columns at their
+        // full size plus the gaps between them
+        max-width: calc(
+            var(#{$board-columns-property}) * var(#{$card-width-property}, #{$card-width-gaming}) +
+            (var(#{$board-columns-property}) - 1) *
+            var(#{$board-gap-property}, #{$board-gap-gaming})
+        );
         margin: 0;
         padding: 0;
         list-style: none;

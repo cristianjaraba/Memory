@@ -1,7 +1,12 @@
 // Tokens of the closing screens of a round. Every theme dresses the three of
-// them its own way, Gaming is the one they are built on
-// (values taken from the design file)
+// them its own way, Gaming is the one they are built on. The loud lines and
+// the figures below them are written as the pair they run between: the size
+// they take on the narrowest screen, and the one of the design file, which
+// they reach once the content column has stopped growing
 
+@use "sass:math";
+
+@use "layout" as *;
 @use "base" as *;
 @use "card" as *;
 @use "hud" as *;
@@ -11,11 +16,11 @@
 $result-background-gaming: $color-field-gaming;
 $result-font-gaming: $font-score;
 $result-shout-color-gaming: $card-match-gaming;
-$result-shout-size-gaming: 124px;
+$result-shout-size-gaming: fluid(34px, 124px);
 $result-shout-weight-gaming: 900;
-$result-shout-size-draw-gaming: 128px;
+$result-shout-size-draw-gaming: fluid(36px, 128px);
 $result-shout-weight-draw-gaming: 700;
-$result-lead-size-gaming: 28px;
+$result-lead-size-gaming: fluid(16px, 28px);
 $result-lead-weight-gaming: 700;
 // Only Gaming pulls the letters of these screens apart
 $result-tracking-gaming: 0.07em;
@@ -36,24 +41,24 @@ $result-font-foods: $font-klee-one;
 // orange ground, the draw in that same orange on white
 $result-shout-color-lost-foods: $color-text;
 $result-shout-color-draw-foods: $card-match-foods;
-$result-shout-size-foods: 130px;
+$result-shout-size-foods: fluid(36px, 130px);
 $result-shout-weight-foods: 600;
-$result-shout-size-draw-foods: 128px;
+$result-shout-size-draw-foods: fluid(36px, 128px);
 // The label over the final scores stands larger than the line of the two
 // other outcomes
-$result-lead-size-lost-foods: 42px;
-$result-lead-size-foods: 40px;
+$result-lead-size-lost-foods: fluid(22px, 42px);
+$result-lead-size-foods: fluid(20px, 40px);
 $result-lead-weight-foods: 600;
 // Its winner is announced in the brown the board names its player on turn in,
 // the line above is written a weight lighter than the name below it
 $result-winner-color-foods: $hud-turn-color-foods;
-$result-winner-size-foods: 80px;
+$result-winner-size-foods: fluid(30px, 80px);
 $result-winner-weight-foods: 600;
 $result-lead-weight-won-foods: 400;
 
 // Room between the parts of a screen, and inside its heading
-$result-gap: 2.5rem;
-$result-title-gap: 1.25rem;
+$result-gap: fluid(1.5rem, 2.5rem);
+$result-title-gap: fluid(0.75rem, 1.25rem);
 
 // The way a closing screen comes in: it drops onto its ground from above.
 // It starts off the page, half the window plus half the block puts it just
@@ -61,24 +66,29 @@ $result-title-gap: 1.25rem;
 $result-drop-travel: calc(-50vh - 50%);
 $result-drop-duration: 520ms;
 
+// The cup Gaming hands its winner (natural size of the export: 308 x 364)
+$result-cup-width: fluid(140px, 308px);
+$result-cup-ratio: math.div(308, 364);
+
 // The two figures a round can close on: the one of the winning player, and
 // the scales of a draw. Gaming lets its scales stand on the ground of the
-// screen, Foods lays both on a light block that carries a shadow
+// screen, Foods lays both on a light block that carries a shadow. Every one
+// of them keeps its aspect ratio while it gives way to a narrow screen
 $result-badge-shadow-foods: 0 4px 12px rgba(0, 0, 0, 0.15);
 $result-badge-background-foods: #f7e6d5;
-$result-badge-winner-width-foods: 260px;
-$result-badge-winner-height-foods: 300px;
-$result-badge-draw-width-foods: 310px;
-$result-badge-draw-height-foods: 290px;
+$result-badge-winner-width-foods: fluid(150px, 260px);
+$result-badge-winner-ratio-foods: math.div(260, 300);
+$result-badge-draw-width-foods: fluid(170px, 310px);
+$result-badge-draw-ratio-foods: math.div(310, 290);
 // The scales are drawn at their natural size where no block holds them, and
 // a little smaller inside the block of Foods (the file measures 350 x 281)
-$result-scale-width-gaming: 350px;
-$result-scale-height-gaming: 281px;
-$result-scale-width-foods: 250px;
-$result-scale-height-foods: 201px;
+$result-scale-width-gaming: fluid(180px, 350px);
+$result-scale-ratio-gaming: math.div(350, 281);
+$result-scale-width-foods: fluid(130px, 250px);
+$result-scale-ratio-foods: math.div(250, 201);
 // The figure of the winner keeps the shape of the pawn of the board (22 x 27)
-$result-pawn-width: 155px;
-$result-pawn-height: 190px;
+$result-pawn-width: fluid(90px, 155px);
+$result-pawn-ratio: math.div(155, 190);
 // It is laid in the colour that player played with, the same two tones the
 // board marks the player on turn with
 $result-pawn-blue-foods: $hud-turn-figure-background-foods;
@@ -90,7 +100,7 @@ $result-home-radius-gaming: $hud-radius;
 $result-home-size-gaming: $hud-exit-size-gaming;
 $result-home-background-foods: $card-match-foods;
 $result-home-font-foods: $font-delius-unicase;
-$result-home-size-foods: 16px;
+$result-home-size-foods: fluid(13px, 16px);
 $result-home-radius-foods: $hud-exit-radius-foods;
 // On the orange ground of a lost round the two trade places
 $result-home-text-lost-foods: $color-surface;

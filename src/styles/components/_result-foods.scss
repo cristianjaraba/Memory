@@ -1,0 +1,138 @@
+// Closing screens of a round in the hand of the Foods theme: game over on
+// the orange of the theme, the two other outcomes on the white ground its
+// board is played on. What both themes share lives in `result`
+
+@use '../tokens' as *;
+
+.result--foods {
+    // Its panel is the one of its own board, only its corners are run square
+    #{$hud-panel-radius-property}: 0;
+    #{$hud-turn-font-property}: #{$hud-turn-font-foods};
+    #{$hud-turn-size-property}: #{$hud-turn-size-foods};
+    #{$hud-score-font-property}: #{$hud-score-font-foods};
+    #{$hud-score-weight-property}: #{$hud-score-weight-foods};
+    #{$hud-score-size-property}: #{$hud-score-size-foods};
+    background-color: $result-background-foods;
+    font-family: $result-font-foods;
+
+    // The round that was lost is the one painted on the orange of the theme
+    &[data-outcome='lost'] {
+        background-color: $result-background-lost-foods;
+    }
+
+    .result__shout {
+        font-weight: $result-shout-weight-foods;
+        font-size: $result-shout-size-foods;
+        letter-spacing: normal;
+        color: $result-shout-color-lost-foods;
+    }
+
+    .result__shout--draw {
+        font-size: $result-shout-size-draw-foods;
+        color: $result-shout-color-draw-foods;
+    }
+
+    .result__lead {
+        font-weight: $result-lead-weight-foods;
+        font-size: $result-lead-size-lost-foods;
+        letter-spacing: normal;
+    }
+
+    // Above the winner and above the draw the line stands a size smaller
+    #result-won .result__lead,
+    #result-draw .result__lead {
+        font-size: $result-lead-size-foods;
+    }
+
+    // The line that announces the winner is written a weight lighter than the
+    // name below it, both in the brown of the theme
+    #result-won .result__lead {
+        font-weight: $result-lead-weight-won-foods;
+        color: $result-winner-color-foods;
+    }
+
+    #result-draw .result__lead {
+        color: $result-shout-color-draw-foods;
+    }
+
+    // Both players are named in the same brown, the figure below carries
+    // the colour that player played with
+    .result__winner,
+    .result__winner[data-player='blue'],
+    .result__winner[data-player='orange'] {
+        font-weight: $result-winner-weight-foods;
+        font-size: $result-winner-size-foods;
+        letter-spacing: normal;
+        color: $result-winner-color-foods;
+    }
+
+    // The cup gives way to the figure of the winning player
+    .result__cup {
+        display: none;
+    }
+
+    // Both figures stand on a light block that carries a soft shadow
+    .result__badge {
+        background-color: $result-badge-background-foods;
+        box-shadow: $result-badge-shadow-foods;
+    }
+
+    .result__badge--winner {
+        display: grid;
+        width: $result-badge-winner-width-foods;
+        aspect-ratio: $result-badge-winner-ratio-foods;
+
+        &::before {
+            width: $result-pawn-width;
+            aspect-ratio: $result-pawn-ratio;
+            mask: url("/assets/icons/chess_pawn.svg") no-repeat center / contain;
+        }
+
+        &[data-player='blue']::before {
+            background-color: $result-pawn-blue-foods;
+        }
+
+        &[data-player='orange']::before {
+            background-color: $result-pawn-orange-foods;
+        }
+    }
+
+    .result__badge--draw {
+        width: $result-badge-draw-width-foods;
+        aspect-ratio: $result-badge-draw-ratio-foods;
+
+        &::before {
+            width: $result-scale-width-foods;
+            aspect-ratio: $result-scale-ratio-foods;
+            background-color: $result-shout-color-draw-foods;
+        }
+    }
+
+    // Its way home is filled with the orange of the theme and written white
+    .result__home {
+        background-color: $result-home-background-foods;
+        border: none;
+        border-radius: $result-home-radius-foods;
+        color: $color-text;
+        font-family: $result-home-font-foods;
+        font-size: $result-home-size-foods;
+        letter-spacing: normal;
+
+        &:hover,
+        &:focus-visible {
+            background-color: $hud-exit-sketch-color;
+        }
+    }
+
+    // On the orange ground of a lost round the button trades its colours,
+    // an orange one would stand on the screen without showing itself
+    &[data-outcome='lost'] .result__home {
+        background-color: $result-home-text-lost-foods;
+        color: $result-home-background-foods;
+
+        &:hover,
+        &:focus-visible {
+            background-color: $result-badge-background-foods;
+        }
+    }
+}

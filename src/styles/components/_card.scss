@@ -3,9 +3,12 @@
 @use '../tokens' as *;
 
 .card {
-    // Fills its grid cell, its height comes from the theme of the board
+    // Fills the grid cell it was handed. The grid gives it as much width as
+    // the screen allows, up to the size the theme draws its cards at, and
+    // the card keeps the aspect ratio of that theme whatever it is given
     width: 100%;
-    height: var(#{$card-height-property}, $card-height-gaming);
+    height: auto;
+    aspect-ratio: var(#{$card-ratio-property}, #{$card-ratio-gaming});
     padding: 0;
     background-color: transparent;
     border: none;
@@ -25,10 +28,11 @@
         position: absolute;
         inset: 0;
         // Cover of the card: the emblem stands in the middle of it, on the
-        // ground the theme of the board hands down
+        // ground the theme of the board hands down. On a card too small for
+        // the export the emblem is drawn as a share of the cover instead
         background:
             url("/assets/icons/pc.svg") no-repeat center /
-                #{$card-emblem-width} #{$card-emblem-height},
+                min(#{$card-emblem-width}, #{$card-emblem-share}),
             var(#{$card-front-property}, $color-background);
         border-radius: var(#{$card-radius-property}, $card-radius-gaming);
         backface-visibility: hidden;
@@ -44,7 +48,8 @@
     &__motif {
         width: 100%;
         height: 100%;
-        // Room to all four sides, the picture stays centred inside it
+        // Room to all four sides, the picture stays centred inside it. The
+        // room is read as a share of the card, so it shrinks along with it
         padding: var(#{$card-motif-inset-property}, $card-motif-inset);
         border-radius: inherit;
         // Keeps the whole picture visible, no matter its aspect ratio
