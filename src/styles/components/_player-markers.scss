@@ -1,78 +1,58 @@
-// Figures that name the two players in the status bar. Every theme lays
-// in its own file, so the row is drawn the way that theme draws it
+// Figures that name the two players: two chess pawns, in place of the two
+// names and the markers beside them. Orange opens the row, Blue follows.
+// The panel is carried by the status bar of the board and by the screen a
+// round closes on, so the rules below stand on their own
 
 @use '../tokens' as *;
 
-.field {
+.field__player[data-player="orange"] {
+    order: $hud-pawn-order-first;
+}
 
-    // Code vibes names its players with a label
-    &--code-vibes {
-        .field__player[data-player="blue"] .field__player-marker,
-        .field__turn-marker[data-player="blue"] {
-            background-image: url("/assets/icons/label_blue.svg");
-        }
+// The name stays for screen readers, the pawn carries it visually
+.field__player-name {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
 
-        .field__player[data-player="orange"] .field__player-marker,
-        .field__turn-marker[data-player="orange"] {
-            background-image: url("/assets/icons/label_orange.svg");
-        }
+.field__player-marker {
+    width: $hud-pawn-width;
+    height: $hud-pawn-height;
+}
+
+.field__player[data-player="blue"] .field__player-marker {
+    background-image: url("/assets/icons/chess_pawn_blue.svg");
+}
+
+.field__player[data-player="orange"] .field__player-marker {
+    background-image: url("/assets/icons/chess_pawn_orange.svg");
+}
+
+// The middle of the bar names the player on turn with the same figure,
+// laid in white on a small block in the colour of that player
+.field__turn-marker {
+    width: auto;
+    height: auto;
+    padding: $hud-turn-figure-padding;
+    background-color: var(#{$hud-turn-figure-background-property},
+        $hud-turn-figure-background-gaming);
+    border-radius: $hud-turn-figure-radius;
+
+    // Orange takes over the block while it is that player's turn
+    &[data-player="orange"] {
+        background-color: $hud-turn-figure-background-orange;
     }
 
-    // Every theme but Code vibes sends two chess pawns into the panel, in
-    // place of the two names and the markers beside them. Orange opens the
-    // row, Blue follows
-    &:not(&--code-vibes) {
-        .field__player[data-player="orange"] {
-            order: $hud-pawn-order-first;
-        }
-
-        // The name stays for screen readers, the pawn carries it visually
-        .field__player-name {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            overflow: hidden;
-            clip-path: inset(50%);
-            white-space: nowrap;
-        }
-
-        // The pawns stand taller than the labels of Code vibes
-        .field__player-marker {
-            width: $hud-pawn-width;
-            height: $hud-pawn-height;
-        }
-
-        .field__player[data-player="blue"] .field__player-marker {
-            background-image: url("/assets/icons/chess_pawn_blue.svg");
-        }
-
-        .field__player[data-player="orange"] .field__player-marker {
-            background-image: url("/assets/icons/chess_pawn_orange.svg");
-        }
-
-        // The middle of the bar names the player on turn with the same
-        // figure, laid in white on a small block in the colour of that player
-        .field__turn-marker {
-            width: auto;
-            height: auto;
-            padding: $hud-turn-figure-padding;
-            background-color: var(#{$hud-turn-figure-background-property},
-                $hud-turn-figure-background-gaming);
-            border-radius: $hud-turn-figure-radius;
-
-            // Orange takes over the block while it is that player's turn
-            &[data-player="orange"] {
-                background-color: $hud-turn-figure-background-orange;
-            }
-
-            &::before {
-                content: "";
-                display: block;
-                width: $hud-turn-figure-width;
-                height: $hud-turn-figure-height;
-                background-color: $color-text;
-                mask: url("/assets/icons/chess_pawn.svg") no-repeat center / contain;
-            }
-        }
+    &::before {
+        content: "";
+        display: block;
+        width: $hud-turn-figure-width;
+        height: $hud-turn-figure-height;
+        background-color: $color-text;
+        mask: url("/assets/icons/chess_pawn.svg") no-repeat center / contain;
     }
 }

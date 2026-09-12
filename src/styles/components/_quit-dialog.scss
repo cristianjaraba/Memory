@@ -1,17 +1,10 @@
-// Dialog that asks before a running round is given up, plus the ways it can
-// come in and go out again. Every theme picks one pair of them
+// Dialog that asks before a running round is given up, plus the way it comes
+// in and goes out again
 
 @use '../tokens' as *;
 
-// The three ways a dialog can come in. Every one of them brings the sheet
-// from a place of its own and fades it in on the way
-@keyframes quit-drop {
-    from {
-        opacity: 0;
-        transform: translateY($quit-entrance-travel-up);
-    }
-}
-
+// The way a dialog comes in: the sheet is sent up from below and fades in
+// on the way
 @keyframes quit-rise {
     from {
         opacity: 0;
@@ -19,34 +12,11 @@
     }
 }
 
-// Neither from above nor from below: the sheet surfaces where it stands,
-// a touch smaller than it ends up
-@keyframes quit-surface {
-    from {
-        opacity: 0;
-        transform: scale($quit-entrance-scale);
-    }
-}
-
-// And the three ways back out again: every theme walks its way in backwards
-@keyframes quit-lift {
-    to {
-        opacity: 0;
-        transform: translateY($quit-entrance-travel-up);
-    }
-}
-
+// And the way back out again: every theme walks its way in backwards
 @keyframes quit-sink {
     to {
         opacity: 0;
         transform: translateY($quit-entrance-travel-down);
-    }
-}
-
-@keyframes quit-settle {
-    to {
-        opacity: 0;
-        transform: scale($quit-entrance-scale);
     }
 }
 
@@ -67,7 +37,7 @@
         height: $quit-height;
         padding: $quit-padding-block $quit-padding-inline;
         background-color: var(#{$quit-background-property},
-            var(#{$hud-background-property}, $hud-background-code-vibes));
+            var(#{$hud-background-property}, $hud-background-gaming));
         // The sheet stands on the dimmed board without a frame around it
         border: none;
         border-radius: var(#{$quit-radius-property}, $hud-radius);
@@ -82,28 +52,28 @@
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            animation: var(#{$quit-entrance-property}, #{$quit-entrance-code-vibes})
-                var(#{$quit-entrance-duration-property}, $quit-entrance-duration-code-vibes) ease-out;
+            animation: var(#{$quit-entrance-property}, #{$quit-entrance-gaming})
+                var(#{$quit-entrance-duration-property}, $quit-entrance-duration-gaming) ease-out;
         }
 
         // The board keeps lying behind the dialog, dimmed down
         &::backdrop {
             background-color: $quit-backdrop-color;
             animation: quit-backdrop
-                var(#{$quit-entrance-duration-property}, $quit-entrance-duration-code-vibes) ease-out;
+                var(#{$quit-entrance-duration-property}, $quit-entrance-duration-gaming) ease-out;
         }
 
         // On the way out the sheet walks its entrance backwards and holds the
         // place it lands in, so the dialog is only closed once it is gone.
         // The class has to follow the entrance above to outrank it
         &--leaving[open] {
-            animation: var(#{$quit-leave-property}, #{$quit-leave-code-vibes})
-                var(#{$quit-leave-duration-property}, $quit-leave-duration-code-vibes) ease-in forwards;
+            animation: var(#{$quit-leave-property}, #{$quit-leave-gaming})
+                var(#{$quit-leave-duration-property}, $quit-leave-duration-gaming) ease-in forwards;
 
             // The dim lifts along with it
             &::backdrop {
                 animation: quit-backdrop
-                    var(#{$quit-leave-duration-property}, $quit-leave-duration-code-vibes) ease-in reverse forwards;
+                    var(#{$quit-leave-duration-property}, $quit-leave-duration-gaming) ease-in reverse forwards;
             }
         }
 
@@ -126,7 +96,7 @@
         // Keeps the question from breaking into one long and one short line
         text-wrap: balance;
         font-family: var(#{$quit-question-font-property},
-            var(#{$hud-turn-font-property}, #{$hud-turn-font-code-vibes}));
+            var(#{$hud-turn-font-property}, #{$hud-turn-font-gaming}));
         font-weight: var(#{$quit-question-weight-property}, 700);
         font-size: var(#{$quit-question-size-property}, $quit-question-size);
         line-height: var(#{$quit-question-line-height-property}, $quit-question-line-height);
@@ -142,20 +112,20 @@
     &__quit-button {
         padding: $button-padding-block $button-padding-inline;
         background-color: var(#{$quit-exit-background-property},
-            var(#{$hud-exit-background-property}, $hud-exit-background-code-vibes));
+            var(#{$hud-exit-background-property}, $hud-exit-background-gaming));
         // The accent frames the button, unless the theme names a tone of its own
-        border: var(#{$hud-exit-border-property}, $hud-exit-border-code-vibes)
-            solid var(#{$quit-exit-border-property}, var(#{$card-match-property}, $card-match-code-vibes));
-        border-radius: var(#{$hud-exit-radius-property}, $hud-exit-radius-code-vibes);
+        border: var(#{$hud-exit-border-property}, $hud-exit-border-gaming)
+            solid var(#{$quit-exit-border-property}, var(#{$card-match-property}, $card-match-gaming));
+        border-radius: var(#{$hud-exit-radius-property}, $hud-exit-radius-gaming);
         color: var(#{$quit-exit-text-property},
-            var(#{$hud-exit-text-property}, $hud-exit-text-code-vibes));
-        font-family: var(#{$hud-exit-font-property}, #{$hud-exit-font-code-vibes});
+            var(#{$hud-exit-text-property}, $hud-exit-text-gaming));
+        font-family: var(#{$hud-exit-font-property}, #{$hud-exit-font-gaming});
         font-weight: 700;
         font-size: var(#{$quit-button-size-property},
-            var(#{$hud-exit-size-property}, $hud-exit-size-code-vibes));
+            var(#{$hud-exit-size-property}, $hud-exit-size-gaming));
         line-height: 100%;
         letter-spacing: var(#{$quit-button-spacing-property},
-            var(#{$hud-exit-spacing-property}, $hud-exit-spacing-code-vibes));
+            var(#{$hud-exit-spacing-property}, $hud-exit-spacing-gaming));
         white-space: nowrap;
         cursor: pointer;
         transition:
@@ -170,14 +140,14 @@
         &:hover,
         &:focus-visible {
             background-color: var(#{$quit-exit-hover-background-property},
-                var(#{$hud-exit-hover-background-property}, $hud-exit-hover-background-code-vibes));
+                var(#{$hud-exit-hover-background-property}, $hud-exit-hover-background-gaming));
             box-shadow:
                 inset 0 0 0 var(#{$quit-exit-hover-ring-property},
-                    var(#{$hud-exit-hover-ring-property}, $hud-exit-hover-ring-code-vibes))
-                    var(#{$quit-exit-border-property}, var(#{$card-match-property}, $card-match-code-vibes)),
+                    var(#{$hud-exit-hover-ring-property}, $hud-exit-hover-ring-gaming))
+                    var(#{$quit-exit-border-property}, var(#{$card-match-property}, $card-match-gaming)),
                 $quit-hover-shadow;
             color: var(#{$quit-exit-hover-text-property},
-                var(#{$hud-exit-hover-text-property}, $hud-exit-hover-text-code-vibes));
+                var(#{$hud-exit-hover-text-property}, $hud-exit-hover-text-gaming));
         }
     }
 

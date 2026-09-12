@@ -8,45 +8,28 @@
 
 // Status bar above the board, it brings its own surface per theme
 // (values taken from the design file)
-$hud-background-code-vibes: #303131;
 $hud-background-gaming: #4f5b76;
-$hud-background-da-projects: #f0f3f4;
 $hud-background-foods: #f0e5d9;
-// Panel that holds both players. Code vibes lies as a lighter block on its
-// bar (the value is measured in the design), the other three lay a white
-// block on theirs
-$hud-panel-code-vibes: #415652;
+// Panel that holds both players, both themes lay a white block on their bar
 $hud-panel-gaming: $color-surface;
-$hud-panel-da-projects: $color-surface;
 $hud-panel-foods: $color-surface;
-// Background of the exit button. Foods is measured in the design, the others
-// keep the tone their panel carried before: the accent laid over the bar
-$hud-exit-background-code-vibes: $hud-panel-code-vibes;
+// Background of the exit button. Foods is measured in the design, Gaming
+// keeps the tone its panel carried before: the accent laid over the bar
 $hud-exit-background-gaming: color.mix($card-match-gaming, $hud-background-gaming, 25%);
-$hud-exit-background-da-projects: color.mix($card-match-da-projects, $hud-background-da-projects, 15%);
 $hud-exit-background-foods: #fff9f2;
-// Label and arrow of the exit button. The two light themes write it in their
-// own accent, the two dark ones keep the text colour of the bar
-$hud-exit-text-code-vibes: $color-text;
+// Label and arrow of the exit button. Foods writes it in its own accent,
+// Gaming keeps the text colour of its bar
 $hud-exit-text-gaming: $color-text;
-$hud-exit-text-da-projects: $card-match-da-projects;
 $hud-exit-text-foods: $card-match-foods;
-// The exit button under the pointer. Every theme answers in its own way: the
-// two light ones fill the button with their accent and write it white, Gaming
-// only lights up the arrow, Code vibes draws its frame thicker
-$hud-exit-hover-background-code-vibes: $hud-exit-background-code-vibes;
+// The exit button under the pointer. Every theme answers in its own way:
+// Foods fills the button with its accent and writes it white, Gaming only
+// lights up the arrow
 $hud-exit-hover-background-gaming: $hud-exit-background-gaming;
-$hud-exit-hover-background-da-projects: $card-match-da-projects;
 $hud-exit-hover-background-foods: $card-match-foods;
-$hud-exit-hover-text-code-vibes: $hud-exit-text-code-vibes;
 $hud-exit-hover-text-gaming: $hud-exit-text-gaming;
-$hud-exit-hover-text-da-projects: $color-text;
 $hud-exit-hover-text-foods: $color-text;
-// The arrow follows the label everywhere but in Gaming, which lights it up
-// in its own signal red
-$hud-exit-hover-icon-code-vibes: currentColor;
+// The arrow follows the label, only Gaming lights it up in its signal red
 $hud-exit-hover-icon-gaming: #e71c4f;
-$hud-exit-hover-icon-da-projects: currentColor;
 $hud-exit-hover-icon-foods: currentColor;
 // Properties the status bar reads its colours from, the theme of the
 // board sets them
@@ -66,10 +49,8 @@ $hud-padding-block: 1.25rem;
 $hud-padding-inline: 1.5rem;
 $hud-gap: 1.5rem;
 $hud-radius: 12px;
-// Panel of the players: Code vibes runs it square, the other three round it
-$hud-panel-radius-code-vibes: 0;
+// Panel of the players, both themes round it
 $hud-panel-radius-gaming: 10px;
-$hud-panel-radius-da-projects: 10px;
 $hud-panel-radius-foods: 10px;
 $hud-panel-radius-property: --hud-panel-radius;
 // Gap between a marker and the text next to it
@@ -85,13 +66,10 @@ $hud-panel-padding-block: 1.25rem;
 $hud-panel-padding-inline: 1.25rem;
 // Scores are written a little smaller than the names next to them
 $hud-score-scale: 0.8em;
-// DA Projects and Foods write their points in a face of their own, the two
-// dark themes keep the one the panel hands down (values from the design file)
-$hud-score-font-da-projects: $font-figtree;
+// Foods writes its points in a face of its own, Gaming keeps the one the
+// panel hands down (values from the design file)
 $hud-score-font-foods: $font-delius-unicase;
-$hud-score-weight-da-projects: 700;
 $hud-score-weight-foods: 700;
-$hud-score-size-da-projects: 30px;
 $hud-score-size-foods: 30px;
 $hud-score-font-property: --hud-score-font;
 $hud-score-weight-property: --hud-score-weight;
@@ -101,8 +79,7 @@ $hud-score-min-width: 2ch;
 // Marker of a player (natural size of the exports)
 $hud-marker-width: 24px;
 $hud-marker-height: 20px;
-// Chess pawn that stands in for a player everywhere but in Code vibes
-// (natural size of the export)
+// Chess pawn that stands in for a player (natural size of the export)
 $hud-pawn-width: 26px;
 $hud-pawn-height: 32px;
 // Orange stands first in the row, Blue keeps the place it has in the markup
@@ -112,18 +89,12 @@ $hud-exit-icon-width: 26px;
 $hud-exit-icon-height: 23px;
 // Label of the exit button, every theme writes it in its own face
 // (values taken from the design file)
-$hud-exit-font-code-vibes: $font-display;
 $hud-exit-font-gaming: $font-score;
-$hud-exit-font-da-projects: $font-figtree;
 $hud-exit-font-foods: $font-delius-unicase;
-$hud-exit-size-code-vibes: 24px;
 $hud-exit-size-gaming: 20px;
-$hud-exit-size-da-projects: 20px;
 $hud-exit-size-foods: 16px;
-// Only Gaming pulls its letters apart, the other three set them normally
-$hud-exit-spacing-code-vibes: normal;
+// Only Gaming pulls its letters apart, Foods sets them normally
 $hud-exit-spacing-gaming: 0.04em;
-$hud-exit-spacing-da-projects: normal;
 $hud-exit-spacing-foods: normal;
 $hud-exit-font-property: --hud-exit-font;
 $hud-exit-size-property: --hud-exit-size;
@@ -132,23 +103,17 @@ $hud-exit-spacing-property: --hud-exit-spacing;
 // arrow. Trimming the line box down to the letters themselves lets the button
 // centre both on one line. Delius Unicase reports a cap height far too small
 // for that, so Foods is centred on the untrimmed line box instead
-$hud-exit-trim-code-vibes: trim-both cap alphabetic;
 $hud-exit-trim-gaming: trim-both cap alphabetic;
-$hud-exit-trim-da-projects: trim-both cap alphabetic;
 $hud-exit-trim-foods: normal;
 $hud-exit-trim-property: --hud-exit-trim;
-// Frame of the exit button, DA projects carries the button without one
-$hud-exit-border-code-vibes: 2px;
+// Frame of the exit button, both themes carry one
 $hud-exit-border-gaming: 2px;
-$hud-exit-border-da-projects: 0;
 $hud-exit-border-foods: 2px;
 $hud-exit-border-property: --hud-exit-border;
 $hud-exit-hover-ring-property: --hud-exit-hover-ring;
-// Under the pointer Code vibes draws its frame twice as strong. The second
-// half is laid inside the button as a ring, so the box keeps its size
-$hud-exit-hover-ring-code-vibes: 2px;
+// Room for a second half of the frame, laid inside the button as a ring, so
+// a theme can draw it thicker under the pointer without growing the box
 $hud-exit-hover-ring-gaming: 0;
-$hud-exit-hover-ring-da-projects: 0;
 $hud-exit-hover-ring-foods: 0;
 // Frame of the Foods exit button. It is not the border of the button but a
 // line laid over it, and it is drawn twice: a second, thinner stroke runs a
@@ -158,31 +123,19 @@ $hud-exit-sketch-width: 3px;
 $hud-exit-sketch-second-width: 2px;
 $hud-exit-sketch-second-angle: -1.2deg;
 $hud-exit-sketch-radius: 18px;
-// Code vibes keeps the button square, the other three round it: Gaming and
-// DA Projects like the bar, Foods to match the drawn frame laid over it
-$hud-exit-radius-code-vibes: 0;
+// Both themes round the button: Gaming like its bar, Foods to match the
+// drawn frame laid over it
 $hud-exit-radius-gaming: $hud-radius;
-$hud-exit-radius-da-projects: $hud-radius;
 $hud-exit-radius-foods: $hud-exit-sketch-radius;
 $hud-exit-radius-property: --hud-exit-radius;
 
 // "Current player" above the board, every theme writes it in its own way
 // (values taken from the design file)
-$hud-turn-font-code-vibes: $font-display;
-$hud-turn-weight-code-vibes: 400;
-$hud-turn-size-code-vibes: 26px;
-$hud-turn-spacing-code-vibes: 0;
-$hud-turn-color-code-vibes: $color-text;
 $hud-turn-font-gaming: $font-score;
 $hud-turn-weight-gaming: 700;
 $hud-turn-size-gaming: 32px;
 $hud-turn-spacing-gaming: 0.07em;
 $hud-turn-color-gaming: $color-text;
-$hud-turn-font-da-projects: $font-figtree;
-$hud-turn-weight-da-projects: 700;
-$hud-turn-size-da-projects: 32px;
-$hud-turn-spacing-da-projects: 0;
-$hud-turn-color-da-projects: #1e7594;
 $hud-turn-font-foods: $font-klee-one;
 $hud-turn-weight-foods: 600;
 $hud-turn-size-foods: 32px;
@@ -197,17 +150,16 @@ $hud-turn-color-property: --hud-turn-color;
 // Marker of the player on turn, it stands bigger than the two in the panel
 $hud-turn-marker-width: 28px;
 $hud-turn-marker-height: 24px;
-// Outside Code vibes the player on turn is named by a white chess pawn on a
-// small block of colour (natural size of the export, plus its surround)
+// The player on turn is named by a white chess pawn on a small block of
+// colour (natural size of the export, plus its surround)
 $hud-turn-figure-width: 22px;
 $hud-turn-figure-height: 27px;
 $hud-turn-figure-padding: 6px;
 // The block carries just a hint of a rounding (value from the design file)
 $hud-turn-figure-radius: 3px;
 // The block takes the colour of the player on turn. Blue is the tone of the
-// theme, Orange is the same in all three
+// theme, Orange is the same in both
 $hud-turn-figure-background-gaming: #1faafc;
-$hud-turn-figure-background-da-projects: #097fc5;
 $hud-turn-figure-background-foods: #097fc5;
 $hud-turn-figure-background-orange: #f3832d;
 $hud-turn-figure-background-property: --hud-turn-figure-background;

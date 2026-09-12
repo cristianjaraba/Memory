@@ -5,61 +5,6 @@
 
 .field {
     // One block per theme: surface of the board plus size and cover of its cards
-    &--code-vibes {
-        #{$board-gap-property}: $board-gap-code-vibes;
-        #{$card-width-property}: $card-width-code-vibes;
-        #{$card-height-property}: $card-height-code-vibes;
-        #{$card-radius-property}: $card-radius-code-vibes;
-        #{$card-motif-inset-property}: $card-motif-inset-code-vibes;
-        #{$card-front-property}: #{$card-front-code-vibes};
-        #{$card-back-property}: $card-back-code-vibes;
-        #{$card-match-property}: $card-match-code-vibes;
-        #{$card-match-width-property}: $card-match-width-code-vibes;
-        #{$hud-background-property}: $hud-background-code-vibes;
-        #{$hud-panel-property}: #{$hud-panel-code-vibes};
-        #{$hud-exit-background-property}: #{$hud-exit-background-code-vibes};
-        #{$hud-exit-font-property}: #{$hud-exit-font-code-vibes};
-        #{$hud-exit-size-property}: $hud-exit-size-code-vibes;
-        #{$hud-exit-spacing-property}: $hud-exit-spacing-code-vibes;
-        #{$hud-exit-trim-property}: #{$hud-exit-trim-code-vibes};
-        #{$hud-exit-text-property}: $hud-exit-text-code-vibes;
-        #{$hud-exit-border-property}: $hud-exit-border-code-vibes;
-        #{$hud-exit-hover-background-property}: #{$hud-exit-hover-background-code-vibes};
-        #{$hud-exit-hover-text-property}: $hud-exit-hover-text-code-vibes;
-        #{$hud-exit-hover-icon-property}: $hud-exit-hover-icon-code-vibes;
-        #{$hud-exit-hover-ring-property}: $hud-exit-hover-ring-code-vibes;
-        #{$hud-panel-radius-property}: $hud-panel-radius-code-vibes;
-        #{$hud-exit-radius-property}: $hud-exit-radius-code-vibes;
-        #{$hud-text-property}: $color-text;
-        #{$hud-turn-font-property}: #{$hud-turn-font-code-vibes};
-        #{$hud-turn-weight-property}: #{$hud-turn-weight-code-vibes};
-        #{$hud-turn-size-property}: #{$hud-turn-size-code-vibes};
-        #{$hud-turn-spacing-property}: #{$hud-turn-spacing-code-vibes};
-        #{$hud-turn-color-property}: #{$hud-turn-color-code-vibes};
-        #{$quit-entrance-property}: #{$quit-entrance-code-vibes};
-        #{$quit-entrance-duration-property}: $quit-entrance-duration-code-vibes;
-        #{$quit-leave-property}: #{$quit-leave-code-vibes};
-        #{$quit-leave-duration-property}: $quit-leave-duration-code-vibes;
-        #{$quit-background-property}: $quit-background-code-vibes;
-        #{$quit-text-property}: $quit-text-code-vibes;
-        #{$quit-radius-property}: $quit-radius-code-vibes;
-        #{$quit-question-font-property}: #{$quit-question-font-code-vibes};
-        #{$quit-question-size-property}: $quit-question-size-code-vibes;
-        #{$quit-question-line-height-property}: $quit-question-line-height-code-vibes;
-        #{$quit-button-size-property}: $quit-button-size-code-vibes;
-        #{$quit-stay-background-property}: $quit-stay-background-code-vibes;
-        #{$quit-stay-text-property}: $quit-stay-text-code-vibes;
-        #{$quit-exit-background-property}: $quit-exit-background-code-vibes;
-        #{$quit-exit-text-property}: $quit-exit-text-code-vibes;
-        #{$quit-exit-hover-background-property}: $quit-exit-hover-background-code-vibes;
-        #{$quit-exit-hover-text-property}: $quit-exit-hover-text-code-vibes;
-        #{$quit-exit-hover-ring-property}: $quit-exit-hover-ring-code-vibes;
-        #{$quit-stay-hover-background-property}: $quit-stay-hover-background-code-vibes;
-        #{$quit-stay-hover-ring-property}: $quit-stay-hover-ring-code-vibes;
-        background-color: $color-background;
-        color: $color-text;
-    }
-
     &--gaming {
         #{$board-gap-property}: $board-gap-gaming;
         #{$card-width-property}: $card-width-gaming;
@@ -117,61 +62,6 @@
         #{$quit-stay-hover-text-property}: $quit-stay-hover-text-gaming;
         background-color: $color-field-gaming;
         color: $color-text;
-    }
-
-    &--da-projects {
-        #{$board-gap-property}: $board-gap-da-projects;
-        #{$card-width-property}: $card-width-da-projects;
-        #{$card-height-property}: $card-height-da-projects;
-        #{$card-radius-property}: $card-radius-da-projects;
-        #{$card-motif-inset-property}: $card-motif-inset-da-projects;
-        #{$card-front-property}: #{$card-front-da-projects};
-        #{$card-back-property}: $card-back-da-projects;
-        #{$card-match-property}: $card-match-da-projects;
-        #{$card-match-width-property}: $card-match-width-da-projects;
-        #{$hud-background-property}: $hud-background-da-projects;
-        #{$hud-panel-property}: #{$hud-panel-da-projects};
-        #{$hud-exit-background-property}: #{$hud-exit-background-da-projects};
-        #{$hud-exit-font-property}: #{$hud-exit-font-da-projects};
-        #{$hud-exit-size-property}: $hud-exit-size-da-projects;
-        #{$hud-exit-spacing-property}: $hud-exit-spacing-da-projects;
-        #{$hud-exit-trim-property}: #{$hud-exit-trim-da-projects};
-        #{$hud-exit-text-property}: $hud-exit-text-da-projects;
-        #{$hud-exit-border-property}: $hud-exit-border-da-projects;
-        #{$hud-exit-hover-background-property}: #{$hud-exit-hover-background-da-projects};
-        #{$hud-exit-hover-text-property}: $hud-exit-hover-text-da-projects;
-        #{$hud-exit-hover-icon-property}: $hud-exit-hover-icon-da-projects;
-        #{$hud-exit-hover-ring-property}: $hud-exit-hover-ring-da-projects;
-        #{$hud-panel-radius-property}: $hud-panel-radius-da-projects;
-        #{$hud-exit-radius-property}: $hud-exit-radius-da-projects;
-        #{$hud-text-property}: $color-surface-text;
-        #{$hud-turn-font-property}: #{$hud-turn-font-da-projects};
-        #{$hud-turn-weight-property}: #{$hud-turn-weight-da-projects};
-        #{$hud-turn-size-property}: #{$hud-turn-size-da-projects};
-        #{$hud-turn-spacing-property}: #{$hud-turn-spacing-da-projects};
-        #{$hud-turn-color-property}: #{$hud-turn-color-da-projects};
-        #{$hud-turn-figure-background-property}: $hud-turn-figure-background-da-projects;
-        #{$quit-entrance-property}: #{$quit-entrance-da-projects};
-        #{$quit-entrance-duration-property}: $quit-entrance-duration-da-projects;
-        #{$quit-leave-property}: #{$quit-leave-da-projects};
-        #{$quit-leave-duration-property}: $quit-leave-duration-da-projects;
-        #{$quit-background-property}: $quit-background-da-projects;
-        #{$quit-radius-property}: $quit-radius-da-projects;
-        #{$quit-question-font-property}: #{$quit-question-font-da-projects};
-        #{$quit-question-size-property}: $quit-question-size-da-projects;
-        #{$quit-question-line-height-property}: $quit-question-line-height-da-projects;
-        #{$quit-button-size-property}: $quit-button-size-da-projects;
-        #{$quit-stay-background-property}: $quit-stay-background-da-projects;
-        #{$quit-stay-text-property}: $quit-stay-text-da-projects;
-        #{$quit-exit-background-property}: $quit-exit-background-da-projects;
-        #{$quit-exit-text-property}: $quit-exit-text-da-projects;
-        #{$quit-exit-hover-background-property}: $quit-exit-hover-background-da-projects;
-        #{$quit-exit-hover-text-property}: $quit-exit-hover-text-da-projects;
-        #{$quit-stay-hover-background-property}: $quit-stay-hover-background-da-projects;
-        #{$quit-stay-hover-text-property}: $quit-stay-hover-text-da-projects;
-        #{$hud-score-font-property}: #{$hud-score-font-da-projects};
-        #{$hud-score-weight-property}: #{$hud-score-weight-da-projects};
-        #{$hud-score-size-property}: #{$hud-score-size-da-projects};
     }
 
     &--foods {

@@ -37,22 +37,13 @@
     src: url("/assets/fonts/orbitron-v35-latin-700.woff2") format('woff2');
 }
 
-// "Current player" of the Code vibes theme
+// Body weight of the display face, used by the home and settings screens
 @font-face {
     font-family: 'Red Rose';
     font-style: normal;
     font-weight: 400;
     font-display: swap;
     src: url("/assets/fonts/red-rose-v25-latin-regular.woff2") format('woff2');
-}
-
-// "Current player" of the DA Projects theme
-@font-face {
-    font-family: 'Figtree';
-    font-style: normal;
-    font-weight: 700;
-    font-display: swap;
-    src: url("/assets/fonts/figtree-v9-latin-700.woff2") format('woff2');
 }
 
 // "Current player" of the Foods theme

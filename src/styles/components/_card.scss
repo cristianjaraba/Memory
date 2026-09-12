@@ -5,7 +5,7 @@
 .card {
     // Fills its grid cell, its height comes from the theme of the board
     width: 100%;
-    height: var(#{$card-height-property}, $card-height-code-vibes);
+    height: var(#{$card-height-property}, $card-height-gaming);
     padding: 0;
     background-color: transparent;
     border: none;
@@ -30,13 +30,13 @@
             url("/assets/icons/pc.svg") no-repeat center /
                 #{$card-emblem-width} #{$card-emblem-height},
             var(#{$card-front-property}, $color-background);
-        border-radius: var(#{$card-radius-property}, $card-radius-code-vibes);
+        border-radius: var(#{$card-radius-property}, $card-radius-gaming);
         backface-visibility: hidden;
 
         // The side with the motif, it is only seen once the card is flipped
         &--back {
             transform: rotateY(180deg);
-            background: var(#{$card-back-property}, $card-back-code-vibes);
+            background: var(#{$card-back-property}, $card-back-gaming);
         }
     }
 
@@ -65,8 +65,8 @@
     // an outline and pulled inwards, so it stays inside the card and leaves
     // the room for the motif untouched
     &.is-matched .card__face {
-        outline: var(#{$card-match-width-property}, $card-match-width-code-vibes)
-            solid var(#{$card-match-property}, $card-match-code-vibes);
-        outline-offset: calc(-1 * var(#{$card-match-width-property}, #{$card-match-width-code-vibes}));
+        outline: var(#{$card-match-width-property}, $card-match-width-gaming)
+            solid var(#{$card-match-property}, $card-match-gaming);
+        outline-offset: calc(-1 * var(#{$card-match-width-property}, #{$card-match-width-gaming}));
     }
 }

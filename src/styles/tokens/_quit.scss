@@ -26,31 +26,7 @@ $quit-backdrop-color: rgba(0, 0, 0, 0.6);
 $quit-hover-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 
 // Wherever a theme says nothing of its own, the dialog follows the bar it was
-// opened from. Code vibes does say something: it lays its question on a white
-// sheet with square corners and writes it larger than anywhere else, and it
-// dresses the two answers in the mint of the theme instead of the yellow of
-// the app (values taken from the design file)
-$quit-background-code-vibes: $color-surface;
-$quit-text-code-vibes: $color-surface-text;
-$quit-radius-code-vibes: 0;
-$quit-question-font-code-vibes: $font-display;
-$quit-question-size-code-vibes: 32px;
-$quit-question-line-height-code-vibes: 40px;
-$quit-button-size-code-vibes: 20px;
-$quit-stay-background-code-vibes: #66cfbc;
-$quit-stay-text-code-vibes: $color-text;
-// The way out is written in the accent of the theme, on the lightest tint of it
-$quit-exit-background-code-vibes: color.mix($card-match-code-vibes, $color-surface, 8%);
-$quit-exit-text-code-vibes: $card-match-code-vibes;
-// Under the pointer the tint of the way out deepens a little, the way back
-// pales instead, and both draw their frame twice as strong. The second half
-// of a frame is laid inside the button, so neither box grows
-$quit-exit-hover-background-code-vibes: color.mix($card-match-code-vibes, $color-surface, 18%);
-$quit-exit-hover-text-code-vibes: $quit-exit-text-code-vibes;
-$quit-exit-hover-ring-code-vibes: 2px;
-$quit-stay-hover-background-code-vibes: color.mix($color-surface, $quit-stay-background-code-vibes, 25%);
-$quit-stay-hover-ring-code-vibes: 2px;
-// Gaming lays its dialog on a white sheet, rounds it a little tighter than
+// opened from. Gaming lays its dialog on a white sheet, rounds it a little tighter than
 // its bar and writes the question in the face of its scores, in the tone its
 // board is painted in. Its answers stand apart: the way back is filled with
 // the pink of the theme, the way out written in the signal red the theme
@@ -78,28 +54,6 @@ $quit-exit-hover-ring-gaming: 2px;
 $quit-stay-hover-background-gaming: $color-surface;
 $quit-stay-hover-text-gaming: $quit-stay-background-gaming;
 
-// DA Projects lays its dialog on the palest of its blues and writes the
-// question larger than its bar does. The way back stands on a pale blue and is
-// written in the accent of the theme, the way out on a warm red written white
-// (values taken from the design file)
-$quit-background-da-projects: #f0f6f9;
-$quit-radius-da-projects: 10px;
-$quit-question-font-da-projects: $font-figtree;
-$quit-question-size-da-projects: 28px;
-$quit-question-line-height-da-projects: 40px;
-$quit-button-size-da-projects: 16px;
-$quit-stay-background-da-projects: #bfe5f2;
-$quit-stay-text-da-projects: $card-match-da-projects;
-$quit-exit-background-da-projects: #fd8a81;
-$quit-exit-text-da-projects: $color-text;
-// Under the pointer the way back trades places with itself: the accent it was
-// written in fills it, and the label turns white. The warm red of the way out
-// deepens and keeps its white label
-$quit-exit-hover-background-da-projects: #ed5b50;
-$quit-exit-hover-text-da-projects: $color-text;
-$quit-stay-hover-background-da-projects: $card-match-da-projects;
-$quit-stay-hover-text-da-projects: $color-text;
-
 // Foods lays its dialog on a light grey sheet and writes the question in the
 // brown of its own hand. The way back is filled with the warm yellow of the
 // theme, the way out keeps the dressing of the bar, drawn frame and all
@@ -120,35 +74,22 @@ $quit-exit-hover-background-foods: $hud-exit-sketch-color;
 $quit-exit-hover-text-foods: $color-text;
 $quit-stay-hover-background-foods: $hud-exit-sketch-color;
 
-// The way the dialog comes in. Code vibes lets it drop from above, Gaming and
-// Foods send it up from below, DA Projects lets it surface where it stands.
-// The two that travel start off the page: half the window plus half the sheet
-// puts them just past the edge, whatever the window measures
+// The way the dialog comes in: both themes send it up from below. It starts
+// off the page, half the window plus half the sheet puts it just past the
+// edge, whatever the window measures
 $quit-entrance-travel-down: calc(50vh + 50%);
-$quit-entrance-travel-up: calc(-50vh - 50%);
-$quit-entrance-scale: 0.94;
-$quit-entrance-code-vibes: quit-drop;
 $quit-entrance-gaming: quit-rise;
-$quit-entrance-da-projects: quit-surface;
 $quit-entrance-foods: quit-rise;
-// The long way in is walked at ease, the one that surfaces on the spot is over
-// as quickly as it was
-$quit-entrance-duration-code-vibes: 520ms;
+// The way in is walked at ease
 $quit-entrance-duration-gaming: 520ms;
-$quit-entrance-duration-da-projects: 260ms;
 $quit-entrance-duration-foods: 520ms;
 
-// The way the dialog leaves again: every theme walks its own way in backwards.
-// Code vibes pulls the sheet back up where it came from, Gaming and Foods let
-// it sink down again, DA Projects lets it fade away as softly as it surfaced
-$quit-leave-code-vibes: quit-lift;
+// The way the dialog leaves again: every theme walks its own way in
+// backwards, both let the sheet sink down where it came from
 $quit-leave-gaming: quit-sink;
-$quit-leave-da-projects: quit-settle;
 $quit-leave-foods: quit-sink;
 // Leaving is a touch brisker than arriving, nobody waits for an answer twice
-$quit-leave-duration-code-vibes: 420ms;
 $quit-leave-duration-gaming: 420ms;
-$quit-leave-duration-da-projects: 260ms;
 $quit-leave-duration-foods: 420ms;
 
 // Properties the dialog reads its own dressing from, a theme that sets none

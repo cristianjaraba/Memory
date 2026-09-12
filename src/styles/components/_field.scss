@@ -29,7 +29,7 @@
         max-width: $hud-max-width;
         margin-bottom: $hud-margin-bottom;
         padding: $hud-padding-block $hud-padding-inline;
-        background-color: var(#{$hud-background-property}, $hud-background-code-vibes);
+        background-color: var(#{$hud-background-property}, $hud-background-gaming);
         border-radius: $hud-radius;
         color: var(#{$hud-text-property}, $color-text);
     }
@@ -43,12 +43,12 @@
         justify-self: start;
         margin: 0;
         padding: $hud-panel-padding-block $hud-panel-padding-inline;
-        background-color: var(#{$hud-panel-property}, $hud-panel-code-vibes);
-        border-radius: var(#{$hud-panel-radius-property}, $hud-panel-radius-code-vibes);
+        background-color: var(#{$hud-panel-property}, $hud-panel-gaming);
+        border-radius: var(#{$hud-panel-radius-property}, $hud-panel-radius-gaming);
         list-style: none;
         // The whole bar is written in the face the picked theme brings along
-        font-family: var(#{$hud-turn-font-property}, #{$hud-turn-font-code-vibes});
-        font-size: var(#{$hud-turn-size-property}, #{$hud-turn-size-code-vibes});
+        font-family: var(#{$hud-turn-font-property}, #{$hud-turn-font-gaming});
+        font-size: var(#{$hud-turn-size-property}, #{$hud-turn-size-gaming});
         line-height: 100%;
     }
 
@@ -89,12 +89,12 @@
         align-items: center;
         gap: $hud-item-gap;
         margin: 0;
-        font-family: var(#{$hud-turn-font-property}, #{$hud-turn-font-code-vibes});
-        font-weight: var(#{$hud-turn-weight-property}, #{$hud-turn-weight-code-vibes});
-        font-size: var(#{$hud-turn-size-property}, #{$hud-turn-size-code-vibes});
+        font-family: var(#{$hud-turn-font-property}, #{$hud-turn-font-gaming});
+        font-weight: var(#{$hud-turn-weight-property}, #{$hud-turn-weight-gaming});
+        font-size: var(#{$hud-turn-size-property}, #{$hud-turn-size-gaming});
         line-height: 100%;
-        letter-spacing: var(#{$hud-turn-spacing-property}, #{$hud-turn-spacing-code-vibes});
-        color: var(#{$hud-turn-color-property}, #{$hud-turn-color-code-vibes});
+        letter-spacing: var(#{$hud-turn-spacing-property}, #{$hud-turn-spacing-gaming});
+        color: var(#{$hud-turn-color-property}, #{$hud-turn-color-gaming});
         white-space: nowrap;
     }
 
@@ -131,17 +131,17 @@
         // Closes the row on the right end of the bar
         justify-self: end;
         padding: $button-padding-block $button-padding-inline;
-        background-color: var(#{$hud-exit-background-property}, $hud-exit-background-code-vibes);
-        // The accent of the theme frames the button, DA projects goes without
-        border: var(#{$hud-exit-border-property}, $hud-exit-border-code-vibes)
-            solid var(#{$card-match-property}, $card-match-code-vibes);
-        border-radius: var(#{$hud-exit-radius-property}, $hud-exit-radius-code-vibes);
-        color: var(#{$hud-exit-text-property}, $hud-exit-text-code-vibes);
-        font-family: var(#{$hud-exit-font-property}, #{$hud-exit-font-code-vibes});
+        background-color: var(#{$hud-exit-background-property}, $hud-exit-background-gaming);
+        // The accent of the theme frames the button
+        border: var(#{$hud-exit-border-property}, $hud-exit-border-gaming)
+            solid var(#{$card-match-property}, $card-match-gaming);
+        border-radius: var(#{$hud-exit-radius-property}, $hud-exit-radius-gaming);
+        color: var(#{$hud-exit-text-property}, $hud-exit-text-gaming);
+        font-family: var(#{$hud-exit-font-property}, #{$hud-exit-font-gaming});
         font-weight: 700;
-        font-size: var(#{$hud-exit-size-property}, $hud-exit-size-code-vibes);
+        font-size: var(#{$hud-exit-size-property}, $hud-exit-size-gaming);
         line-height: 100%;
-        letter-spacing: var(#{$hud-exit-spacing-property}, $hud-exit-spacing-code-vibes);
+        letter-spacing: var(#{$hud-exit-spacing-property}, $hud-exit-spacing-gaming);
         white-space: nowrap;
         cursor: pointer;
 
@@ -151,15 +151,15 @@
         &:focus-visible {
             #{$hud-exit-icon-property}: var(#{$hud-exit-hover-icon-property}, currentColor);
             background-color: var(#{$hud-exit-hover-background-property},
-                $hud-exit-hover-background-code-vibes);
-            box-shadow: inset 0 0 0 var(#{$hud-exit-hover-ring-property}, $hud-exit-hover-ring-code-vibes)
-                var(#{$card-match-property}, $card-match-code-vibes);
-            color: var(#{$hud-exit-hover-text-property}, $hud-exit-hover-text-code-vibes);
+                $hud-exit-hover-background-gaming);
+            box-shadow: inset 0 0 0 var(#{$hud-exit-hover-ring-property}, $hud-exit-hover-ring-gaming)
+                var(#{$card-match-property}, $card-match-gaming);
+            color: var(#{$hud-exit-hover-text-property}, $hud-exit-hover-text-gaming);
         }
     }
 
     &__exit-label {
-        text-box: var(#{$hud-exit-trim-property}, #{$hud-exit-trim-code-vibes});
+        text-box: var(#{$hud-exit-trim-property}, #{$hud-exit-trim-gaming});
     }
 
     // Drawn as a mask, so the arrow always takes the colour of the bar
@@ -179,8 +179,8 @@
         align-self: start;
         display: grid;
         grid-template-columns:
-            repeat(var(--board-columns, #{$board-columns-default}), var(#{$card-width-property}, $card-width-code-vibes));
-        gap: var(#{$board-gap-property}, $board-gap-code-vibes);
+            repeat(var(--board-columns, #{$board-columns-default}), var(#{$card-width-property}, $card-width-gaming));
+        gap: var(#{$board-gap-property}, $board-gap-gaming);
         margin: 0;
         padding: 0;
         list-style: none;
