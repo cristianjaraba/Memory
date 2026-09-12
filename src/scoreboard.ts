@@ -1,3 +1,8 @@
+/**
+ * @file Keeps the points of a round and the turn, and writes both into the
+ * status bar above the board.
+ */
+
 import { getPickedInput } from './settings-form';
 
 /** The two players of a round, in the order they sit in the status bar. */
@@ -21,6 +26,7 @@ const POINTS_PER_PAIR = 1;
 /** Points every player starts a round with. */
 const SCORE_START = 0;
 
+/** One of the two colours a round is played in. */
 export type Player = (typeof PLAYERS)[number];
 
 /** Points of the running round, one entry per player. */
@@ -40,6 +46,8 @@ export function resetScores(): void {
 /**
  * The colour picked in the settings. That player takes the first turn, and
  * the screen a round closes on is seen from that player.
+ *
+ * @returns The picked colour, blue where nothing is picked yet.
  */
 export function getPickedPlayer(): Player {
   const picked = getPickedInput('player-color')?.value;
@@ -67,7 +75,11 @@ function showTurn(): void {
   }
 }
 
-/** Writes the points of one player into the status bar. */
+/**
+ * Writes the points of one player into the status bar.
+ *
+ * @param player - The colour whose output is written anew.
+ */
 function showScore(player: Player): void {
   const output = document.getElementById(SCORE_OUTPUTS[player]);
   if (output) {
@@ -75,12 +87,20 @@ function showScore(player: Player): void {
   }
 }
 
-/** Points both players stand on. */
+/**
+ * Points both players stand on.
+ *
+ * @returns A copy of the scores, so no caller writes into the round.
+ */
 export function getScores(): Record<Player, number> {
   return { ...scores };
 }
 
-/** The player with the most points, none if both stand equal. */
+/**
+ * The player with the most points, none if both stand equal.
+ *
+ * @returns The leading colour, or null on a draw.
+ */
 export function getWinner(): Player | null {
   const [first, second] = PLAYERS;
   if (scores[first] === scores[second]) {

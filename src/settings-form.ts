@@ -1,3 +1,8 @@
+/**
+ * @file Reads the picks of the settings form and keeps the summary panel,
+ * its cover and the start button in step with them.
+ */
+
 /** Radio group of the settings form and the output that mirrors it. */
 const SUMMARY_OUTPUTS: Record<string, string> = {
   theme: 'summary-theme',
@@ -53,7 +58,12 @@ function updateSummary(): void {
   updatePanelButtons();
 }
 
-/** Returns the label of the radio picked in the given group. */
+/**
+ * Returns the label of the radio picked in the given group.
+ *
+ * @param group - Name the radios of that group share.
+ * @returns The label text, empty where the group carries no pick.
+ */
 function getPickedLabel(group: string): string {
   const input = getPickedInput(group);
   if (!input) {
@@ -63,12 +73,21 @@ function getPickedLabel(group: string): string {
   return label?.textContent?.trim() ?? '';
 }
 
-/** Returns the picked radio of the given group, if there is one. */
+/**
+ * Returns the picked radio of the given group, if there is one.
+ *
+ * @param group - Name the radios of that group share.
+ * @returns The checked radio, or null while the group is untouched.
+ */
 export function getPickedInput(group: string): HTMLInputElement | null {
   return document.querySelector<HTMLInputElement>(`.settings__input[name="${group}"]:checked`);
 }
 
-/** Tells whether every group of the settings form carries a pick. */
+/**
+ * Tells whether every group of the settings form carries a pick.
+ *
+ * @returns True once theme, colour and board size are all picked.
+ */
 function areAllPicksIn(): boolean {
   return Object.keys(SUMMARY_OUTPUTS).every(group => getPickedInput(group) !== null);
 }
@@ -96,7 +115,11 @@ function markUncoveredPanel(): void {
   summary?.classList.toggle(UNCOVERED_CLASS, arePicksUncovered);
 }
 
-/** Returns the cover that lies over the panel while the picks are hidden. */
+/**
+ * Returns the cover that lies over the panel while the picks are hidden.
+ *
+ * @returns The cover button, or null where the screen carries none.
+ */
 function getCoverButton(): HTMLButtonElement | null {
   return document.querySelector<HTMLButtonElement>('.settings__reveal');
 }

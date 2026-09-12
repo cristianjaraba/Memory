@@ -1,4 +1,9 @@
 /**
+ * @file Holds the card motifs of every theme and hands them out as urls the
+ * board can put straight into an image.
+ */
+
+/**
  * Motifs of every theme, one entry per picture in public/assets.
  * A round needs half as many motifs as it has cards, each one is used twice,
  * so every theme holds enough motifs for the largest board (18 pairs).
@@ -52,12 +57,20 @@ const THEME_FILES: Record<string, string[]> = {
  * Builds the url of a file inside the public folder. The base path of the
  * build is put in front of it, so the pictures are also found when the game
  * does not run in the root folder of a domain.
+ *
+ * @param file - Path of the picture, seen from the public folder.
+ * @returns The url the browser loads that picture from.
  */
 function toAssetUrl(file: string): string {
   return encodeURI(import.meta.env.BASE_URL + file);
 }
 
-/** Returns the motif urls of a theme, an empty list if it is unknown. */
+/**
+ * Returns the motif urls of a theme, an empty list if it is unknown.
+ *
+ * @param theme - Name of the theme picked in the settings.
+ * @returns Every motif of that theme, ready to be put into an image.
+ */
 export function getThemeMotifs(theme: string): string[] {
   return (THEME_FILES[theme] ?? []).map(toAssetUrl);
 }

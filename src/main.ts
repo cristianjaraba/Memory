@@ -1,3 +1,8 @@
+/**
+ * @file Entry point of the game. It pulls in the styles, sets the start
+ * screen and ties the single modules together.
+ */
+
 import './styles/style.scss';
 import { buildBoard, setupCardFlip } from './board';
 import { setupNavigation, showSection } from './navigation';

@@ -1,3 +1,8 @@
+/**
+ * @file Lays out the board of a round, turns the cards that are clicked and
+ * books every pair that is found.
+ */
+
 import { getThemeMotifs } from './card-themes';
 import { addPairPoints, switchPlayer } from './scoreboard';
 import { getPickedInput } from './settings-form';
@@ -44,14 +49,26 @@ export function buildBoard(): void {
   isBoardLocked = false;
 }
 
-/** Draws the motifs of one round: every pair twice, in random order. */
+/**
+ * Draws the motifs of one round: every pair twice, in random order.
+ *
+ * @param theme - Name of the theme the motifs are taken from.
+ * @param cardCount - How many cards the picked board size holds.
+ * @returns One motif url per card, shuffled.
+ */
 function dealMotifs(theme: string, cardCount: number): string[] {
   const motifs = getThemeMotifs(theme);
   const pairs = shuffle(motifs).slice(0, cardCount / CARDS_PER_PAIR);
   return shuffle([...pairs, ...pairs]);
 }
 
-/** Returns a shuffled copy of the given list (Fisher-Yates). */
+/**
+ * Returns a shuffled copy of the given list (Fisher-Yates).
+ *
+ * @typeParam T - Type of the entries, they are only moved about.
+ * @param items - The list to shuffle, it is left untouched.
+ * @returns A new list holding the same entries in random order.
+ */
 function shuffle<T>(items: T[]): T[] {
   const shuffled = [...items];
   for (let index = shuffled.length - 1; index > 0; index -= 1) {
@@ -61,7 +78,12 @@ function shuffle<T>(items: T[]): T[] {
   return shuffled;
 }
 
-/** Clones the card template once per motif of the round. */
+/**
+ * Clones the card template once per motif of the round.
+ *
+ * @param motifs - The motif urls the round is played with.
+ * @returns One card per motif, empty where the template is missing.
+ */
 function createCards(motifs: string[]): DocumentFragment[] {
   const template = document.querySelector<HTMLTemplateElement>('#card-template');
   if (!template) {
@@ -70,7 +92,14 @@ function createCards(motifs: string[]): DocumentFragment[] {
   return motifs.map((motif, index) => createCard(template, motif, index));
 }
 
-/** Builds one card, its motif stays hidden until the card is flipped. */
+/**
+ * Builds one card, its motif stays hidden until the card is flipped.
+ *
+ * @param template - The card template of the page.
+ * @param motif - Url of the picture that card carries.
+ * @param index - Place of the card on the board, it names it for screen readers.
+ * @returns The filled card, ready to be laid on the board.
+ */
 function createCard(template: HTMLTemplateElement, motif: string, index: number): DocumentFragment {
   const card = template.content.cloneNode(true) as DocumentFragment;
   const image = card.querySelector<HTMLImageElement>('.card__motif');
@@ -82,7 +111,11 @@ function createCard(template: HTMLTemplateElement, motif: string, index: number)
   return card;
 }
 
-/** Turns over the card that was clicked and closes a finished round. */
+/**
+ * Turns over the card that was clicked and closes a finished round.
+ *
+ * @param onRoundEnd - Called once the last pair of the round is found.
+ */
 export function setupCardFlip(onRoundEnd: () => void): void {
   closeRound = onRoundEnd;
   const field = document.getElementById('field');
@@ -94,7 +127,11 @@ export function setupCardFlip(onRoundEnd: () => void): void {
   });
 }
 
-/** Turns a card face up, as soon as two are up they are compared. */
+/**
+ * Turns a card face up, as soon as two are up they are compared.
+ *
+ * @param card - The card that was clicked.
+ */
 function revealCard(card: HTMLButtonElement): void {
   const isAlreadyUp = card.classList.contains('is-flipped');
   if (isBoardLocked || isAlreadyUp) {
@@ -131,7 +168,11 @@ function keepPair(): void {
   openCards = [];
 }
 
-/** Tells whether every card on the board has found its partner. */
+/**
+ * Tells whether every card on the board has found its partner.
+ *
+ * @returns True once no card is left to turn.
+ */
 function isBoardCleared(): boolean {
   const cards = document.querySelectorAll<HTMLButtonElement>('.card');
   return [...cards].every(card => card.classList.contains('is-matched'));
@@ -151,7 +192,12 @@ function hideOpenCards(): void {
   isBoardLocked = false;
 }
 
-/** Returns the motif a card shows, it tells two cards apart. */
+/**
+ * Returns the motif a card shows, it tells two cards apart.
+ *
+ * @param card - The card to read.
+ * @returns Url of its picture, empty where the card carries none.
+ */
 function getMotif(card: HTMLButtonElement): string {
   return card.querySelector<HTMLImageElement>('.card__motif')?.src ?? '';
 }

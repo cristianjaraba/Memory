@@ -1,3 +1,8 @@
+/**
+ * @file Closes a round: picks the screen the outcome calls for, names the
+ * winner and writes the points both players ended on.
+ */
+
 import { showSection } from './navigation';
 import { getPickedPlayer, getScores, getWinner } from './scoreboard';
 import type { Player } from './scoreboard';
@@ -6,6 +11,7 @@ import { getPickedInput, resetSettings } from './settings-form';
 /** The three ways a round can end, seen from the picked player. */
 const OUTCOMES = ['lost', 'won', 'draw'] as const;
 
+/** How a round ended, seen from the player who picked the colour. */
 type Outcome = (typeof OUTCOMES)[number];
 
 /** Block of the closing screen every outcome is written in. */
@@ -47,6 +53,8 @@ export function showResult(): void {
 /**
  * Sends the screen down its way in. A block that was shown before keeps the
  * way it played the last time, so the class is taken off and laid on anew.
+ *
+ * @param outcome - The outcome whose block is on show.
  */
 function replayDrop(outcome: Outcome): void {
   const block = document.getElementById(OUTCOME_IDS[outcome]);
@@ -60,7 +68,12 @@ function replayDrop(outcome: Outcome): void {
   block.classList.add(DROPPING_CLASS);
 }
 
-/** Names the block a round ends on, seen from the picked player. */
+/**
+ * Names the block a round ends on, seen from the picked player.
+ *
+ * @param winner - The leading colour, or null on a draw.
+ * @returns Won, lost or draw.
+ */
 function pickOutcome(winner: Player | null): Outcome {
   if (!winner) {
     return 'draw';
@@ -68,7 +81,11 @@ function pickOutcome(winner: Player | null): Outcome {
   return winner === getPickedPlayer() ? 'won' : 'lost';
 }
 
-/** Shows one block of the closing screen and hides the other two. */
+/**
+ * Shows one block of the closing screen and hides the other two.
+ *
+ * @param target - The outcome that is to be seen.
+ */
 function showOutcome(target: Outcome): void {
   OUTCOMES.forEach(outcome => {
     const block = document.getElementById(OUTCOME_IDS[outcome]);
@@ -82,6 +99,8 @@ function showOutcome(target: Outcome): void {
  * Dresses the closing screen in the theme the round was played in. The
  * outcome is written alongside it, a theme may paint one of the three
  * on a ground of its own.
+ *
+ * @param outcome - The outcome the screen is marked with.
  */
 function dressScreen(outcome: Outcome): void {
   const result = document.getElementById('result');
@@ -92,7 +111,11 @@ function dressScreen(outcome: Outcome): void {
   }
 }
 
-/** Names the winner, written in the colour that player played with. */
+/**
+ * Names the winner, written in the colour that player played with.
+ *
+ * @param winner - The colour that took the round.
+ */
 function showWinner(winner: Player): void {
   const name = document.getElementById('result-winner');
   const badge = document.getElementById('result-badge');
