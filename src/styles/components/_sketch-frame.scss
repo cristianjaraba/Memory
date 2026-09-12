@@ -1,0 +1,70 @@
+// Drawn frame of the Foods theme. It is not a border but a line laid over
+// the box, drawn twice and roughened by the filter of the document: the way
+// out of the bar, the way out of the dialog and a pair that was found all
+// carry the same hand
+
+@use '../tokens' as *;
+
+.field--foods {
+
+    // The border of the two buttons stays, unpainted, so the room they take
+    // up does not change. A found pair gives up its plain outline instead
+    .field__exit,
+    .field__quit-button--exit {
+        position: relative;
+        border-color: transparent;
+    }
+
+    .card.is-matched .card__face {
+        outline: none;
+    }
+
+    .field__exit::before,
+    .field__exit::after,
+    .field__quit-button--exit::before,
+    .field__quit-button--exit::after,
+    .card.is-matched .card__face::before,
+    .card.is-matched .card__face::after {
+        content: "";
+        position: absolute;
+        border-radius: $hud-exit-sketch-radius;
+        filter: url("#sketchy-frame");
+        pointer-events: none;
+    }
+
+    // On the buttons the line reaches out to the border box, so it runs
+    // where the border would have run
+    .field__exit::before,
+    .field__exit::after,
+    .field__quit-button--exit::before,
+    .field__quit-button--exit::after {
+        inset: -$hud-exit-border-foods;
+    }
+
+    // On a card it stays inside the corners the theme cuts for it, so the
+    // room for the motif is left untouched
+    .card.is-matched .card__face::before,
+    .card.is-matched .card__face::after {
+        inset: 0;
+        border-radius: inherit;
+    }
+
+    // The stroke the pen laid down first. It runs thinner and a touch
+    // askew, the way a pen that goes round a box a second time never quite
+    // finds its own line again
+    .field__exit::before,
+    .field__quit-button--exit::before,
+    .card.is-matched .card__face::before {
+        border: $hud-exit-sketch-second-width solid $hud-exit-sketch-color;
+        // Turned about the lower right corner, so the two lines meet there
+        // and drift apart towards the upper left
+        transform-origin: 100% 100%;
+        transform: rotate($hud-exit-sketch-second-angle);
+    }
+
+    .field__exit::after,
+    .field__quit-button--exit::after,
+    .card.is-matched .card__face::after {
+        border: $hud-exit-sketch-width solid $hud-exit-sketch-color;
+    }
+}

@@ -32,6 +32,10 @@ $settings-hover-diamond-size: 12px;
 $settings-content-column-gap: 10rem;
 // Smallest distance between two option groups, they spread from there
 $settings-group-gap: 2rem;
+// Fixed width of the left column: room for every legend and for the longest
+// option in bold, so a hovered or picked row cannot widen the column and
+// push the centred content block sideways
+$settings-lists-width: 16rem;
 
 // Theme preview, shown right of the lists (natural size of the exports).
 // It never grows past that size and only shrinks on a narrow screen
@@ -54,20 +58,45 @@ $settings-summary-height: 4rem;
 // Fixed as well: room for the longest set of picks, so the row keeps one
 // width no matter which options are picked
 $settings-summary-width: 27rem;
+// Way the panel grows to the right when it is uncovered: it rolls out past
+// its new width and is caught softly, every swing after it smaller than the
+// one before. The factors are read as a share of the growth itself
+$settings-summary-grow-duration: 950ms;
+$settings-summary-grow-overshoot: 0.22;
+$settings-summary-grow-rebound: 0.07;
+$settings-summary-grow-settle: 0.02;
+// Rolls out without a push and is taken out of speed long before the mark
+$settings-summary-grow-easing: cubic-bezier(0.32, 0.14, 0.24, 1);
+// Every swing after that one leaves and lands as softly as it can
+$settings-summary-swing-easing: cubic-bezier(0.45, 0.05, 0.3, 1);
 // Type of the panel, a size smaller than the option lists it sums up
 $settings-summary-value-size: 16px;
 $settings-start-size: 18px;
 // Gap between the picked values and the start button next to them
 $settings-summary-column-gap: 1rem;
+// The start button is padded tighter than the buttons that stand on their
+// own: it shares its row with the picks and has to keep inside its height
+$settings-start-padding-block: 11px;
+$settings-start-padding-inline: 16px;
 // Play icon inside the start button (natural size of the export)
 $settings-start-icon-width: 16px;
 $settings-start-icon-height: 13px;
 $settings-start-icon-gap: 0.5rem;
+// Fill of the start button while a pick is still missing
+$color-start-disabled: #dbdbd6;
+// Name of a setting that is still open, a shade back from the picked value
+$color-summary-placeholder: #8a8a85;
+// Tint the cover of the panel takes once a click would uncover the picks
+$color-summary-cover-hover: rgba(48, 49, 49, 0.06);
 $settings-summary-padding: 0.75rem;
 $settings-summary-gap: 1.5rem;
 $settings-summary-slash-width: 32px;
 $settings-summary-slash-thickness: 5px;
 $settings-summary-slash-angle: 109.33deg;
+// Once the picks are uncovered the slash is drawn thinner and a diamond
+// closes off its lower end, the same way the rule below the title is built
+$settings-summary-slash-thickness-thin: 3px;
+$settings-summary-diamond-size: 10px;
 
 $settings-radio-size: 20px;
 $settings-radio-ring: 3px;

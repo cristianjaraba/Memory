@@ -82,6 +82,8 @@
     // the gap is their minimum distance
     &__lists {
         flex: none;
+        // Held at one width, the bold of a hovered row stays inside it
+        width: $settings-lists-width;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -132,9 +134,9 @@
         }
     }
 
-    // Line that grows out of the label while the row is hovered. It starts at
-    // the right edge of the row and is taken out of the flow, so neither the
-    // row nor the column next to it moves while it grows
+    // Line that grows out of the label of a called out row. It starts at the
+    // right edge of the row and is taken out of the flow, so neither the row
+    // nor the column next to it moves while it grows
     &__label::after {
         content: '';
         position: absolute;
@@ -147,12 +149,15 @@
         transition: width 150ms ease-in-out;
     }
 
-    &__option:hover &__label::after {
+    // Every picked row keeps the line. In the theme list a hovered row draws
+    // it as well, that list answers a hover with its preview anyway
+    &__input:checked ~ &__label::after,
+    &__options--themes &__option:hover &__label::after {
         width: $settings-hover-line-width;
     }
 
-    // Diamond that closes the hover line, a square turned by 45 degrees. It
-    // is scaled instead of resized, so it grows out of its own centre
+    // Diamond that closes the line, a square turned by 45 degrees. It is
+    // scaled instead of resized, so it grows out of its own centre
     &__label::before {
         content: '';
         position: absolute;
@@ -165,7 +170,8 @@
         transition: transform 150ms ease-in-out;
     }
 
-    &__option:hover &__label::before {
+    &__input:checked ~ &__label::before,
+    &__options--themes &__option:hover &__label::before {
         transform: translateY(-50%) rotate(45deg) scale(1);
     }
 
@@ -185,13 +191,9 @@
         transition: border-width 150ms ease-in-out, background-color 150ms ease-in-out,
             box-shadow 150ms ease-in-out;
 
-        // Thinner ring while hovered and once the option is picked
-        &:hover,
+        // Thinner ring once the option is picked
         &:checked {
             border-width: $settings-radio-ring-thin;
-        }
-
-        &:checked {
             background-color: currentColor;
             box-shadow: inset 0 0 0 $settings-radio-dot-gap $color-surface;
         }
@@ -202,9 +204,9 @@
         }
     }
 
-    // Hovering a row previews the pick with the same dot, the option that is
-    // really picked simply keeps it once the pointer moves on
-    &__option:hover &__input:not(:checked) {
+    // Hovering a theme row previews the pick with the same dot, the option
+    // that is really picked simply keeps it once the pointer moves on
+    &__options--themes &__option:hover &__input:not(:checked) {
         border-width: $settings-radio-ring-thin;
         background-color: currentColor;
         box-shadow: inset 0 0 0 $settings-radio-dot-gap $color-surface;
@@ -253,5 +255,11 @@
         font-size: $settings-option-size;
         line-height: 100%;
         cursor: pointer;
+    }
+
+    // A hovered theme row and every picked row carry their text in bold
+    &__options--themes &__option:hover &__label,
+    &__input:checked ~ &__label {
+        font-weight: 700;
     }
 }

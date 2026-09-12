@@ -1,5 +1,5 @@
-// Dialog that asks before a running round is given up, plus the three
-// ways it can come in. Every theme picks one of them
+// Dialog that asks before a running round is given up, plus the ways it can
+// come in and go out again. Every theme picks one pair of them
 
 @use '../tokens' as *;
 
@@ -23,6 +23,28 @@
 // a touch smaller than it ends up
 @keyframes quit-surface {
     from {
+        opacity: 0;
+        transform: scale($quit-entrance-scale);
+    }
+}
+
+// And the three ways back out again: every theme walks its way in backwards
+@keyframes quit-lift {
+    to {
+        opacity: 0;
+        transform: translateY($quit-entrance-travel-up);
+    }
+}
+
+@keyframes quit-sink {
+    to {
+        opacity: 0;
+        transform: translateY($quit-entrance-travel-down);
+    }
+}
+
+@keyframes quit-settle {
+    to {
         opacity: 0;
         transform: scale($quit-entrance-scale);
     }
@@ -71,10 +93,27 @@
                 var(#{$quit-entrance-duration-property}, $quit-entrance-duration-code-vibes) ease-out;
         }
 
+        // On the way out the sheet walks its entrance backwards and holds the
+        // place it lands in, so the dialog is only closed once it is gone.
+        // The class has to follow the entrance above to outrank it
+        &--leaving[open] {
+            animation: var(#{$quit-leave-property}, #{$quit-leave-code-vibes})
+                var(#{$quit-leave-duration-property}, $quit-leave-duration-code-vibes) ease-in forwards;
+
+            // The dim lifts along with it
+            &::backdrop {
+                animation: quit-backdrop
+                    var(#{$quit-leave-duration-property}, $quit-leave-duration-code-vibes) ease-in reverse forwards;
+            }
+        }
+
         // Whoever asked for less movement is shown the dialog where it lands
+        // and is spared the way out as well
         @media (prefers-reduced-motion: reduce) {
             &[open],
-            &::backdrop {
+            &--leaving[open],
+            &::backdrop,
+            &--leaving[open]::backdrop {
                 animation: none;
             }
         }
@@ -119,15 +158,24 @@
             var(#{$hud-exit-spacing-property}, $hud-exit-spacing-code-vibes));
         white-space: nowrap;
         cursor: pointer;
-        transition: transform 200ms ease-in-out;
+        transition:
+            background-color 200ms ease-in-out,
+            box-shadow 200ms ease-in-out,
+            color 200ms ease-in-out;
 
-        // The same answer every theme plays for its way out
+        // Under the pointer the way out answers the way its theme says: with
+        // a deeper ground, a stronger frame, or with neither. The frame is
+        // drawn on as a ring inside the button, so the box keeps its size,
+        // and the shadow below it is the one part every theme plays
         &:hover,
         &:focus-visible {
             background-color: var(#{$quit-exit-hover-background-property},
                 var(#{$hud-exit-hover-background-property}, $hud-exit-hover-background-code-vibes));
-            box-shadow: inset 0 0 0 var(#{$hud-exit-hover-ring-property}, $hud-exit-hover-ring-code-vibes)
-                var(#{$card-match-property}, $card-match-code-vibes);
+            box-shadow:
+                inset 0 0 0 var(#{$quit-exit-hover-ring-property},
+                    var(#{$hud-exit-hover-ring-property}, $hud-exit-hover-ring-code-vibes))
+                    var(#{$quit-exit-border-property}, var(#{$card-match-property}, $card-match-code-vibes)),
+                $quit-hover-shadow;
             color: var(#{$quit-exit-hover-text-property},
                 var(#{$hud-exit-hover-text-property}, $hud-exit-hover-text-code-vibes));
         }
@@ -140,14 +188,19 @@
         border-color: var(#{$quit-stay-background-property}, $color-accent);
         color: var(#{$quit-stay-text-property}, $color-accent-text);
 
-        // It keeps its colours under the pointer and only steps forward,
-        // the way the start button of the settings does
+        // Under the pointer it answers on its own: every theme deepens or
+        // trades the ground it stands on, and a theme that names no second
+        // colour and no frame leaves those as they are
         &:hover,
         &:focus-visible {
-            background-color: var(#{$quit-stay-background-property}, $color-accent);
-            box-shadow: none;
-            color: var(#{$quit-stay-text-property}, $color-accent-text);
-            transform: scale(1.05);
+            background-color: var(#{$quit-stay-hover-background-property},
+                var(#{$quit-stay-background-property}, $color-accent));
+            box-shadow:
+                inset 0 0 0 var(#{$quit-stay-hover-ring-property}, 0)
+                    var(#{$quit-stay-background-property}, $color-accent),
+                $quit-hover-shadow;
+            color: var(#{$quit-stay-hover-text-property},
+                var(#{$quit-stay-text-property}, $color-accent-text));
         }
     }
 }

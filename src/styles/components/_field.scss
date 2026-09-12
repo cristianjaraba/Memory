@@ -77,6 +77,9 @@
         // Keeps the number from shifting the row while it counts up
         min-width: $hud-score-min-width;
         text-align: right;
+        // The row spaces its parts evenly, the points step back out of
+        // that spacing and stand right next to the player they belong to
+        margin-inline-start: calc(#{$hud-score-gap} - #{$hud-item-gap});
     }
 
     // Whose turn it is, it sits in the middle of the bar and is written

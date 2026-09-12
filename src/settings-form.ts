@@ -5,22 +5,39 @@ const SUMMARY_OUTPUTS: Record<string, string> = {
   'board-size': 'summary-board',
 };
 
+/** Class the panel carries once its picks are uncovered. */
+const UNCOVERED_CLASS = 'settings__summary--uncovered';
+
+/** True once the panel was clicked with all three options picked. */
+let arePicksUncovered = false;
+
 /** Keeps the summary in sync with every pick in the settings form. */
 export function setupSummary(): void {
   const settings = document.getElementById('settings');
   settings?.addEventListener('change', updateSummary);
+  getCoverButton()?.addEventListener('click', uncoverPicks);
   updateSummary();
 }
 
-/** Writes every picked option into the summary. */
+/** Takes the click on the panel: the picks show, the round can start. */
+function uncoverPicks(): void {
+  arePicksUncovered = true;
+  updateSummary();
+}
+
+/**
+ * Writes every picked option into the summary, as long as the panel was
+ * uncovered. A covered entry is left empty, the stylesheet fills it with
+ * the name of the setting it stands for.
+ */
 function updateSummary(): void {
   Object.entries(SUMMARY_OUTPUTS).forEach(([group, outputId]) => {
     const output = document.getElementById(outputId);
     if (output) {
-      output.textContent = getPickedLabel(group);
+      output.textContent = arePicksUncovered ? getPickedLabel(group) : '';
     }
   });
-  updateStartButton();
+  updatePanelButtons();
 }
 
 /** Returns the label of the radio picked in the given group. */
@@ -38,11 +55,35 @@ export function getPickedInput(group: string): HTMLInputElement | null {
   return document.querySelector<HTMLInputElement>(`.settings__input[name="${group}"]:checked`);
 }
 
-/** The start button stays disabled until all three options are picked. */
-function updateStartButton(): void {
-  const startButton = document.querySelector<HTMLButtonElement>('.settings__start');
-  const isComplete = Object.keys(SUMMARY_OUTPUTS).every(group => getPickedInput(group));
-  if (startButton) {
-    startButton.disabled = !isComplete;
+/** Tells whether every group of the settings form carries a pick. */
+function areAllPicksIn(): boolean {
+  return Object.keys(SUMMARY_OUTPUTS).every(group => getPickedInput(group) !== null);
+}
+
+/**
+ * The cover only answers once all three picks are in and leaves the panel
+ * as soon as it was pressed. Until then the start button stays disabled.
+ */
+function updatePanelButtons(): void {
+  const cover = getCoverButton();
+  if (cover) {
+    cover.disabled = !areAllPicksIn();
+    cover.hidden = arePicksUncovered;
   }
+  const startButton = document.querySelector<HTMLButtonElement>('.settings__start');
+  if (startButton) {
+    startButton.disabled = !arePicksUncovered;
+  }
+  markUncoveredPanel();
+}
+
+/** Marks the uncovered panel, its slashes thin out and grow a diamond. */
+function markUncoveredPanel(): void {
+  const summary = document.querySelector<HTMLElement>('.settings__summary');
+  summary?.classList.toggle(UNCOVERED_CLASS, arePicksUncovered);
+}
+
+/** Returns the cover that lies over the panel while the picks are hidden. */
+function getCoverButton(): HTMLButtonElement | null {
+  return document.querySelector<HTMLButtonElement>('.settings__reveal');
 }

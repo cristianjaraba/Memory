@@ -38,6 +38,8 @@
         #{$hud-turn-color-property}: #{$hud-turn-color-code-vibes};
         #{$quit-entrance-property}: #{$quit-entrance-code-vibes};
         #{$quit-entrance-duration-property}: $quit-entrance-duration-code-vibes;
+        #{$quit-leave-property}: #{$quit-leave-code-vibes};
+        #{$quit-leave-duration-property}: $quit-leave-duration-code-vibes;
         #{$quit-background-property}: $quit-background-code-vibes;
         #{$quit-text-property}: $quit-text-code-vibes;
         #{$quit-radius-property}: $quit-radius-code-vibes;
@@ -51,6 +53,9 @@
         #{$quit-exit-text-property}: $quit-exit-text-code-vibes;
         #{$quit-exit-hover-background-property}: $quit-exit-hover-background-code-vibes;
         #{$quit-exit-hover-text-property}: $quit-exit-hover-text-code-vibes;
+        #{$quit-exit-hover-ring-property}: $quit-exit-hover-ring-code-vibes;
+        #{$quit-stay-hover-background-property}: $quit-stay-hover-background-code-vibes;
+        #{$quit-stay-hover-ring-property}: $quit-stay-hover-ring-code-vibes;
         background-color: $color-background;
         color: $color-text;
     }
@@ -89,6 +94,8 @@
         #{$hud-turn-figure-background-property}: $hud-turn-figure-background-gaming;
         #{$quit-entrance-property}: #{$quit-entrance-gaming};
         #{$quit-entrance-duration-property}: $quit-entrance-duration-gaming;
+        #{$quit-leave-property}: #{$quit-leave-gaming};
+        #{$quit-leave-duration-property}: $quit-leave-duration-gaming;
         #{$quit-background-property}: $quit-background-gaming;
         #{$quit-text-property}: $quit-text-gaming;
         #{$quit-radius-property}: $quit-radius-gaming;
@@ -105,6 +112,9 @@
         #{$quit-exit-text-property}: $quit-exit-text-gaming;
         #{$quit-exit-hover-background-property}: $quit-exit-hover-background-gaming;
         #{$quit-exit-hover-text-property}: $quit-exit-hover-text-gaming;
+        #{$quit-exit-hover-ring-property}: $quit-exit-hover-ring-gaming;
+        #{$quit-stay-hover-background-property}: $quit-stay-hover-background-gaming;
+        #{$quit-stay-hover-text-property}: $quit-stay-hover-text-gaming;
         background-color: $color-field-gaming;
         color: $color-text;
     }
@@ -143,6 +153,8 @@
         #{$hud-turn-figure-background-property}: $hud-turn-figure-background-da-projects;
         #{$quit-entrance-property}: #{$quit-entrance-da-projects};
         #{$quit-entrance-duration-property}: $quit-entrance-duration-da-projects;
+        #{$quit-leave-property}: #{$quit-leave-da-projects};
+        #{$quit-leave-duration-property}: $quit-leave-duration-da-projects;
         #{$quit-background-property}: $quit-background-da-projects;
         #{$quit-radius-property}: $quit-radius-da-projects;
         #{$quit-question-font-property}: #{$quit-question-font-da-projects};
@@ -155,6 +167,8 @@
         #{$quit-exit-text-property}: $quit-exit-text-da-projects;
         #{$quit-exit-hover-background-property}: $quit-exit-hover-background-da-projects;
         #{$quit-exit-hover-text-property}: $quit-exit-hover-text-da-projects;
+        #{$quit-stay-hover-background-property}: $quit-stay-hover-background-da-projects;
+        #{$quit-stay-hover-text-property}: $quit-stay-hover-text-da-projects;
         #{$hud-score-font-property}: #{$hud-score-font-da-projects};
         #{$hud-score-weight-property}: #{$hud-score-weight-da-projects};
         #{$hud-score-size-property}: #{$hud-score-size-da-projects};
@@ -194,6 +208,8 @@
         #{$hud-turn-figure-background-property}: $hud-turn-figure-background-foods;
         #{$quit-entrance-property}: #{$quit-entrance-foods};
         #{$quit-entrance-duration-property}: $quit-entrance-duration-foods;
+        #{$quit-leave-property}: #{$quit-leave-foods};
+        #{$quit-leave-duration-property}: $quit-leave-duration-foods;
         #{$quit-background-property}: $quit-background-foods;
         #{$quit-text-property}: $quit-text-foods;
         #{$quit-radius-property}: $quit-radius-foods;
@@ -203,6 +219,9 @@
         #{$quit-question-line-height-property}: $quit-question-line-height-foods;
         #{$quit-stay-background-property}: $quit-stay-background-foods;
         #{$quit-stay-text-property}: $quit-stay-text-foods;
+        #{$quit-stay-hover-background-property}: $quit-stay-hover-background-foods;
+        #{$quit-exit-hover-background-property}: $quit-exit-hover-background-foods;
+        #{$quit-exit-hover-text-property}: $quit-exit-hover-text-foods;
         #{$hud-score-font-property}: #{$hud-score-font-foods};
         #{$hud-score-weight-property}: #{$hud-score-weight-foods};
         #{$hud-score-size-property}: #{$hud-score-size-foods};

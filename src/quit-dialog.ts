@@ -4,6 +4,12 @@ import { getPickedInput } from './settings-form';
 /** Value the dialog carries back when the round is given up. */
 const QUIT_VALUE = 'quit';
 
+/** Value the dialog carries back when the round goes on. */
+const STAY_VALUE = 'stay';
+
+/** Class that plays the way out the picked theme gives the dialog. */
+const LEAVING_CLASS = 'field__quit--leaving';
+
 /** Labels the two answers carry where the theme words none of its own. */
 const QUIT_LABEL_DEFAULT = 'Exit game';
 const STAY_LABEL_DEFAULT = 'Back to game';
@@ -26,12 +32,84 @@ export function setupQuitDialog(): void {
   if (!exitButton || !dialog) {
     return;
   }
-  exitButton.addEventListener('click', () => dialog.showModal());
-  dialog.addEventListener('close', () => {
-    if (dialog.returnValue === QUIT_VALUE) {
-      showSection('settings');
+  exitButton.addEventListener('click', () => openDialog(dialog));
+  dialog.addEventListener('cancel', (event) => escapeDialog(event, dialog));
+  dialog.addEventListener('click', (event) => clickBesideDialog(event, dialog));
+  dialog.addEventListener('close', () => finishDialog(dialog));
+}
+
+/** Brings the dialog in, cleared of the way out of the round before. */
+function openDialog(dialog: HTMLDialogElement): void {
+  dialog.classList.remove(LEAVING_CLASS);
+  // A way out that was cut short leaves its animation behind, and a browser
+  // that keeps one plays no second
+  dialog.getAnimations().forEach((leaving) => leaving.cancel());
+  dialog.showModal();
+}
+
+/** Lets the escape key take the same way out as the answer that stays. */
+function escapeDialog(event: Event, dialog: HTMLDialogElement): void {
+  // Without this the browser would close the dialog without its way out
+  event.preventDefault();
+  leaveDialog(dialog, STAY_VALUE);
+}
+
+/** Sends the dialog out when the click landed beside the sheet. */
+function clickBesideDialog(event: MouseEvent, dialog: HTMLDialogElement): void {
+  const besideSheet = event.target === dialog && !isOnSheet(event, dialog);
+  if (besideSheet) {
+    leaveDialog(dialog, STAY_VALUE);
+  }
+}
+
+/** Tells whether a click landed on the sheet itself, padding and all. */
+function isOnSheet(event: MouseEvent, dialog: HTMLDialogElement): boolean {
+  const sheet = dialog.getBoundingClientRect();
+  const onColumn = event.clientX >= sheet.left && event.clientX <= sheet.right;
+  const onRow = event.clientY >= sheet.top && event.clientY <= sheet.bottom;
+  return onColumn && onRow;
+}
+
+/** Plays the way out of the picked theme and closes the dialog behind it. */
+function leaveDialog(dialog: HTMLDialogElement, answer: string): void {
+  // A second answer while the sheet is already on its way out changes nothing
+  if (dialog.classList.contains(LEAVING_CLASS)) {
+    return;
+  }
+  if (skipsMotion()) {
+    dialog.close(answer);
+    return;
+  }
+  dialog.classList.add(LEAVING_CLASS);
+  closeAfterLeaving(dialog, answer);
+}
+
+/** Closes the dialog once its own way out has been played to the end. */
+function closeAfterLeaving(dialog: HTMLDialogElement, answer: string): void {
+  const onLeft = (event: AnimationEvent): void => {
+    // The dimmed board animates along and reports in here as well
+    if (event.target !== dialog || event.pseudoElement) {
+      return;
     }
-  });
+    dialog.removeEventListener('animationend', onLeft);
+    // Cleared while the sheet is still on the page: a browser that is handed
+    // a hidden one keeps the played way out and replays none the next time
+    dialog.classList.remove(LEAVING_CLASS);
+    dialog.close(answer);
+  };
+  dialog.addEventListener('animationend', onLeft);
+}
+
+/** Tells whether the visitor asked to be spared animations. */
+function skipsMotion(): boolean {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+/** Takes the answer the closed dialog carries back. */
+function finishDialog(dialog: HTMLDialogElement): void {
+  if (dialog.returnValue === QUIT_VALUE) {
+    showSection('settings');
+  }
 }
 
 /** Writes the labels the picked theme gives the two answers of the dialog. */

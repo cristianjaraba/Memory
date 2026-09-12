@@ -42,9 +42,9 @@
                         <img class="settings__legend-icon" src="/assets/icons/palette.svg" alt="" aria-hidden="true">
                         <span class="settings__legend-text">Game themes</span>
                     </legend>
-                    <ul class="settings__options">
+                    <ul class="settings__options settings__options--themes">
                         <li class="settings__option">
-                            <input class="settings__input" type="radio" name="theme" id="theme-code-vibes" value="code-vibes" checked>
+                            <input class="settings__input" type="radio" name="theme" id="theme-code-vibes" value="code-vibes">
                             <label class="settings__label" for="theme-code-vibes">Code vibes theme</label>
                             <img class="settings__preview" width="460" height="412" src="/assets/code_vibes_theme_cards/code_vibes_theme_preview.png"
                                 alt="Cards of the Code vibes theme">
@@ -77,7 +77,7 @@
                     </legend>
                     <ul class="settings__options">
                         <li class="settings__option">
-                            <input class="settings__input" type="radio" name="player-color" id="player-blue" value="blue" checked>
+                            <input class="settings__input" type="radio" name="player-color" id="player-blue" value="blue">
                             <label class="settings__label" for="player-blue">Blue</label>
                         </li>
                         <li class="settings__option">
@@ -90,11 +90,11 @@
                 <fieldset class="settings__group">
                     <legend class="settings__legend">
                         <img class="settings__legend-icon" src="/assets/icons/style.svg" alt="" aria-hidden="true">
-                        <span class="settings__legend-text">Boardsize</span>
+                        <span class="settings__legend-text">Board size</span>
                     </legend>
                     <ul class="settings__options">
                         <li class="settings__option">
-                            <input class="settings__input" type="radio" name="board-size" id="board-16" value="16" checked>
+                            <input class="settings__input" type="radio" name="board-size" id="board-16" value="16">
                             <label class="settings__label" for="board-16">16 cards</label>
                         </li>
                         <li class="settings__option">
@@ -112,15 +112,23 @@
             <!-- Overview of the picked options, it fills up while choosing -->
             <div class="settings__panel">
                 <aside class="settings__summary" aria-label="Your current selection">
-                    <ul class="settings__summary-list">
+                    <!--
+                        Lies over the panel and takes the click that uncovers
+                        the picks. It only answers once all three of them are
+                        in and leaves the panel as soon as it was pressed
+                    -->
+                    <button class="settings__reveal" type="button" id="summary-reveal"
+                        aria-controls="summary-list" aria-label="Show the picked options" disabled></button>
+
+                    <ul class="settings__summary-list" id="summary-list">
                         <li class="settings__summary-item">
-                            <output class="settings__summary-value" id="summary-theme" aria-label="Game theme">Code vibes theme</output>
+                            <output class="settings__summary-value" id="summary-theme" aria-label="Game theme" data-placeholder="Theme"></output>
                         </li>
                         <li class="settings__summary-item">
-                            <output class="settings__summary-value" id="summary-player" aria-label="Player">Blue</output>
+                            <output class="settings__summary-value" id="summary-player" aria-label="Player" data-placeholder="Player"></output>
                         </li>
                         <li class="settings__summary-item">
-                            <output class="settings__summary-value" id="summary-board" aria-label="Boardsize">16 cards</output>
+                            <output class="settings__summary-value" id="summary-board" aria-label="Boardsize" data-placeholder="Board size"></output>
                         </li>
                     </ul>
 

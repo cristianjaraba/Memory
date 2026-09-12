@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  base: "/dist/"
+  base: "/Memory/"
 });
 
 // Website: adresse.de/Memory/

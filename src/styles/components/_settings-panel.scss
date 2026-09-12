@@ -3,6 +3,44 @@
 
 @use '../tokens' as *;
 
+// Growth of the uncovered panel: it rolls out a little past the width it is
+// headed for, is caught and drifts back, and every swing after that one is
+// smaller than the one before. The steps are written as a share of the
+// growth, so every screen width rebounds the same way
+@keyframes settings-summary-grow {
+    0% {
+        width: $settings-summary-width;
+        animation-timing-function: $settings-summary-grow-easing;
+    }
+
+    // A little way out past the mark
+    46% {
+        width: calc(
+            #{$settings-summary-width} +
+            var(--summary-overhang) * #{1 + $settings-summary-grow-overshoot}
+        );
+        animation-timing-function: $settings-summary-swing-easing;
+    }
+
+    // Back short of it
+    70% {
+        width: calc(
+            #{$settings-summary-width} +
+            var(--summary-overhang) * #{1 - $settings-summary-grow-rebound}
+        );
+        animation-timing-function: $settings-summary-swing-easing;
+    }
+
+    // One last swing out, barely a nudge
+    87% {
+        width: calc(
+            #{$settings-summary-width} +
+            var(--summary-overhang) * #{1 + $settings-summary-grow-settle}
+        );
+        animation-timing-function: $settings-summary-swing-easing;
+    }
+}
+
 .settings {
     // Panel in the right column, it carries the preview and the summary
     &__panel {
@@ -21,10 +59,18 @@
 
     // Picked values first, the start button right behind them
     &__summary {
-        // Sits in the bottom corner of the column, its fixed width holds the
-        // longest set of picks, so the row never changes size
+        // How far the panel stands out on the left of its column: the
+        // preview above it is drawn as wide as the column and is flush with
+        // its right edge, so the whole difference lies on the left
+        --summary-overhang: calc(
+            #{$settings-summary-width} - (var(--preview-width) - #{$settings-preview-inset})
+        );
+
+        // Sits in the bottom corner of the column. It is held by its left
+        // edge, so the growth below can only run to the right and the picked
+        // values stay where they were read
         position: absolute;
-        right: 0;
+        left: calc(100% - #{$settings-summary-width});
         bottom: 0;
         width: $settings-summary-width;
         display: flex;
@@ -36,8 +82,50 @@
         background-color: $color-summary-surface;
     }
 
+    // Uncovered panel: it grows to the right by as much as it stands out on
+    // the left. Both sides stand out the same far afterwards, which leaves
+    // the preview above it right over its middle. The width is the one the
+    // panel keeps, the animation only plays the way into it
+    &__summary--uncovered {
+        width: calc(#{$settings-summary-width} + var(--summary-overhang));
+        animation: settings-summary-grow $settings-summary-grow-duration;
+
+        // Whoever asked for less movement is handed the grown panel at once
+        @media (prefers-reduced-motion: reduce) {
+            animation: none;
+        }
+    }
+
+    // Cover over the whole panel, it takes the click that uncovers the
+    // picks. It carries no ink of its own, so the names of the still
+    // covered settings stay readable underneath it
+    &__reveal {
+        position: absolute;
+        inset: 0;
+        // Above the values and the start button, both are out of reach
+        // until the cover is gone
+        z-index: 1;
+        padding: 0;
+        border: none;
+        background-color: transparent;
+        transition: background-color 200ms ease-in-out;
+
+        // Only once all three picks are in there is something to uncover
+        &:enabled {
+            cursor: pointer;
+        }
+
+        &:hover:enabled,
+        &:focus-visible:enabled {
+            background-color: $color-summary-cover-hover;
+        }
+    }
+
     // Entries side by side, each gap holds one accent slash
     &__summary-list {
+        // Takes everything the start button leaves over, so the picks spread
+        // over the panel instead of huddling at its left edge
+        flex: 1;
         display: flex;
         align-items: center;
         gap: $settings-summary-gap;
@@ -49,8 +137,12 @@
     // Only holds the picked value, the anchor is needed for the slash
     &__summary-item {
         position: relative;
+        // Every entry takes the same share of the free room and carries its
+        // value in the middle of it. The gaps between them keep their width,
+        // so the slash drawn into them stays in their middle
+        flex: 1 0 auto;
+        text-align: center;
         // Keeps its text on one line, the row has a fixed height
-        flex: none;
         white-space: nowrap;
         font-family: $font-body;
         font-weight: 400;
@@ -71,16 +163,47 @@
         transform: translate(-50%, -50%) rotate($settings-summary-slash-angle);
     }
 
+    // Uncovered panel: the slashes are drawn thinner and every one of them
+    // is closed off with a diamond at its lower end
+    &__summary--uncovered &__summary-item + &__summary-item {
+        &::before {
+            border-top-width: $settings-summary-slash-thickness-thin;
+        }
+
+        // Diamond, a square turned by 45 degrees. It takes the turn of the
+        // slash first and rides out to its lower end, so the turn it is
+        // given there leaves its upper and its lower tip on the slash
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -$settings-summary-gap * 0.5;
+            width: $settings-summary-diamond-size;
+            height: $settings-summary-diamond-size;
+            background-color: $color-accent;
+            transform: translate(-50%, -50%) rotate($settings-summary-slash-angle)
+                translateX($settings-summary-slash-width * 0.5)
+                rotate(-45deg);
+        }
+    }
+
+    // As long as a pick is missing, the entry names the setting it waits
+    // for. The name is drawn, not written into the output, the label of
+    // the output already carries it for a screen reader
+    &__summary-value:empty::before {
+        content: attr(data-placeholder);
+        color: $color-summary-placeholder;
+    }
+
     // Disabled until all three options are picked
     &__start {
-        // Only as wide as icon and label, the auto margin keeps it at the
-        // right end of the row, whatever the picked values need
+        // Only as wide as icon and label. The spread out list beside it
+        // holds it at the right end of the row, one gap away from the picks
         flex: none;
-        margin-left: auto;
         display: flex;
         align-items: center;
         gap: $settings-start-icon-gap;
-        padding: $button-padding-block $button-padding-inline;
+        padding: $settings-start-padding-block $settings-start-padding-inline;
         white-space: nowrap;
         border: none;
         background-color: $color-accent;
@@ -97,8 +220,10 @@
             transform: scale(1.05);
         }
 
+        // Until all three picks are in: the accent is dropped, icon and
+        // label keep their ink, so the button stays readable
         &:disabled {
-            opacity: 0.4;
+            background-color: $color-start-disabled;
             cursor: not-allowed;
         }
     }

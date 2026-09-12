@@ -74,6 +74,9 @@ $hud-panel-radius-foods: 10px;
 $hud-panel-radius-property: --hud-panel-radius;
 // Gap between a marker and the text next to it
 $hud-item-gap: 0.5rem;
+// The points stand closer to the player they belong to than the rest of
+// the row does, so the two read as one unit
+$hud-score-gap: 0.2rem;
 // Gap between the two players of a round
 $hud-players-gap: 1.5rem;
 // Room the status bar leaves between itself and the first row of cards
