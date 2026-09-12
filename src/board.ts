@@ -18,6 +18,12 @@ const CARDS_PER_PAIR = 2;
 /** How long a wrong guess stays visible before it is turned back. */
 const MISMATCH_DELAY_MS = 900;
 
+/** How long the last pair of a round stays on show before it is closed. */
+const ROUND_END_DELAY_MS = 700;
+
+/** Closes the round, it is handed in with the listener of the board. */
+let closeRound: () => void = () => {};
+
 /** The cards that are face up and still waiting for their partner. */
 let openCards: HTMLButtonElement[] = [];
 
@@ -76,8 +82,9 @@ function createCard(template: HTMLTemplateElement, motif: string, index: number)
   return card;
 }
 
-/** Turns over the card that was clicked. */
-export function setupCardFlip(): void {
+/** Turns over the card that was clicked and closes a finished round. */
+export function setupCardFlip(onRoundEnd: () => void): void {
+  closeRound = onRoundEnd;
   const field = document.getElementById('field');
   field?.addEventListener('click', event => {
     const card = (event.target as HTMLElement).closest<HTMLButtonElement>('.card');
@@ -108,12 +115,32 @@ function comparePair(): void {
     window.setTimeout(hideOpenCards, MISMATCH_DELAY_MS);
     return;
   }
+  keepPair();
+  addPairPoints();
+  if (isBoardCleared()) {
+    endRound();
+  }
+}
+
+/** Leaves the two cards of a found pair face up, out of the game. */
+function keepPair(): void {
   openCards.forEach(card => {
     card.classList.add('is-matched');
     card.disabled = true;
   });
   openCards = [];
-  addPairPoints();
+}
+
+/** Tells whether every card on the board has found its partner. */
+function isBoardCleared(): boolean {
+  const cards = document.querySelectorAll<HTMLButtonElement>('.card');
+  return [...cards].every(card => card.classList.contains('is-matched'));
+}
+
+/** Leaves the last pair on show for a moment, then closes the round. */
+function endRound(): void {
+  isBoardLocked = true;
+  window.setTimeout(closeRound, ROUND_END_DELAY_MS);
 }
 
 /** Turns the two cards of a wrong guess face down again. */

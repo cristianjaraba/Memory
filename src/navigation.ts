@@ -1,5 +1,5 @@
 /** Ids of the top level sections, only one of them is visible at a time. */
-const SECTION_IDS = ['home', 'settings', 'field'] as const;
+const SECTION_IDS = ['home', 'settings', 'field', 'result'] as const;
 
 export type SectionId = (typeof SECTION_IDS)[number];
 

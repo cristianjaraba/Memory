@@ -21,7 +21,7 @@ const POINTS_PER_PAIR = 1;
 /** Points every player starts a round with. */
 const SCORE_START = 0;
 
-type Player = (typeof PLAYERS)[number];
+export type Player = (typeof PLAYERS)[number];
 
 /** Points of the running round, one entry per player. */
 let scores: Record<Player, number> = { orange: SCORE_START, blue: SCORE_START };
@@ -32,13 +32,16 @@ let currentPlayer: Player = PLAYERS[0];
 /** Puts both scores back to zero, the picked colour opens the round. */
 export function resetScores(): void {
   scores = { blue: SCORE_START, orange: SCORE_START };
-  currentPlayer = getStartingPlayer();
+  currentPlayer = getPickedPlayer();
   PLAYERS.forEach(showScore);
   showTurn();
 }
 
-/** The player colour picked in the settings takes the first turn. */
-function getStartingPlayer(): Player {
+/**
+ * The colour picked in the settings. That player takes the first turn, and
+ * the screen a round closes on is seen from that player.
+ */
+export function getPickedPlayer(): Player {
   const picked = getPickedInput('player-color')?.value;
   return PLAYERS.find(player => player === picked) ?? PLAYERS[0];
 }
@@ -70,4 +73,18 @@ function showScore(player: Player): void {
   if (output) {
     output.textContent = String(scores[player]);
   }
+}
+
+/** Points both players stand on. */
+export function getScores(): Record<Player, number> {
+  return { ...scores };
+}
+
+/** The player with the most points, none if both stand equal. */
+export function getWinner(): Player | null {
+  const [first, second] = PLAYERS;
+  if (scores[first] === scores[second]) {
+    return null;
+  }
+  return scores[first] > scores[second] ? first : second;
 }

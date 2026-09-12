@@ -37,6 +37,15 @@
     src: url("/assets/fonts/orbitron-v35-latin-700.woff2") format('woff2');
 }
 
+// The two shouts of the closing screens, they are written at their heaviest
+@font-face {
+    font-family: 'Orbitron';
+    font-style: normal;
+    font-weight: 900;
+    font-display: swap;
+    src: url("/assets/fonts/orbitron-v35-latin-900.woff2") format('woff2');
+}
+
 // Body weight of the display face, used by the home and settings screens
 @font-face {
     font-family: 'Red Rose';
@@ -46,13 +55,22 @@
     src: url("/assets/fonts/red-rose-v25-latin-regular.woff2") format('woff2');
 }
 
-// "Current player" of the Foods theme
+// "Current player" of the Foods theme, and the shouts it closes a round with
 @font-face {
     font-family: 'Klee One';
     font-style: normal;
     font-weight: 600;
     font-display: swap;
     src: url("/assets/fonts/klee-one-v13-latin-600.woff2") format('woff2');
+}
+
+// The line Foods announces its winner with is written a weight lighter
+@font-face {
+    font-family: 'Klee One';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/assets/fonts/klee-one-v13-latin-regular.woff2") format('woff2');
 }
 
 // Score of the Foods theme

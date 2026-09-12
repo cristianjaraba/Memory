@@ -2,6 +2,7 @@ import './styles/style.scss';
 import { buildBoard, setupCardFlip } from './board';
 import { setupNavigation, showSection } from './navigation';
 import { showQuitLabels, setupQuitDialog } from './quit-dialog';
+import { showResult, setupResultScreen } from './result-screen';
 import { resetScores } from './scoreboard';
 import { getPickedInput, setupSummary } from './settings-form';
 
@@ -12,8 +13,9 @@ function init(): void {
   showSection('home');
   setupNavigation(startRound);
   setupSummary();
-  setupCardFlip();
+  setupCardFlip(showResult);
   setupQuitDialog();
+  setupResultScreen();
 }
 
 /** Opens the game board, dressed in the picked theme. */

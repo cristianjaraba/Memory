@@ -1,0 +1,96 @@
+// Tokens of the closing screens of a round. Every theme dresses the three of
+// them its own way, Gaming is the one they are built on
+// (values taken from the design file)
+
+@use "base" as *;
+@use "card" as *;
+@use "hud" as *;
+
+// Gaming stands all three outcomes on the ground of its board and writes them
+// in the face of its scores. Its two shouts are pink, everything else white
+$result-background-gaming: $color-field-gaming;
+$result-font-gaming: $font-score;
+$result-shout-color-gaming: $card-match-gaming;
+$result-shout-size-gaming: 124px;
+$result-shout-weight-gaming: 900;
+$result-shout-size-draw-gaming: 128px;
+$result-shout-weight-draw-gaming: 700;
+$result-lead-size-gaming: 28px;
+$result-lead-weight-gaming: 700;
+// Only Gaming pulls the letters of these screens apart
+$result-tracking-gaming: 0.07em;
+// It names its winner in the colour that player played with, a touch deeper
+// than the tone the status bar writes its players in
+$result-winner-blue-gaming: #2298db;
+$result-winner-orange-gaming: #ea6900;
+$result-winner-size-gaming: $result-lead-size-gaming;
+$result-winner-weight-gaming: 700;
+
+// Foods writes its closing screens in its own hand. Game over is painted on
+// the orange of the theme, the two other outcomes keep the white ground its
+// board is played on
+$result-background-foods: $color-surface;
+$result-background-lost-foods: $card-match-foods;
+$result-font-foods: $font-klee-one;
+// Its shouts are written at the weight of its hand, game over in white on the
+// orange ground, the draw in that same orange on white
+$result-shout-color-lost-foods: $color-text;
+$result-shout-color-draw-foods: $card-match-foods;
+$result-shout-size-foods: 130px;
+$result-shout-weight-foods: 600;
+$result-shout-size-draw-foods: 128px;
+// The label over the final scores stands larger than the line of the two
+// other outcomes
+$result-lead-size-lost-foods: 42px;
+$result-lead-size-foods: 40px;
+$result-lead-weight-foods: 600;
+// Its winner is announced in the brown the board names its player on turn in,
+// the line above is written a weight lighter than the name below it
+$result-winner-color-foods: $hud-turn-color-foods;
+$result-winner-size-foods: 80px;
+$result-winner-weight-foods: 600;
+$result-lead-weight-won-foods: 400;
+
+// Room between the parts of a screen, and inside its heading
+$result-gap: 2.5rem;
+$result-title-gap: 1.25rem;
+
+// The way a closing screen comes in: it drops onto its ground from above.
+// It starts off the page, half the window plus half the block puts it just
+// past the upper edge, whatever the window measures
+$result-drop-travel: calc(-50vh - 50%);
+$result-drop-duration: 520ms;
+
+// The two figures a round can close on: the one of the winning player, and
+// the scales of a draw. Gaming lets its scales stand on the ground of the
+// screen, Foods lays both on a light block that carries a shadow
+$result-badge-shadow-foods: 0 4px 12px rgba(0, 0, 0, 0.15);
+$result-badge-background-foods: #f7e6d5;
+$result-badge-winner-width-foods: 260px;
+$result-badge-winner-height-foods: 300px;
+$result-badge-draw-width-foods: 310px;
+$result-badge-draw-height-foods: 290px;
+// The scales are drawn at their natural size where no block holds them, and
+// a little smaller inside the block of Foods (the file measures 350 x 281)
+$result-scale-width-gaming: 350px;
+$result-scale-height-gaming: 281px;
+$result-scale-width-foods: 250px;
+$result-scale-height-foods: 201px;
+// The figure of the winner keeps the shape of the pawn of the board (22 x 27)
+$result-pawn-width: 155px;
+$result-pawn-height: 190px;
+// It is laid in the colour that player played with, the same two tones the
+// board marks the player on turn with
+$result-pawn-blue-foods: $hud-turn-figure-background-foods;
+$result-pawn-orange-foods: $color-player-orange;
+
+// The way home. Gaming dresses it like the way out of its board, Foods fills
+// it with its orange and writes it white, in the face of its scores
+$result-home-radius-gaming: $hud-radius;
+$result-home-size-gaming: $hud-exit-size-gaming;
+$result-home-background-foods: $card-match-foods;
+$result-home-font-foods: $font-delius-unicase;
+$result-home-size-foods: 16px;
+$result-home-radius-foods: $hud-exit-radius-foods;
+// On the orange ground of a lost round the two trade places
+$result-home-text-lost-foods: $color-surface;
