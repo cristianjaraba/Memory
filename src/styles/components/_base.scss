@@ -14,3 +14,10 @@ body {
     height: 100vh;
     margin: 0;
 }
+
+// Holder of the filter a theme paints with. It draws nothing itself, but as
+// an inline element it opens a line of its own below the screen and pushes a
+// scrollbar onto every page. As a block box of no height it takes no room
+.filters {
+    display: block;
+}
