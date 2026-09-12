@@ -19,6 +19,19 @@ export function setupSummary(): void {
   updateSummary();
 }
 
+/**
+ * Clears every pick and covers the panel again, so a player who left a
+ * round finds the settings screen the way it was on the first visit.
+ */
+export function resetSettings(): void {
+  const inputs = document.querySelectorAll<HTMLInputElement>('.settings__input');
+  inputs.forEach(input => {
+    input.checked = false;
+  });
+  arePicksUncovered = false;
+  updateSummary();
+}
+
 /** Takes the click on the panel: the picks show, the round can start. */
 function uncoverPicks(): void {
   arePicksUncovered = true;

@@ -1,5 +1,5 @@
 import { showSection } from './navigation';
-import { getPickedInput } from './settings-form';
+import { getPickedInput, resetSettings } from './settings-form';
 
 /** Value the dialog carries back when the round is given up. */
 const QUIT_VALUE = 'quit';
@@ -108,6 +108,8 @@ function skipsMotion(): boolean {
 /** Takes the answer the closed dialog carries back. */
 function finishDialog(dialog: HTMLDialogElement): void {
   if (dialog.returnValue === QUIT_VALUE) {
+    // Whoever gives up a round picks every setting anew for the next one
+    resetSettings();
     showSection('settings');
   }
 }
