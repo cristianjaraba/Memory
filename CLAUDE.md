@@ -1,120 +1,131 @@
-# Projekt: Memory
+# Project: Memory
 
-Ein Memory-Spiel (Karten-Matching-Spiel) als Web-App. Umschulungsprojekt.
+A memory game (card matching game) as a web app. Retraining project.
 
-## Tech-Stack
+## Tech stack
 
 - TypeScript
-- HTML (semantisch, barrierefrei)
+- HTML (semantic, accessible)
 - SCSS
 
-## User Stories / Anforderungen
+## User stories / requirements
 
-### 1. Homescreen
-- Startseite mit klarer visueller Hierarchie (Logo/Titel, Start-Button gut sichtbar zentriert)
-- Start-Button führt zur Settings-Page
-- Controller-Icon mit Animation (z. B. Hover- oder Idle-Animation), sinnvoll im Layout positioniert (z. B. neben Titel oder Button)
+### 1. Home screen
+- Landing page with a clear visual hierarchy (logo/title, start button clearly visible and centred)
+- Start button leads to the settings page
+- Controller icon with an animation (e.g. hover or idle animation), sensibly placed in the layout (e.g. next to the title or the button)
 
 ### 2. Settings
-- Auswahl der Spielerfarbe: 2 Optionen (z. B. Blau / Orange)
-- Auswahl der Spielfeldgröße: 4x4 / 4x6 / 6x6
-- Auswahl des Themes: mind. 2 Themes wählbar (weitere optional)
+- Choice of player colour: 2 options (e.g. blue / orange)
+- Choice of board size: 4x4 / 4x6 / 6x6
+- Choice of theme: at least 2 themes selectable (more are optional)
 
 ### 3. Layouts
-- Mind. 2 verschiedene Layouts wählbar
-- Layout-Wahl ändert das Farbschema
-- Layout-Wahl beeinflusst die Themengebiete der Memory-Bilder
+- At least 2 different layouts selectable
+- The layout choice changes the colour scheme
+- The layout choice drives the subject areas of the memory pictures
 
-### 4. Spielfeld / Spielerlebnis
-- Spielfeld entspricht der gewählten Größe
-- Gewähltes Theme wird in Farbe und Motiven dargestellt
-- Über dem Spielfeld: aktueller Punktestand, aktueller Spieler, "Exit Game"-Button
-- Karten drehen sich beim Klick in einer flüssigen Animation um
+### 4. Board / gameplay
+- The board matches the chosen size
+- The chosen theme shows in both colour and motifs
+- Above the board: current score, current player, "Exit Game" button
+- Cards turn over on click in a smooth animation
 
-### 5. Spielende
-- "Game Over"-Anzeige mit aktuellem Punktestand nach Rundenende
-- Spieler mit den meisten Punkten wird als Gewinner angezeigt
-- Möglichkeit, eine neue Runde zu starten
+### 5. End of a round
+- "Game Over" display with the current score once the round ends
+- The player with the most points is shown as the winner
+- A way to start a new round
 
-## Code Conventions
+## Code conventions
 
-### Dateigröße (gilt für alle Dateitypen)
-- Keine Code-Datei länger als 300–400 Zeilen (`.ts`, `.html`, `.scss`, …)
-- Wird eine Datei zu lang: Code ohne Rückfrage in sinnvolle Module auslagern
-- SCSS: Partials nach Screen/Komponente, `style.scss` bindet sie nur noch ein
-- TypeScript: ein Modul pro Aufgabengebiet, `main.ts` verdrahtet sie nur
+### File size (applies to every file type)
+- No code file longer than 300-400 lines (`.ts`, `.html`, `.scss`, ...)
+- If a file grows too long: split the code into sensible modules without asking first
+- SCSS: partials per screen/component, `style.scss` only pulls them in
+- TypeScript: one module per subject area, `main.ts` only wires them together
 
-### TypeScript – Allgemein
-- Dateinamen in kebab-case (z. B. `user-utils.ts`)
-- Max. 14 Zeilen pro Funktion
-- Semikolons verwenden
-- Kein `any` (wenn möglich) – stattdessen exakter Typ oder `unknown`
-- Variablen-, Funktions-, Klassen- und Typnamen auf Englisch (keine deutschen Bezeichner)
+### TypeScript - general
+- File names in kebab-case (e.g. `user-utils.ts`)
+- Max. 14 lines per function
+- Use semicolons
+- No `any` (where possible) - use the exact type or `unknown` instead
+- Variable, function, class and type names in English (no German identifiers)
 
-### TypeScript – Namensgebung
-- Funktionen: camelCase (`getUser()`)
-- Klassen: PascalCase (`UserProfile`)
+### TypeScript - naming
+- Functions: camelCase (`getUser()`)
+- Classes: PascalCase (`UserProfile`)
 - Interfaces: PascalCase (`User`)
-- Konstanten: UPPER_CASE (`MAX_RETRIES`)
-- Typen: PascalCase (`UserID`)
+- Constants: UPPER_CASE (`MAX_RETRIES`)
+- Types: PascalCase (`UserID`)
 
-### TypeScript – Formatierung
-- 2 Leerzeichen Einrückung
-- Imports gruppieren (Std, Dritt, Lokal)
-- Typen und Rückgabewerte explizit angeben (`function loadData(): Promise<Data>`)
+### TypeScript - formatting
+- 2 spaces indentation
+- Group imports (std, third party, local)
+- State types and return values explicitly (`function loadData(): Promise<Data>`)
 
-### TypeScript – Kommentare
-- TSDoc für Funktionen & Methoden (`/** Gibt den user zurück. */`)
+### TypeScript - comments
+- TSDoc for functions and methods (`/** Returns the user. */`)
+- Add documentation comments to the codebase using JSDoc style, limited to
+  `.js`, `.jsx`, `.ts` and `.tsx` files
+- Every file opens with an `@file` block saying what the module is for
+- Document every parameter with `@param`, every return value with `@returns`
+  and every generic with `@typeParam`. A function that takes no arguments and
+  returns nothing keeps its one line description
+- Do not repeat the type inside the tag (no `@param {string}`); the signature
+  already carries it, and a second copy only goes stale
+- Exported types, constants and module level variables are documented too,
+  and a TSDoc block belongs to one declaration only: two constants need two
+  blocks
 
-### TypeScript – Clean Code
-- Eine Aufgabe pro Funktion
-- Keine Magic Numbers (`const MAX_USERS = 100;`)
-- HTML auslagern statt inline
-- Lesbare Bedingungen (`if (isUserActive)` statt `if (x)`)
+### TypeScript - clean code
+- One task per function
+- No magic numbers (`const MAX_USERS = 100;`)
+- Move HTML out instead of writing it inline
+- Readable conditions (`if (isUserActive)` instead of `if (x)`)
 
-### HTML – Struktur & Semantik
-- Semantische Tags nutzen: `header`, `nav`, `main`, `section`, `article`, `aside`, `footer`
-- `h1`–`h6` in sinnvoller Hierarchie
-- `section` für thematische Abschnitte, `article` für eigenständige Inhalte
-- `aside` nur für Zusatzinfos, nicht für Layout
-- `figure` + `figcaption` für bedeutungstragende Bilder
+### HTML - structure and semantics
+- Use semantic tags: `header`, `nav`, `main`, `section`, `article`, `aside`, `footer`
+- `h1`-`h6` in a sensible hierarchy
+- `section` for thematic blocks, `article` for standalone content
+- `aside` only for side information, not for layout
+- `figure` + `figcaption` for pictures that carry meaning
 
-### HTML – Lesbarkeit & Wartbarkeit
-- Einheitlich eingerückt und formatiert
-- Keine tiefen, unübersichtlichen Verschachtelungen
-- Sprechende Namen (englisch)
-- Verständliche, gepflegte Kommentare
+### HTML - readability and maintainability
+- Consistently indented and formatted
+- No deep, confusing nesting
+- Meaningful names (English)
+- Understandable, well kept comments
 
-### HTML – Barrierefreiheit
-- Bilder mit sinnvollen `alt`-Texten
-- E-Mail-Adressen mit `mailto:`
-- Tabellen mit `<caption>` (wenn sinnvoll) und `<th>` statt nur `<td>` für Überschriften
-- Navigation als Liste (`<ul>` in `<nav>`)
+### HTML - accessibility
+- Images with meaningful `alt` texts
+- Email addresses with `mailto:`
+- Tables with `<caption>` (where it helps) and `<th>` instead of only `<td>` for headings
+- Navigation as a list (`<ul>` inside `<nav>`)
 
-### HTML – Inhalte kennzeichnen
-- Wichtiges mit `<strong>` oder `<em>` hervorheben, nicht nur `<b>`/`<i>`
-- Inline-Textstruktur mit `<span>`
-- Fließtext in `<p>`, nicht in `<div>`
+### HTML - marking up content
+- Highlight what matters with `<strong>` or `<em>`, not only `<b>`/`<i>`
+- Inline text structure with `<span>`
+- Running text in `<p>`, not in `<div>`
 
-### HTML – Gültigkeit & Standards
-- Korrektes `<!DOCTYPE html>`
-- `<html lang="...">` immer setzen
-- `<meta charset="UTF-8">` und `<title>` im `<head>`
-- `index.html` mit Favicon
+### HTML - validity and standards
+- Correct `<!DOCTYPE html>`
+- Always set `<html lang="...">`
+- `<meta charset="UTF-8">` and `<title>` in the `<head>`
+- `index.html` with a favicon
 
-### HTML – Best Practices
-- So wenig `<div>` wie möglich, so viel wie nötig (keine "div-Suppe")
-- Struktur (HTML) von Darstellung (CSS) trennen
-- Kein Lorem Ipsum – eigene, kreative Texte verwenden
+### HTML - best practices
+- As few `<div>` as possible, as many as needed (no "div soup")
+- Keep structure (HTML) apart from presentation (CSS)
+- No lorem ipsum - write your own, creative texts
 
 ### Fonts
-- Keine Google Fonts CDN-Links (kein `<link href="https://fonts.googleapis.com/...">`)
-- Schriftarten selbst hosten: WOFF2-Dateien von https://gwfh.mranftl.com/fonts herunterladen, in `assets/fonts/` ablegen
-- Passende `@font-face`-Regeln in SCSS definieren (z. B. `_fonts.scss`), mit `font-display: swap`
-- Diese SCSS-Datei in die Hauptstyles einbinden statt externer Font-Links im `<head>`
+- No Google Fonts CDN links (no `<link href="https://fonts.googleapis.com/...">`)
+- Self host the fonts: download the WOFF2 files from https://gwfh.mranftl.com/fonts and put them in `assets/fonts/`
+- Define matching `@font-face` rules in SCSS (e.g. `_fonts.scss`), with `font-display: swap`
+- Pull that SCSS file into the main styles instead of linking fonts externally in the `<head>`
 
-## Hinweise für Claude Code
+## Notes for Claude Code
 
-- Vor dem Einreichen: alle User Stories oben als Checkliste durchgehen
-- Zusätzliche Extras über die Anforderungen hinaus kurz dokumentieren (für die Mentoren)
-- Bei Unsicherheit zu Konventionen: siehe Abschnitt "Code Conventions" oben, nicht raten
+- Before handing in: walk through all the user stories above as a checklist
+- Briefly document extras that go beyond the requirements (for the mentors)
+- If a convention is unclear: see the "Code conventions" section above, do not guess
